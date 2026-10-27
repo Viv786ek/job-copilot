@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input, Label } from '@/components/ui/input';
 import { apiFetch } from '@/lib/api';
+import { DEMO } from '@/lib/session';
 
 export function AuthForm({ mode, oauth }: { mode: 'login' | 'register'; oauth: { google: boolean; github: boolean } }) {
   const router = useRouter();
@@ -39,6 +40,27 @@ export function AuthForm({ mode, oauth }: { mode: 'login' | 'register'; oauth: {
     } finally {
       setLoading(false);
     }
+  }
+
+  if (DEMO) {
+    return (
+      <div className="flex min-h-screen items-center justify-center px-4">
+        <Card className="w-full max-w-md text-center">
+          <CardHeader>
+            <Sparkles className="mx-auto h-8 w-8 text-primary" />
+            <CardTitle className="text-2xl">No sign-up needed</CardTitle>
+            <CardDescription>
+              This is the public demo. You&apos;ll use a sample candidate profile, and everything stays in your browser.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Button asChild className="w-full">
+              <Link href="/dashboard">Enter the demo</Link>
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+    );
   }
 
   return (

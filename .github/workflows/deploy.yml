@@ -8,6 +8,8 @@ on:
 jobs:
   migrate:
     name: Apply database migrations (Neon)
+    # Off until you add the production secrets and set repository variable DEPLOY_ENABLED=true.
+    if: vars.DEPLOY_ENABLED == 'true'
     runs-on: ubuntu-latest
     environment: production
     steps:

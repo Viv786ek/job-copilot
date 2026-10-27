@@ -8,7 +8,7 @@ import { EmptyState, PageHeader, ScoreRing } from '@/components/app/shared';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { useApi, useToken } from '@/lib/api';
+import { download, useApi, useToken } from '@/lib/api';
 import type { Resume } from '@/lib/types';
 import { cn, formatDate } from '@/lib/utils';
 
@@ -50,9 +50,9 @@ export default function ResumesPage() {
     onError: (e) => toast.error((e as Error).message),
   });
 
-  async function download(id: string) {
+  async function downloadResume(id: string, fileName: string) {
     const { url } = await api<{ url: string }>(`/resumes/${id}/download`);
-    window.open(url, '_blank', 'noopener');
+    download(url, fileName);
   }
 
   function onFiles(files: FileList | null) {
@@ -114,7 +114,7 @@ export default function ResumesPage() {
                 </div>
                 <div className="flex items-center gap-1" onClick={(e) => e.stopPropagation()}>
                   {r.healthScore != null && <ScoreRing score={r.healthScore} size={44} />}
-                  <Button size="icon" variant="ghost" title="Download" onClick={() => download(r.id)}>
+                  <Button size="icon" variant="ghost" title="Download" onClick={() => downloadResume(r.id, r.fileName)}>
                     <Download />
                   </Button>
                   <Button size="icon" variant="ghost" title="Make active & re-parse" onClick={() => action.mutate({ id: r.id, op: r.status === 'PARSED' ? 'activate' : 'reparse' })}>

@@ -2,8 +2,8 @@
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { ExternalLink, KanbanSquare, Loader2, Sparkles } from 'lucide-react';
-import { useParams, useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { Suspense, useState } from 'react';
 import { toast } from 'sonner';
 import { DocView } from '@/components/app/doc-views';
 import { MatchBreakdown, PageHeader, ScoreRing } from '@/components/app/shared';
@@ -12,8 +12,9 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/progress';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { useApi, useToken } from '@/lib/api';
+import { download, useApi, useToken } from '@/lib/api';
 import type { GeneratedDoc, JdAnalysis } from '@/lib/types';
+import { DEMO } from '@/lib/session';
 import { formatSalary } from '@/lib/utils';
 
 interface JobDetail {
@@ -34,7 +35,15 @@ const GENERATORS = [
 ] as const;
 
 export default function JobDetailPage() {
-  const { id } = useParams<{ id: string }>();
+  return (
+    <Suspense>
+      <JobDetail />
+    </Suspense>
+  );
+}
+
+function JobDetail() {
+  const id = useSearchParams().get('id') ?? '';
   const api = useApi();
   const { ready } = useToken();
   const qc = useQueryClient();
@@ -227,9 +236,9 @@ function GeneratedPanel({ docId, label, busy, onGenerate }: { docId?: string; la
   const { ready } = useToken();
   const { data: doc } = useQuery({ queryKey: ['doc', docId], queryFn: () => api<GeneratedDoc>(`/documents/${docId}`), enabled: ready && !!docId });
 
-  async function download() {
+  async function downloadDocx() {
     const { url } = await api<{ url: string }>(`/documents/${docId}/docx`);
-    window.location.href = url;
+    download(url, `${doc?.job?.companyName ?? 'Job'}-${label.replace(/\s+/g, '-')}.${DEMO ? 'doc' : 'docx'}`);
   }
 
   return (
@@ -237,8 +246,9 @@ function GeneratedPanel({ docId, label, busy, onGenerate }: { docId?: string; la
       <Button onClick={onGenerate} disabled={busy}>
         {busy ? <Loader2 className="animate-spin" /> : <Sparkles />} {docId ? `Regenerate ${label.toLowerCase()}` : `Generate ${label.toLowerCase()}`}
       </Button>
-      {busy && <p className="text-sm text-muted-foreground">Writing from your real experience… this takes 10–30 seconds.</p>}
-      {doc && <DocView doc={doc} onDownload={doc.type === 'TAILORED_RESUME' || doc.type === 'COVER_LETTER' ? download : undefined} />}
+      {busy && <p className="text-sm text-muted-foreground">{DEMO ? 'Generating…' : 'Writing from your real experience… this takes 10–30 seconds.'}</p>}
+      {DEMO && !doc && <p className="text-sm text-muted-foreground">Demo mode uses a template generator in your browser. The deployed product uses OpenAI, Claude or Gemini.</p>}
+      {doc && <DocView doc={doc} onDownload={doc.type === 'TAILORED_RESUME' || doc.type === 'COVER_LETTER' ? downloadDocx : undefined} />}
     </div>
   );
 }

@@ -15,7 +15,7 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { signOut, useSession } from 'next-auth/react';
+import { DEMO, useAppSession } from '@/lib/session';
 import { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -33,7 +33,7 @@ const NAV = [
 
 export function Sidebar() {
   const pathname = usePathname();
-  const { data } = useSession();
+  const session = useAppSession();
   const [open, setOpen] = useState(false);
 
   const nav = (
@@ -59,13 +59,13 @@ export function Sidebar() {
     <div className="border-t pt-4">
       <div className="mb-3 flex items-center justify-between px-1">
         <div className="min-w-0">
-          <p className="truncate text-sm font-medium">{data?.user?.name ?? data?.user?.email}</p>
-          <p className="truncate text-xs text-muted-foreground">{data?.user?.email}</p>
+          <p className="truncate text-sm font-medium">{session.user?.name ?? session.user?.email}</p>
+          <p className="truncate text-xs text-muted-foreground">{session.user?.email}</p>
         </div>
-        <Badge variant={data?.user?.plan === 'FREE' ? 'secondary' : 'default'}>{data?.user?.plan ?? 'FREE'}</Badge>
+        <Badge variant={session.user?.plan === 'FREE' ? 'secondary' : 'default'}>{session.user?.plan ?? 'FREE'}</Badge>
       </div>
-      <Button variant="ghost" className="w-full justify-start" onClick={() => signOut({ callbackUrl: '/' })}>
-        <LogOut /> Sign out
+      <Button variant="ghost" className="w-full justify-start" onClick={session.signOut}>
+        <LogOut /> {DEMO ? 'Exit demo' : 'Sign out'}
       </Button>
     </div>
   );

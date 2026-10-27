@@ -47,7 +47,7 @@ export default function DocumentsPage() {
       {data && data.length === 0 && <EmptyState title="No documents yet" description="Open any job match and generate a tailored resume or cover letter." />}
       <div className="grid gap-3 md:grid-cols-2">
         {data?.map((d) => (
-          <Link key={d.id} href={`/documents/${d.id}`}>
+          <Link key={d.id} href={`/documents/view?id=${d.id}`}>
             <Card className="transition-shadow hover:shadow-md">
               <CardContent className="flex items-center justify-between p-4">
                 <div>

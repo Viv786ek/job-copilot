@@ -43,7 +43,14 @@ Target topology: **Vercel** (web) · **Render** or **Railway** (API + worker + R
 Required repository secrets (environment `production`):
 `DATABASE_URL`, `DIRECT_DATABASE_URL`, `RENDER_API_DEPLOY_HOOK`, `RENDER_WORKER_DEPLOY_HOOK`, `VERCEL_TOKEN`, `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID`.
 
-## 7. Production checklist
+## 7. Static demo on GitHub Pages
+`pages.yml` builds `apps/web` with `BUILD_TARGET=pages` (`npm run build:pages`) on every push to `main` and publishes it to `https://<user>.github.io/<repo>/`.
+In this mode `NEXT_PUBLIC_DEMO_MODE=true` swaps the HTTP client for an in-browser implementation of the API (`src/lib/demo`) backed by localStorage. Auth.js and middleware are left out of the static build.
+One-time setup: **Settings → Pages → Source: GitHub Actions**.
+
+The full-stack deploy (`deploy.yml`) stays off until you add its secrets and set the repository variable `DEPLOY_ENABLED=true`.
+
+## 8. Production checklist
 - [ ] Secrets are ≥ 32 random bytes; `INTERNAL_API_KEY` identical in API, web and n8n.
 - [ ] `NODE_ENV=production` (disables Swagger UI).
 - [ ] Redis `maxmemory-policy noeviction` (BullMQ requirement).

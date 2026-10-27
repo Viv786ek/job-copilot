@@ -74,7 +74,7 @@ export function MatchBreakdown({ breakdown }: { breakdown: Record<string, number
         <div key={key}>
           <div className="mb-1 flex justify-between text-sm">
             <span>{label}</span>
-            <span className="text-muted-foreground">{breakdown[key] ?? 0}%</span>
+            <span className="text-muted-foreground">{key === 'semantic' && !breakdown[key] ? 'n/a (no embeddings)' : `${breakdown[key] ?? 0}%`}</span>
           </div>
           <Progress value={breakdown[key] ?? 0} />
         </div>

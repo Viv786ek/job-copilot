@@ -53,7 +53,7 @@ export default function JobsPage() {
       }),
     onSuccess: ({ jobId }) => {
       toast.success('Job imported and analyzed');
-      router.push(`/jobs/${jobId}`);
+      router.push(`/jobs/view?id=${jobId}`);
     },
     onError: (e) => toast.error((e as Error).message),
   });
@@ -146,7 +146,7 @@ export default function JobsPage() {
               <div className="min-w-0 flex-1">
                 <div className="flex items-start justify-between gap-2">
                   <div className="min-w-0">
-                    <Link href={`/jobs/${m.job.id}`} className="font-semibold hover:underline">
+                    <Link href={`/jobs/view?id=${m.job.id}`} className="font-semibold hover:underline">
                       {m.job.title}
                     </Link>
                     <p className="text-sm text-muted-foreground">

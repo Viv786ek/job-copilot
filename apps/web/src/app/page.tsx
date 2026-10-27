@@ -1,6 +1,10 @@
-import { ArrowRight, Bot, FileCheck2, KanbanSquare, Radar, ShieldCheck, Sparkles } from 'lucide-react';
+import { ArrowRight, Bot, FileCheck2, Github, KanbanSquare, Radar, ShieldCheck, Sparkles } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+
+// Read directly (not from the client-only session module) because this is a server component.
+const DEMO = process.env.NEXT_PUBLIC_DEMO_MODE === 'true';
+const REPO_URL = 'https://github.com/Viv786ek/job-copilot';
 
 const FEATURES = [
   { icon: Radar, title: 'Jobs that actually fit', body: 'Daily discovery across job APIs, company career pages and anything you import from LinkedIn, Naukri, Indeed, Wellfound and more — ranked by an explainable match score.' },
@@ -17,11 +21,19 @@ export default function Landing() {
           <Sparkles className="h-5 w-5 text-primary" /> VP AI Job Copilot
         </span>
         <div className="flex gap-2">
-          <Button variant="ghost" asChild>
-            <Link href="/login">Sign in</Link>
-          </Button>
+          {DEMO ? (
+            <Button variant="ghost" asChild>
+              <a href={REPO_URL} target="_blank" rel="noopener noreferrer">
+                <Github /> Source
+              </a>
+            </Button>
+          ) : (
+            <Button variant="ghost" asChild>
+              <Link href="/login">Sign in</Link>
+            </Button>
+          )}
           <Button asChild>
-            <Link href="/register">Get started free</Link>
+            <Link href={DEMO ? '/dashboard' : '/register'}>{DEMO ? 'Open live demo' : 'Get started free'}</Link>
           </Button>
         </div>
       </header>
@@ -37,16 +49,29 @@ export default function Landing() {
           Upload your resume once. Get matched jobs every morning, a tailored resume and cover letter for each one, recruiter
           messages, interview prep, and a tracker that reminds you to follow up.
         </p>
-        <div className="mt-10 flex justify-center gap-3">
+        <div className="mt-10 flex flex-wrap justify-center gap-3">
           <Button size="lg" asChild>
-            <Link href="/register">
-              Upload your resume <ArrowRight />
+            <Link href={DEMO ? '/dashboard' : '/register'}>
+              {DEMO ? 'Try the live demo' : 'Upload your resume'} <ArrowRight />
             </Link>
           </Button>
-          <Button size="lg" variant="outline" asChild>
-            <Link href="/login">I have an account</Link>
-          </Button>
+          {DEMO ? (
+            <Button size="lg" variant="outline" asChild>
+              <a href={REPO_URL} target="_blank" rel="noopener noreferrer">
+                <Github /> View source on GitHub
+              </a>
+            </Button>
+          ) : (
+            <Button size="lg" variant="outline" asChild>
+              <Link href="/login">I have an account</Link>
+            </Button>
+          )}
         </div>
+        {DEMO && (
+          <p className="mx-auto mt-4 max-w-xl text-xs text-muted-foreground">
+            The demo runs in your browser with a sample candidate and fictional jobs, so no sign-up is needed.
+          </p>
+        )}
       </section>
 
       <section className="container grid gap-6 pb-24 sm:grid-cols-2">

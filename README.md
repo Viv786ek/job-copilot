@@ -4,6 +4,8 @@
 
 ![stack](https://img.shields.io/badge/Next.js-14-black) ![stack](https://img.shields.io/badge/NestJS-10-e0234e) ![stack](https://img.shields.io/badge/PostgreSQL-Prisma-336791) ![stack](https://img.shields.io/badge/BullMQ-Redis-dc382d) ![stack](https://img.shields.io/badge/AI-OpenAI%20%7C%20Claude%20%7C%20Gemini-6e56cf) ![stack](https://img.shields.io/badge/n8n-workflows-ea4b71)
 
+**🔗 Live demo: https://viv786ek.github.io/job-copilot/** — runs fully in your browser (sample candidate, fictional jobs). The matching engine, ATS scoring and honesty guardrails are the production code; AI writing is template-based in the demo.
+
 ## What it does
 
 | | Feature | How |
@@ -68,7 +70,7 @@ Full HLD, LLD, sequence diagrams, ER diagram and scaling plan: **[docs/ARCHITECT
 ├── packages/shared/              zod schemas, enums, skill taxonomy (used by API + web)
 ├── n8n/workflows/                5 importable workflows
 ├── infra/docker-compose.yml      Postgres, Redis, MinIO, n8n
-├── .github/workflows/            ci.yml, deploy.yml
+├── .github/workflows/            ci.yml, deploy.yml, pages.yml (static demo)
 ├── render.yaml                   Render blueprint
 └── docs/                         ARCHITECTURE, API, SETUP, DEPLOYMENT, PRODUCT
 ```

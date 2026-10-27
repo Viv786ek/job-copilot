@@ -61,8 +61,8 @@ export class DocumentsService {
     );
     const { resume: safe, flags } = enforceHonesty(resume.parsed, resume.rawText, data);
 
-    const before = atsKeywordCoverage(resume.rawText, analysis.atsKeywords, have);
-    const after = atsKeywordCoverage(tailoredToText(safe), analysis.atsKeywords, have);
+    const before = atsKeywordCoverage(resume.rawText, analysis.atsKeywords);
+    const after = atsKeywordCoverage(tailoredToText(safe), analysis.atsKeywords);
 
     return this.prisma.generatedDocument.create({
       data: {

@@ -117,7 +117,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const app = $env.COPILOT_APP_URL;\nreturn $input.all().map(({ json }) => {\n  const rows = json.matches.map(m => `<tr><td style=\"padding:6px 10px\"><b>${m.score}%</b></td><td style=\"padding:6px 10px\"><a href=\"${app}/jobs/${m.job.id}\">${m.job.title}</a><br><span style=\"color:#666\">${m.job.companyName} · ${m.job.location ?? ''}</span></td></tr>`).join('');\n  return { json: { to: json.user.email, name: json.user.name, count: json.matches.length, html: `<p>Hi ${json.user.name ?? 'there'},</p><p>${json.matches.length} new roles match your profile today:</p><table>${rows}</table><p><a href=\"${app}/jobs\">See all matches</a></p>` } };\n});"
+        "jsCode": "const app = $env.COPILOT_APP_URL;\nreturn $input.all().map(({ json }) => {\n  const rows = json.matches.map(m => `<tr><td style=\"padding:6px 10px\"><b>${m.score}%</b></td><td style=\"padding:6px 10px\"><a href=\"${app}/jobs/view?id=${m.job.id}\">${m.job.title}</a><br><span style=\"color:#666\">${m.job.companyName} · ${m.job.location ?? ''}</span></td></tr>`).join('');\n  return { json: { to: json.user.email, name: json.user.name, count: json.matches.length, html: `<p>Hi ${json.user.name ?? 'there'},</p><p>${json.matches.length} new roles match your profile today:</p><table>${rows}</table><p><a href=\"${app}/jobs\">See all matches</a></p>` } };\n});"
       },
       "name": "Build Digest",
       "type": "n8n-nodes-base.code",

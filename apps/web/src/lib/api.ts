@@ -1,7 +1,8 @@
 'use client';
 
-import { useSession } from 'next-auth/react';
 import { useCallback } from 'react';
+import { demoRequest } from './demo/backend';
+import { DEMO, useAppSession } from './session';
 
 export const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:4000';
 
@@ -15,6 +16,7 @@ export class ApiError extends Error {
 }
 
 export async function apiFetch<T>(path: string, token: string | undefined, init: RequestInit = {}): Promise<T> {
+  if (DEMO) return demoRequest<T>(path, init);
   const isForm = init.body instanceof FormData;
   const res = await fetch(`${API_URL}/api/v1${path}`, {
     ...init,
@@ -35,15 +37,22 @@ export async function apiFetch<T>(path: string, token: string | undefined, init:
 
 /** Returns a fetcher bound to the current session token. */
 export function useApi() {
-  const { data } = useSession();
-  const token = data?.accessToken;
-  return useCallback(
-    <T,>(path: string, init?: RequestInit) => apiFetch<T>(path, token, init),
-    [token],
-  );
+  const { token } = useAppSession();
+  return useCallback(<T,>(path: string, init?: RequestInit) => apiFetch<T>(path, token, init), [token]);
 }
 
 export function useToken() {
-  const { data, status } = useSession();
-  return { token: data?.accessToken, ready: status === 'authenticated' };
+  const { token, ready } = useAppSession();
+  return { token, ready };
+}
+
+/** Triggers a browser download for a presigned (or blob) URL. */
+export function download(url: string, fileName: string) {
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = fileName;
+  a.rel = 'noopener';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
 }

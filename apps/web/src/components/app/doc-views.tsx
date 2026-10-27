@@ -5,6 +5,7 @@ import { toast } from 'sonner';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { DEMO } from '@/lib/session';
 import type { GeneratedDoc } from '@/lib/types';
 
 function copy(text: string) {
@@ -42,7 +43,7 @@ export function DocView({ doc, onDownload }: { doc: GeneratedDoc; onDownload?: (
             <Badge variant="outline">v{doc.version}</Badge>
             {onDownload && (
               <Button size="sm" onClick={onDownload}>
-                <Download /> Download DOCX
+                <Download /> Download {DEMO ? 'Word' : 'DOCX'}
               </Button>
             )}
           </div>
@@ -109,7 +110,7 @@ export function DocView({ doc, onDownload }: { doc: GeneratedDoc; onDownload?: (
         <div className="space-y-3">
           {onDownload && (
             <Button size="sm" onClick={onDownload}>
-              <Download /> Download DOCX
+              <Download /> Download {DEMO ? 'Word' : 'DOCX'}
             </Button>
           )}
           <CopyBlock title={c.subject} text={c.body} />

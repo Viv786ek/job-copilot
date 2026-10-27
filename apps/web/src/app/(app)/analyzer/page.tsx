@@ -31,7 +31,7 @@ export default function AnalyzerPage() {
 
   const save = useMutation({
     mutationFn: () => api<{ jobId: string }>('/jobs/import', { method: 'POST', body: JSON.stringify({ description, title: title || undefined, company: company || undefined }) }),
-    onSuccess: ({ jobId }) => router.push(`/jobs/${jobId}`),
+    onSuccess: ({ jobId }) => router.push(`/jobs/view?id=${jobId}`),
     onError: (e) => toast.error((e as Error).message),
   });
 
