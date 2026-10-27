@@ -1,0 +1,40 @@
+# Render Blueprint: API (web service) + background worker + managed Redis.
+# Postgres is Neon (set DATABASE_URL / DIRECT_DATABASE_URL as secrets).
+services:
+  - type: web
+    name: job-copilot-api
+    runtime: docker
+    dockerfilePath: apps/api/Dockerfile
+    dockerContext: .
+    healthCheckPath: /health
+    autoDeploy: false # deployed by GitHub Actions after migrations
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: REDIS_URL
+        fromService: { type: redis, name: job-copilot-redis, property: connectionString }
+      - key: ENABLE_SCHEDULER
+        value: 'false'
+      - fromGroup: job-copilot-secrets
+
+  - type: worker
+    name: job-copilot-worker
+    runtime: docker
+    dockerfilePath: apps/api/Dockerfile
+    dockerContext: .
+    dockerCommand: node dist/worker.js
+    autoDeploy: false
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: REDIS_URL
+        fromService: { type: redis, name: job-copilot-redis, property: connectionString }
+      - key: ENABLE_SCHEDULER
+        value: 'true'
+      - fromGroup: job-copilot-secrets
+
+  - type: redis
+    name: job-copilot-redis
+    plan: starter
+    maxmemoryPolicy: noeviction
+    ipAllowList: []

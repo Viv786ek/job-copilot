@@ -1,0 +1,86 @@
+{
+  "name": "03 · New Job Found (Analyze → Score → Resume → Cover Letter → Draft)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "job-found",
+        "authentication": "headerAuth",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "name": "New Job Found",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [200, 300],
+      "webhookId": "job-found",
+      "credentials": { "httpHeaderAuth": { "id": "COPILOT_INTERNAL_KEY", "name": "Copilot Internal Key" } }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true, "typeValidation": "loose" },
+          "conditions": [{ "leftValue": "={{ $json.body.jobId }}", "rightValue": "", "operator": { "type": "string", "operation": "notEmpty", "singleValue": true } }],
+          "combinator": "and"
+        }
+      },
+      "name": "Known Job ID?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [420, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.COPILOT_API_URL }}/api/v1/internal/jobs/{{ $json.body.jobId }}/process",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": { "parameters": [{ "name": "userId", "value": "={{ $json.body.userId || '' }}" }] },
+        "options": {}
+      },
+      "name": "Analyze + Match + Auto-Docs (API queue)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [680, 200],
+      "credentials": { "httpHeaderAuth": { "id": "COPILOT_INTERNAL_KEY", "name": "Copilot Internal Key" } }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.COPILOT_API_URL }}/api/v1/internal/jobs/ingest",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ jobs: $json.body.jobs || [$json.body.job] }) }}",
+        "options": {}
+      },
+      "name": "Ingest Raw Job(s)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [680, 420],
+      "credentials": { "httpHeaderAuth": { "id": "COPILOT_INTERNAL_KEY", "name": "Copilot Internal Key" } }
+    },
+    {
+      "parameters": { "respondWith": "json", "responseBody": "={{ $json }}", "options": { "responseCode": 202 } },
+      "name": "Respond",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [940, 300]
+    }
+  ],
+  "connections": {
+    "New Job Found": { "main": [[{ "node": "Known Job ID?", "type": "main", "index": 0 }]] },
+    "Known Job ID?": {
+      "main": [
+        [{ "node": "Analyze + Match + Auto-Docs (API queue)", "type": "main", "index": 0 }],
+        [{ "node": "Ingest Raw Job(s)", "type": "main", "index": 0 }]
+      ]
+    },
+    "Analyze + Match + Auto-Docs (API queue)": { "main": [[{ "node": "Respond", "type": "main", "index": 0 }]] },
+    "Ingest Raw Job(s)": { "main": [[{ "node": "Respond", "type": "main", "index": 0 }]] }
+  },
+  "settings": { "executionOrder": "v1" },
+  "tags": [{ "name": "job-copilot" }]
+}

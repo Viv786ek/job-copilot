@@ -1,0 +1,72 @@
+{
+  "name": "05 · Notification Router (API events → email)",
+  "nodes": [
+    {
+      "parameters": { "httpMethod": "POST", "path": "copilot-notify", "authentication": "headerAuth", "options": {} },
+      "name": "API Notification",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [200, 300],
+      "webhookId": "copilot-notify",
+      "credentials": { "httpHeaderAuth": { "id": "COPILOT_INTERNAL_KEY", "name": "Copilot Internal Key" } }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            { "conditions": { "options": { "caseSensitive": true, "typeValidation": "strict" }, "conditions": [{ "leftValue": "={{ $json.body.type }}", "rightValue": "DOCS_READY", "operator": { "type": "string", "operation": "equals" } }], "combinator": "and" }, "renameOutput": true, "outputKey": "docs" },
+            { "conditions": { "options": { "caseSensitive": true, "typeValidation": "strict" }, "conditions": [{ "leftValue": "={{ $json.body.type }}", "rightValue": "RESUME_PARSED", "operator": { "type": "string", "operation": "equals" } }], "combinator": "and" }, "renameOutput": true, "outputKey": "resume" }
+          ]
+        },
+        "options": { "fallbackOutput": "none" }
+      },
+      "name": "Route By Type",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3,
+      "position": [440, 300]
+    },
+    {
+      "parameters": {
+        "fromEmail": "={{ $env.COPILOT_FROM_EMAIL }}",
+        "toEmail": "={{ $json.body.user.email }}",
+        "subject": "={{ $json.body.title }}",
+        "emailFormat": "html",
+        "html": "=<p>{{ $json.body.body }}</p><p><a href=\"{{ $env.COPILOT_APP_URL }}/applications\">Review your application draft</a></p>",
+        "options": {}
+      },
+      "name": "Email: Draft Ready",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [700, 220],
+      "credentials": { "smtp": { "id": "SMTP", "name": "SMTP" } }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.N8N_SELF_URL }}/webhook/copilot-resume-parsed",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.body) }}",
+        "options": {}
+      },
+      "name": "Forward To Workflow 01",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [700, 400],
+      "credentials": { "httpHeaderAuth": { "id": "COPILOT_INTERNAL_KEY", "name": "Copilot Internal Key" } }
+    }
+  ],
+  "connections": {
+    "API Notification": { "main": [[{ "node": "Route By Type", "type": "main", "index": 0 }]] },
+    "Route By Type": {
+      "main": [
+        [{ "node": "Email: Draft Ready", "type": "main", "index": 0 }],
+        [{ "node": "Forward To Workflow 01", "type": "main", "index": 0 }]
+      ]
+    }
+  },
+  "settings": { "executionOrder": "v1" },
+  "tags": [{ "name": "job-copilot" }]
+}

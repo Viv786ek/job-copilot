@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: copilot
+          POSTGRES_PASSWORD: copilot
+          POSTGRES_DB: copilot_test
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U copilot" --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      DATABASE_URL: postgresql://copilot:copilot@localhost:5432/copilot_test
+      DIRECT_DATABASE_URL: postgresql://copilot:copilot@localhost:5432/copilot_test
+      AUTH_SECRET: ci-only-auth-secret-0123456789abcdef
+      NEXT_TELEMETRY_DISABLED: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run build -w @copilot/shared
+      - name: Prisma generate + migrations apply cleanly
+        working-directory: apps/api
+        run: npx prisma generate && npx prisma migrate deploy
+      - name: Typecheck
+        run: npm run typecheck -w @copilot/api && npm run typecheck -w @copilot/web
+      - name: Unit tests
+        run: npm test -w @copilot/api
+      - name: Build
+        run: npm run build -w @copilot/api && npm run build -w @copilot/web

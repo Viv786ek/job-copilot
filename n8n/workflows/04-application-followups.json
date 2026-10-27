@@ -1,0 +1,106 @@
+{
+  "name": "04 · Application Tracking (Status → Follow-ups → Dashboard)",
+  "nodes": [
+    {
+      "parameters": { "rule": { "interval": [{ "field": "cronExpression", "expression": "30 9 * * 1-5" }] } },
+      "name": "Weekdays 9:30",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [200, 300]
+    },
+    {
+      "parameters": {
+        "url": "={{ $env.COPILOT_API_URL }}/api/v1/internal/follow-ups/due",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "name": "Due Follow-ups",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [440, 300],
+      "credentials": { "httpHeaderAuth": { "id": "COPILOT_INTERNAL_KEY", "name": "Copilot Internal Key" } }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Build a ready-to-send follow-up for the candidate. We email the CANDIDATE, not the recruiter:\n// the candidate reviews and sends from their own mailbox (better deliverability, no impersonation).\nconst app = $env.COPILOT_APP_URL;\nreturn $input.all().map(({ json: a }) => {\n  const draft = a.draft?.followUpEmails?.[0];\n  const subject = draft?.subject ?? `Following up on my ${a.role} application`;\n  const body = draft?.body ?? `Hi ${a.recruiterName ?? 'there'},\\n\\nI applied for the ${a.role} role at ${a.company} and wanted to follow up. I remain very interested and would be glad to share more about my fit.\\n\\nThank you for your time.`;\n  return { json: { ...a, subject, body, html: `<p>Time to follow up with <b>${a.company}</b> about <b>${a.role}</b>.</p>${a.recruiterEmail ? `<p>Recruiter: ${a.recruiterName ?? ''} &lt;${a.recruiterEmail}&gt;</p>` : ''}<p><b>Suggested email</b> — subject: <i>${subject}</i></p><pre style=\"white-space:pre-wrap;font-family:inherit\">${body}</pre><p><a href=\"${app}/applications\">Update status in your tracker</a></p>` } };\n});"
+      },
+      "name": "Draft Follow-up",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "fromEmail": "={{ $env.COPILOT_FROM_EMAIL }}",
+        "toEmail": "={{ $json.user.email }}",
+        "subject": "=Follow up with {{ $json.company }} today",
+        "emailFormat": "html",
+        "html": "={{ $json.html }}",
+        "options": {}
+      },
+      "name": "Send Follow-up Reminder",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [920, 300],
+      "credentials": { "smtp": { "id": "SMTP", "name": "SMTP" } }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.COPILOT_API_URL }}/api/v1/internal/applications/{{ $('Draft Follow-up').item.json.applicationId }}/follow-up-sent",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{ \"channel\": \"manual\" }",
+        "options": {}
+      },
+      "name": "Track & Reschedule (updates dashboard)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1160, 300],
+      "credentials": { "httpHeaderAuth": { "id": "COPILOT_INTERNAL_KEY", "name": "Copilot Internal Key" } }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "application-status",
+        "authentication": "headerAuth",
+        "options": {}
+      },
+      "name": "Status Update (e.g. from Gmail classifier)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [200, 560],
+      "webhookId": "application-status",
+      "credentials": { "httpHeaderAuth": { "id": "COPILOT_INTERNAL_KEY", "name": "Copilot Internal Key" } }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.COPILOT_API_URL }}/api/v1/internal/applications/{{ $json.body.applicationId }}/status",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ status: $json.body.status, message: $json.body.message }) }}",
+        "options": {}
+      },
+      "name": "Track Status",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [440, 560],
+      "credentials": { "httpHeaderAuth": { "id": "COPILOT_INTERNAL_KEY", "name": "Copilot Internal Key" } }
+    }
+  ],
+  "connections": {
+    "Weekdays 9:30": { "main": [[{ "node": "Due Follow-ups", "type": "main", "index": 0 }]] },
+    "Due Follow-ups": { "main": [[{ "node": "Draft Follow-up", "type": "main", "index": 0 }]] },
+    "Draft Follow-up": { "main": [[{ "node": "Send Follow-up Reminder", "type": "main", "index": 0 }]] },
+    "Send Follow-up Reminder": { "main": [[{ "node": "Track & Reschedule (updates dashboard)", "type": "main", "index": 0 }]] },
+    "Status Update (e.g. from Gmail classifier)": { "main": [[{ "node": "Track Status", "type": "main", "index": 0 }]] }
+  },
+  "settings": { "executionOrder": "v1", "timezone": "Asia/Kolkata" },
+  "tags": [{ "name": "job-copilot" }]
+}

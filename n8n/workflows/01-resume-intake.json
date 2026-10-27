@@ -1,0 +1,77 @@
+{
+  "name": "01 · Resume Intake (Upload → Parse → Profile → Skills)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "resume-intake",
+        "authentication": "headerAuth",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "name": "Resume Uploaded",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [240, 300],
+      "webhookId": "resume-intake",
+      "credentials": { "httpHeaderAuth": { "id": "COPILOT_INTERNAL_KEY", "name": "Copilot Internal Key" } }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.COPILOT_API_URL }}/api/v1/internal/resumes/{{ $json.body.resumeId }}/parse",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": { "timeout": 15000, "retry": { "maxTries": 3 } }
+      },
+      "name": "Queue Parse (API)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [480, 300],
+      "credentials": { "httpHeaderAuth": { "id": "COPILOT_INTERNAL_KEY", "name": "Copilot Internal Key" } }
+    },
+    {
+      "parameters": { "respondWith": "json", "responseBody": "={{ { queued: true, resumeId: $('Resume Uploaded').item.json.body.resumeId } }}", "options": { "responseCode": 202 } },
+      "name": "Respond 202",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [720, 300]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "copilot-resume-parsed",
+        "authentication": "headerAuth",
+        "options": {}
+      },
+      "name": "Resume Parsed Event",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [240, 560],
+      "webhookId": "copilot-resume-parsed",
+      "credentials": { "httpHeaderAuth": { "id": "COPILOT_INTERNAL_KEY", "name": "Copilot Internal Key" } }
+    },
+    {
+      "parameters": {
+        "fromEmail": "={{ $env.COPILOT_FROM_EMAIL }}",
+        "toEmail": "={{ $json.body.user.email }}",
+        "subject": "Your profile is ready — we're finding jobs for you",
+        "emailFormat": "html",
+        "html": "=<p>Hi {{ $json.body.user.name || 'there' }},</p><p>{{ $json.body.body }}</p><p>We've started searching for matching roles. Open your dashboard: <a href=\"{{ $env.COPILOT_APP_URL }}/resumes\">{{ $env.COPILOT_APP_URL }}</a></p>",
+        "options": {}
+      },
+      "name": "Email Candidate",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [480, 560],
+      "credentials": { "smtp": { "id": "SMTP", "name": "SMTP" } }
+    }
+  ],
+  "connections": {
+    "Resume Uploaded": { "main": [[{ "node": "Queue Parse (API)", "type": "main", "index": 0 }]] },
+    "Queue Parse (API)": { "main": [[{ "node": "Respond 202", "type": "main", "index": 0 }]] },
+    "Resume Parsed Event": { "main": [[{ "node": "Email Candidate", "type": "main", "index": 0 }]] }
+  },
+  "settings": { "executionOrder": "v1", "saveManualExecutions": true },
+  "tags": [{ "name": "job-copilot" }]
+}

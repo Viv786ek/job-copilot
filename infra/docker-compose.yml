@@ -1,0 +1,72 @@
+# Local development infrastructure: Postgres, Redis, MinIO (S3) and n8n.
+# Usage: npm run infra:up
+name: job-copilot
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: copilot
+      POSTGRES_PASSWORD: copilot
+      POSTGRES_DB: copilot
+    ports: ['5432:5432']
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U copilot']
+      interval: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    command: ['redis-server', '--appendonly', 'yes', '--maxmemory-policy', 'noeviction']
+    ports: ['6379:6379']
+    volumes: [redisdata:/data]
+
+  minio:
+    image: minio/minio:RELEASE.2024-10-13T13-34-11Z
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: copilot
+      MINIO_ROOT_PASSWORD: copilot-secret
+    ports: ['9000:9000', '9001:9001']
+    volumes: [miniodata:/data]
+
+  minio-init:
+    image: minio/mc:RELEASE.2024-10-08T09-37-26Z
+    depends_on: [minio]
+    entrypoint: >
+      /bin/sh -c "sleep 3; mc alias set local http://minio:9000 copilot copilot-secret &&
+      mc mb --ignore-existing local/job-copilot && echo bucket ready"
+
+  n8n:
+    image: n8nio/n8n:1.64.3
+    ports: ['5678:5678']
+    environment:
+      N8N_HOST: localhost
+      N8N_PORT: 5678
+      WEBHOOK_URL: http://localhost:5678/
+      GENERIC_TIMEZONE: Asia/Kolkata
+      N8N_BLOCK_ENV_ACCESS_IN_NODE: 'false'
+      DB_TYPE: postgresdb
+      DB_POSTGRESDB_HOST: postgres
+      DB_POSTGRESDB_DATABASE: copilot
+      DB_POSTGRESDB_SCHEMA: n8n
+      DB_POSTGRESDB_USER: copilot
+      DB_POSTGRESDB_PASSWORD: copilot
+      # Read by the workflows in /n8n/workflows
+      COPILOT_API_URL: http://host.docker.internal:4000
+      COPILOT_APP_URL: http://localhost:3000
+      COPILOT_FROM_EMAIL: jobs@localhost
+      N8N_SELF_URL: http://localhost:5678
+    extra_hosts: ['host.docker.internal:host-gateway']
+    volumes:
+      - n8ndata:/home/node/.n8n
+      - ../n8n/workflows:/workflows:ro
+    depends_on:
+      postgres: { condition: service_healthy }
+
+volumes:
+  pgdata:
+  redisdata:
+  miniodata:
+  n8ndata:

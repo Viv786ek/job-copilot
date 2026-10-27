@@ -1,0 +1,163 @@
+{
+  "name": "02 · Scheduled Job Search (Fetch → Normalize → Store → Notify)",
+  "nodes": [
+    {
+      "parameters": { "rule": { "interval": [{ "field": "hours", "hoursInterval": 6 }] } },
+      "name": "Every 6 Hours",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [200, 200]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.COPILOT_API_URL }}/api/v1/internal/search/run-all",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": { "timeout": 30000 }
+      },
+      "name": "Search APIs For All Users",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [460, 100],
+      "credentials": { "httpHeaderAuth": { "id": "COPILOT_INTERNAL_KEY", "name": "Copilot Internal Key" } }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.COPILOT_API_URL }}/api/v1/internal/career-pages/crawl",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": { "timeout": 300000 }
+      },
+      "name": "Crawl Career Pages",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [460, 260],
+      "credentials": { "httpHeaderAuth": { "id": "COPILOT_INTERNAL_KEY", "name": "Copilot Internal Key" } }
+    },
+    {
+      "parameters": { "url": "https://weworkremotely.com/categories/remote-programming-jobs.rss", "options": {} },
+      "name": "RSS: WeWorkRemotely",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.1,
+      "position": [460, 420]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Normalize RSS items into the API's RawJob shape.\nconst jobs = $input.all().map(({ json: i }) => {\n  const [company, ...rest] = (i.title || '').split(':');\n  const description = (i.contentSnippet || i.content || '').trim();\n  return {\n    source: 'CAREER_PAGE',\n    externalId: i.guid || i.link,\n    url: i.link,\n    title: rest.join(':').trim() || i.title,\n    companyName: company.trim() || 'Unknown',\n    location: 'Remote',\n    workMode: 'REMOTE',\n    description,\n    postedAt: i.isoDate || null,\n  };\n}).filter(j => j.description.length >= 100);\nreturn [{ json: { jobs } }];"
+      },
+      "name": "Normalize Jobs",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [700, 420]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.COPILOT_API_URL }}/api/v1/internal/jobs/ingest",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json) }}",
+        "options": {}
+      },
+      "name": "Store In Database",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [940, 420],
+      "credentials": { "httpHeaderAuth": { "id": "COPILOT_INTERNAL_KEY", "name": "Copilot Internal Key" } }
+    },
+    {
+      "parameters": { "rule": { "interval": [{ "field": "cronExpression", "expression": "0 8 * * *" }] } },
+      "name": "Daily 8am Digest",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [200, 700]
+    },
+    {
+      "parameters": {
+        "url": "={{ $env.COPILOT_API_URL }}/api/v1/internal/users/active",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "name": "Active Users",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [460, 700],
+      "credentials": { "httpHeaderAuth": { "id": "COPILOT_INTERNAL_KEY", "name": "Copilot Internal Key" } }
+    },
+    {
+      "parameters": {
+        "url": "={{ $env.COPILOT_API_URL }}/api/v1/internal/users/{{ $json.id }}/digest",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": { "batching": { "batch": { "batchSize": 10, "batchInterval": 1000 } } }
+      },
+      "name": "Get New Matches",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [700, 700],
+      "credentials": { "httpHeaderAuth": { "id": "COPILOT_INTERNAL_KEY", "name": "Copilot Internal Key" } }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true, "typeValidation": "loose" },
+          "conditions": [{ "leftValue": "={{ $json.matches.length }}", "rightValue": 0, "operator": { "type": "number", "operation": "gt" } }],
+          "combinator": "and"
+        }
+      },
+      "name": "Has Matches?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [940, 700]
+    },
+    {
+      "parameters": {
+        "jsCode": "const app = $env.COPILOT_APP_URL;\nreturn $input.all().map(({ json }) => {\n  const rows = json.matches.map(m => `<tr><td style=\"padding:6px 10px\"><b>${m.score}%</b></td><td style=\"padding:6px 10px\"><a href=\"${app}/jobs/${m.job.id}\">${m.job.title}</a><br><span style=\"color:#666\">${m.job.companyName} · ${m.job.location ?? ''}</span></td></tr>`).join('');\n  return { json: { to: json.user.email, name: json.user.name, count: json.matches.length, html: `<p>Hi ${json.user.name ?? 'there'},</p><p>${json.matches.length} new roles match your profile today:</p><table>${rows}</table><p><a href=\"${app}/jobs\">See all matches</a></p>` } };\n});"
+      },
+      "name": "Build Digest",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1180, 680]
+    },
+    {
+      "parameters": {
+        "fromEmail": "={{ $env.COPILOT_FROM_EMAIL }}",
+        "toEmail": "={{ $json.to }}",
+        "subject": "={{ $json.count }} new job matches for you",
+        "emailFormat": "html",
+        "html": "={{ $json.html }}",
+        "options": {}
+      },
+      "name": "Notify Candidate",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [1420, 680],
+      "credentials": { "smtp": { "id": "SMTP", "name": "SMTP" } }
+    }
+  ],
+  "connections": {
+    "Every 6 Hours": {
+      "main": [
+        [
+          { "node": "Search APIs For All Users", "type": "main", "index": 0 },
+          { "node": "Crawl Career Pages", "type": "main", "index": 0 },
+          { "node": "RSS: WeWorkRemotely", "type": "main", "index": 0 }
+        ]
+      ]
+    },
+    "RSS: WeWorkRemotely": { "main": [[{ "node": "Normalize Jobs", "type": "main", "index": 0 }]] },
+    "Normalize Jobs": { "main": [[{ "node": "Store In Database", "type": "main", "index": 0 }]] },
+    "Daily 8am Digest": { "main": [[{ "node": "Active Users", "type": "main", "index": 0 }]] },
+    "Active Users": { "main": [[{ "node": "Get New Matches", "type": "main", "index": 0 }]] },
+    "Get New Matches": { "main": [[{ "node": "Has Matches?", "type": "main", "index": 0 }]] },
+    "Has Matches?": { "main": [[{ "node": "Build Digest", "type": "main", "index": 0 }], []] },
+    "Build Digest": { "main": [[{ "node": "Notify Candidate", "type": "main", "index": 0 }]] }
+  },
+  "settings": { "executionOrder": "v1", "timezone": "Asia/Kolkata" },
+  "tags": [{ "name": "job-copilot" }]
+}

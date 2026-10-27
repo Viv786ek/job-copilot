@@ -1,0 +1,25 @@
+{
+  "name": "vp-ai-job-copilot",
+  "private": true,
+  "version": "1.0.0",
+  "description": "AI-powered job application automation platform: resume intelligence, ATS optimization, job matching, tailored documents and application tracking.",
+  "workspaces": ["apps/*", "packages/*"],
+  "scripts": {
+    "dev": "turbo run dev --parallel",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "db:migrate": "npm run prisma:migrate -w @copilot/api",
+    "db:seed": "npm run prisma:seed -w @copilot/api",
+    "infra:up": "docker compose -f infra/docker-compose.yml up -d",
+    "infra:down": "docker compose -f infra/docker-compose.yml down"
+  },
+  "devDependencies": {
+    "turbo": "^2.1.3",
+    "typescript": "^5.6.3",
+    "prettier": "^3.3.3"
+  },
+  "engines": { "node": ">=20" },
+  "packageManager": "npm@10.9.0"
+}
