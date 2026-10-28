@@ -3,14 +3,14 @@ import type { ParsedResume } from '@copilot/shared';
 /** Sample data for the static demo. All companies and postings are fictional. */
 
 export const SAMPLE_RESUME: ParsedResume = {
-  fullName: 'Aarav Sharma',
-  email: 'aarav.sharma@example.com',
+  fullName: 'Vivek Kumar Srivastava',
+  email: 'vivek.Srivastava@example.com',
   phone: '+91 98765 43210',
   location: 'Bengaluru, India',
   headline: 'Full Stack Developer',
   summary:
-    'Full stack developer with 4 years of experience building React and Node.js products used by thousands of customers. Comfortable owning features end to end, from database design to deployment.',
-  links: ['linkedin.com/in/aarav-sharma-demo', 'github.com/aarav-demo'],
+    'Full stack developer with 6 years of experience building React and Node.js products used by thousands of customers. Comfortable owning features end to end, from database design to deployment.',
+  links: ['linkedin.com/in/viveksde', 'github.com/viv786ek'],
   // The first 10 appear in the resume's skills line; the rest are skills the candidate declared in
   // their profile but never wrote down, which is exactly the gap honest tailoring closes.
   skills: ['JavaScript', 'TypeScript', 'React', 'Node.js', 'Express', 'PostgreSQL', 'MongoDB', 'Docker', 'AWS', 'Git', 'Redux', 'REST APIs', 'Jest', 'HTML', 'CSS', 'Tailwind CSS', 'Redis', 'CI/CD', 'Microservices'],

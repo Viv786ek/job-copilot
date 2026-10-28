@@ -28,7 +28,7 @@ function useDemoSession(): AppSession {
   return {
     token: 'demo',
     ready: true,
-    user: { name: 'Aarav Sharma (demo)', email: 'aarav.sharma@example.com', plan: 'PRO' },
+    user: { name: 'Vivek Kumar Srivastava', email: 'vivek.Srivastava@example.com', plan: 'PRO' },
     signOut: () => {
       resetDemo();
       window.location.href = `${BASE_PATH}/`;
