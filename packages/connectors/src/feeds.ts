@@ -174,7 +174,15 @@ export const arbeitnow: FeedConnector = {
     const out: RawJob[] = [];
     const pages = Math.ceil((q?.limit ?? 1500) / 100);
     for (let page = 1; page <= pages; page++) {
-      const d = await getJson<{ data: Array<Record<string, any>>; links?: { next?: string | null } }>(`https://www.arbeitnow.com/api/job-board-api?page=${page}`);
+      if (page > 1) await new Promise((r) => setTimeout(r, 1500)); // stay under their rate limit
+      let d: { data: Array<Record<string, any>>; links?: { next?: string | null } };
+      try {
+        d = await getJson(`https://www.arbeitnow.com/api/job-board-api?page=${page}`);
+      } catch (e) {
+        // Rate-limited or failed mid-way: keep the pages already fetched rather than losing everything.
+        if (out.length) break;
+        throw e;
+      }
       for (const j of d.data) {
         const tags: string[] = j.tags ?? [];
         out.push({
