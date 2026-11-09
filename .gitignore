@@ -13,3 +13,5 @@ next-env.d.ts
 *.tsbuildinfo
 .pages-stash
 out
+apps/web/public/data
+apps/web/public/vendor

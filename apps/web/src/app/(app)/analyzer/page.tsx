@@ -5,6 +5,7 @@ import { FileSearch, Loader2, Save } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { toast } from 'sonner';
+import { VisaPanel } from '@/components/app/job-panels';
 import { MatchBreakdown, PageHeader, ScoreRing } from '@/components/app/shared';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -22,7 +23,7 @@ export default function AnalyzerPage() {
 
   const analyze = useMutation({
     mutationFn: () =>
-      api<{ analysis: JdAnalysis; match: MatchResult }>('/jobs/analyze', {
+      api<{ analysis: JdAnalysis; match: MatchResult; visa?: { status: string; confidence: number; visaTypes: string[]; evidence: string[]; relocation: boolean; requiresAuthorizationIn: string[] } }>('/jobs/analyze', {
         method: 'POST',
         body: JSON.stringify({ description, title: title || undefined, company: company || undefined }),
       }),
@@ -39,7 +40,7 @@ export default function AnalyzerPage() {
 
   return (
     <>
-      <PageHeader title="JD Analyzer" description="Paste any job description to see required skills, ATS keywords, your match score and gaps." />
+      <PageHeader title="JD Analyzer" description="Paste any job description (LinkedIn, Wellfound, Bayt, anywhere) to see required skills, ATS keywords, visa sponsorship signals, your match score and gaps." />
       <div className="grid gap-6 lg:grid-cols-2">
         <Card>
           <CardContent className="space-y-3 p-6">
@@ -69,6 +70,9 @@ export default function AnalyzerPage() {
                 <ScoreRing score={r.match.atsScore} size={96} label="ATS score" />
               </CardContent>
             </Card>
+            {r.visa && (
+              <VisaPanel job={{ visaStatus: r.visa.status, visaConfidence: r.visa.confidence, visaTypes: r.visa.visaTypes, visaEvidence: r.visa.evidence, relocation: r.visa.relocation, requiresAuthorizationIn: r.visa.requiresAuthorizationIn }} />
+            )}
             <Card>
               <CardHeader>
                 <CardTitle className="text-base">Breakdown</CardTitle>

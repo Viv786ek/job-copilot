@@ -15,7 +15,7 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { DEMO, useAppSession } from '@/lib/session';
+import { LOCAL_MODE, useAppSession } from '@/lib/session';
 import { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -65,7 +65,7 @@ export function Sidebar() {
         <Badge variant={session.user?.plan === 'FREE' ? 'secondary' : 'default'}>{session.user?.plan ?? 'FREE'}</Badge>
       </div>
       <Button variant="ghost" className="w-full justify-start" onClick={session.signOut}>
-        <LogOut /> {DEMO ? 'Exit demo' : 'Sign out'}
+        <LogOut /> {LOCAL_MODE ? 'Clear my data' : 'Sign out'}
       </Button>
     </div>
   );

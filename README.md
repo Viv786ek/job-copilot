@@ -4,13 +4,13 @@
 
 ![stack](https://img.shields.io/badge/Next.js-14-black) ![stack](https://img.shields.io/badge/NestJS-10-e0234e) ![stack](https://img.shields.io/badge/PostgreSQL-Prisma-336791) ![stack](https://img.shields.io/badge/BullMQ-Redis-dc382d) ![stack](https://img.shields.io/badge/AI-OpenAI%20%7C%20Claude%20%7C%20Gemini-6e56cf) ![stack](https://img.shields.io/badge/n8n-workflows-ea4b71)
 
-**🔗 Live demo: https://viv786ek.github.io/job-copilot/** — runs fully in your browser (sample candidate, fictional jobs). The matching engine, ATS scoring and honesty guardrails are the production code; AI writing is template-based in the demo.
+**🔗 Live app: https://viv786ek.github.io/job-copilot/** — upload your resume and search ~17,000 real openings from 600+ company career boards and 7 job feeds across 130+ countries, refreshed every 6 hours. Runs in your browser: your resume never leaves your device.
 
 ## What it does
 
 | | Feature | How |
 |---|---|---|
-| 1 | **Resume parser** | PDF/DOCX → text → LLM structured extraction (skills, experience, education, projects, certifications) validated by zod, cross-checked by a deterministic skill taxonomy |
+| 1 | **Resume parser** | PDF/DOCX/TXT → text → structured profile (skills, experience, education, projects, certifications). Built-in deterministic parser (no AI needed); LLM extraction when a free Gemini key or local model is configured |
 | 2 | **JD analyzer** | Required/preferred skills, years, ATS keywords, seniority, visa, work mode → match score + missing skills |
 | 3 | **Resume optimizer** | Per-JD tailored resume. **Honesty guardrails in code** strip invented skills, roles, projects and metrics, and show the user what was removed. ATS keyword coverage before → after |
 | 4 | **Cover letters** | Specific, achievement-backed, tone-selectable, DOCX export |
@@ -18,7 +18,9 @@
 | 6 | **Interview prep** | Technical, behavioral (STAR stories mapped to your resume), system design (scaled to seniority), questions to ask |
 | 7 | **Application tracker** | Kanban + table, status timeline, interviews, follow-up scheduling, auto-ghosting after 3 nudges |
 | ★ | **Job matching engine** | Deterministic, explainable 0–100 score across 6 components + ATS score; GIN-indexed candidate prefilter |
-| ★ | **Job discovery** | Remotive, RemoteOK, Adzuna (India + 15 countries), Greenhouse/Lever/Ashby career pages, RSS via n8n; URL/paste import for LinkedIn, Naukri, Indeed, Wellfound, Instahyre, Hirist, Foundit |
+| ★ | **Job discovery** | 600+ verified company boards on Greenhouse, Lever, Ashby, Workable, SmartRecruiters, Recruitee, Personio (auto-discovered from Y Combinator + curated product companies); RemoteOK, We Work Remotely, Remotive, Himalayas, Jobicy, Arbeitnow, Working Nomads; Adzuna, Jooble, Reed, USAJobs with free keys; any careers page via JSON-LD, Firecrawl or Playwright; paste-import for LinkedIn, Wellfound, Naukri, Bayt |
+| ★ | **Countries & visas** | Every ISO country, detected from free-form locations; remote reach (worldwide / region / country); visa sponsorship detection with confidence, programme (H-1B, Skilled Worker, Blue Card, HSM…), relocation and work-authorization requirements, cross-checked against the UK and Netherlands official sponsor registers |
+| ★ | **Apply kit** | Prefilled application answers, sponsorship statement, cover letter, and an autofill bookmarklet for the employer’s own form; you review and submit |
 | ★ | **Dashboard** | Resume health, ATS improvement, job match, applied, interviews, rejections, response rate, weekly trend, skill gaps |
 
 ## Architecture

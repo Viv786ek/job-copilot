@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 
 // Read directly (not from the client-only session module) because this is a server component.
-const DEMO = process.env.NEXT_PUBLIC_DEMO_MODE === 'true';
+const LOCAL_MODE = process.env.NEXT_PUBLIC_LOCAL_MODE === 'true';
 const REPO_URL = 'https://github.com/Viv786ek/job-copilot';
 
 const FEATURES = [
@@ -21,7 +21,7 @@ export default function Landing() {
           <Sparkles className="h-5 w-5 text-primary" /> VP AI Job Copilot
         </span>
         <div className="flex gap-2">
-          {DEMO ? (
+          {LOCAL_MODE ? (
             <Button variant="ghost" asChild>
               <a href={REPO_URL} target="_blank" rel="noopener noreferrer">
                 <Github /> Source
@@ -33,7 +33,7 @@ export default function Landing() {
             </Button>
           )}
           <Button asChild>
-            <Link href={DEMO ? '/dashboard' : '/register'}>{DEMO ? 'Open live demo' : 'Get started free'}</Link>
+            <Link href={LOCAL_MODE ? '/dashboard' : '/register'}>{LOCAL_MODE ? 'Open the app' : 'Get started free'}</Link>
           </Button>
         </div>
       </header>
@@ -51,11 +51,11 @@ export default function Landing() {
         </p>
         <div className="mt-10 flex flex-wrap justify-center gap-3">
           <Button size="lg" asChild>
-            <Link href={DEMO ? '/dashboard' : '/register'}>
-              {DEMO ? 'Try the live demo' : 'Upload your resume'} <ArrowRight />
+            <Link href={LOCAL_MODE ? '/resumes' : '/register'}>
+              Upload your resume <ArrowRight />
             </Link>
           </Button>
-          {DEMO ? (
+          {LOCAL_MODE ? (
             <Button size="lg" variant="outline" asChild>
               <a href={REPO_URL} target="_blank" rel="noopener noreferrer">
                 <Github /> View source on GitHub
@@ -67,9 +67,9 @@ export default function Landing() {
             </Button>
           )}
         </div>
-        {DEMO && (
+        {LOCAL_MODE && (
           <p className="mx-auto mt-4 max-w-xl text-xs text-muted-foreground">
-            The demo runs in your browser with a sample candidate and fictional jobs, so no sign-up is needed.
+            No sign-up: jobs are harvested every 6 hours from public company career boards and job feeds, and your resume never leaves your browser.
           </p>
         )}
       </section>

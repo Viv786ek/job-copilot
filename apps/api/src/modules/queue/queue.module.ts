@@ -39,12 +39,18 @@ export class QueueService {
     return this.pipeline.add(JOBS.AUTO_DOCS, { userId, jobId }, { ...DEFAULT_JOB_OPTS, jobId: `docs-${userId}-${jobId}` });
   }
 
+  harvestAll() {
+    const bucket = Math.floor(Date.now() / 1_800_000);
+    return this.jobs.add(JOBS.HARVEST_ALL, {}, { ...DEFAULT_JOB_OPTS, attempts: 1, jobId: `harvest-${bucket}` });
+  }
+
   digest(userId: string) {
     return this.notifications.add(JOBS.DAILY_DIGEST, { userId }, DEFAULT_JOB_OPTS);
   }
 
   /** Repeatable schedules; registered once by the worker process. */
   async registerSchedules() {
+    await this.jobs.upsertJobScheduler('job-harvest', { pattern: '15 */6 * * *' }, { name: JOBS.HARVEST_ALL });
     await this.jobs.upsertJobScheduler('job-sweep', { pattern: '0 */4 * * *' }, { name: JOBS.SCHEDULED_SWEEP });
     await this.notifications.upsertJobScheduler('follow-ups', { pattern: '0 9 * * *', tz: 'Asia/Kolkata' }, { name: JOBS.FOLLOW_UP_SWEEP });
   }

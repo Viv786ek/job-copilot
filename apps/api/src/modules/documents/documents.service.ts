@@ -9,11 +9,12 @@ import {
   skillKey,
   TailoredResume,
   TailoredResumeSchema,
+  templates,
 } from '@copilot/shared';
 import { PrismaService } from '../../core/prisma.service';
 import { StorageService } from '../../core/storage.service';
 import { AiService } from '../ai/ai.service';
-import { prompts } from '../ai/prompts';
+import { prompts } from '@copilot/shared';
 import { JobsService } from '../jobs/jobs.service';
 import { atsKeywordCoverage } from '../matching/matching.engine';
 import { ResumesService } from '../resumes/resumes.service';
@@ -54,12 +55,20 @@ export class DocumentsService {
     const have = new Set(resume.parsed.skills.map(skillKey));
     const missing = [...analysis.requiredSkills, ...analysis.preferredSkills].filter((s) => !have.has(skillKey(s)));
 
-    const { data, model } = await this.ai.generateJson(
-      TailoredResumeSchema,
-      prompts.tailorResume(resume.parsed, analysis, job.description, missing),
-      { feature: 'resume.tailor', userId, temperature: 0.3, maxTokens: 6000, cache: false },
-    );
-    const { resume: safe, flags } = enforceHonesty(resume.parsed, resume.rawText, data);
+    let safe: TailoredResume;
+    let flags: string[];
+    let model = 'deterministic';
+    if (this.ai.isConfigured()) {
+      const out = await this.ai.generateJson(
+        TailoredResumeSchema,
+        prompts.tailorResume(resume.parsed, analysis, job.description, missing),
+        { feature: 'resume.tailor', userId, temperature: 0.3, maxTokens: 6000, cache: false },
+      );
+      model = out.model;
+      ({ resume: safe, flags } = enforceHonesty(resume.parsed, resume.rawText, out.data));
+    } else {
+      ({ resume: safe, flags } = templates.tailorResume(resume.parsed, resume.rawText, analysis));
+    }
 
     const before = atsKeywordCoverage(resume.rawText, analysis.atsKeywords);
     const after = atsKeywordCoverage(tailoredToText(safe), analysis.atsKeywords);
@@ -82,12 +91,14 @@ export class DocumentsService {
 
   /** Feature 4: Cover Letter Generator. */
   async coverLetter(userId: string, jobId: string, tone = 'confident and warm') {
-    const { job, resume } = await this.context(userId, jobId);
-    const { data, model } = await this.ai.generateJson(
-      CoverLetterSchema,
-      prompts.coverLetter(resume.parsed, job.title, job.companyName, job.description, tone),
-      { feature: 'cover-letter', userId, temperature: 0.6, cache: false },
-    );
+    const { job, analysis, resume } = await this.context(userId, jobId);
+    const { data, model } = this.ai.isConfigured()
+      ? await this.ai.generateJson(
+          CoverLetterSchema,
+          prompts.coverLetter(resume.parsed, job.title, job.companyName, job.description, tone),
+          { feature: 'cover-letter', userId, temperature: 0.6, cache: false },
+        )
+      : { data: templates.coverLetter(resume.parsed, job, analysis), model: 'deterministic' };
     return this.prisma.generatedDocument.create({
       data: {
         userId, jobId, resumeId: resume.id, type: 'COVER_LETTER',
@@ -100,11 +111,13 @@ export class DocumentsService {
   /** Feature 5: Recruiter outreach (LinkedIn note + message, email, two follow-ups). */
   async outreach(userId: string, jobId: string, recruiterName?: string) {
     const { job, resume } = await this.context(userId, jobId);
-    const { data, model } = await this.ai.generateJson(
-      OutreachSchema,
-      prompts.outreach(resume.parsed, job.title, job.companyName, recruiterName),
-      { feature: 'outreach', userId, temperature: 0.6, cache: false },
-    );
+    const { data, model } = this.ai.isConfigured()
+      ? await this.ai.generateJson(
+          OutreachSchema,
+          prompts.outreach(resume.parsed, job.title, job.companyName, recruiterName),
+          { feature: 'outreach', userId, temperature: 0.6, cache: false },
+        )
+      : { data: templates.outreach(resume.parsed, job), model: 'deterministic' };
     data.linkedinConnectionNote = data.linkedinConnectionNote.slice(0, 300);
     return this.prisma.generatedDocument.create({
       data: {
@@ -118,11 +131,13 @@ export class DocumentsService {
   /** Feature 6: Interview preparation. Cached per (resume, job) since it is deterministic enough. */
   async interviewPrep(userId: string, jobId: string) {
     const { job, analysis, resume } = await this.context(userId, jobId);
-    const { data, model } = await this.ai.generateJson(
-      InterviewPrepSchema,
-      prompts.interviewPrep(resume.parsed, analysis, job.title, job.companyName),
-      { feature: 'interview-prep', userId, temperature: 0.4, maxTokens: 6000 },
-    );
+    const { data, model } = this.ai.isConfigured()
+      ? await this.ai.generateJson(
+          InterviewPrepSchema,
+          prompts.interviewPrep(resume.parsed, analysis, job.title, job.companyName),
+          { feature: 'interview-prep', userId, temperature: 0.4, maxTokens: 6000 },
+        )
+      : { data: templates.interviewPrep(resume.parsed, job, analysis), model: 'deterministic' };
     return this.prisma.generatedDocument.create({
       data: {
         userId, jobId, resumeId: resume.id, type: 'INTERVIEW_PREP',
@@ -130,6 +145,66 @@ export class DocumentsService {
         content: json(data), model,
       },
     });
+  }
+
+  /**
+   * Apply kit: everything needed to complete the employer's own application form, prefilled from
+   * the user's profile. The user submits on the employer's site; nothing is submitted for them.
+   */
+  async applyKit(userId: string, jobId: string) {
+    const [job, user, prefs] = await Promise.all([
+      this.prisma.job.findUnique({ where: { id: jobId } }),
+      this.prisma.user.findUniqueOrThrow({ where: { id: userId }, select: { name: true, email: true } }),
+      this.prisma.jobPreference.findUnique({ where: { userId } }),
+    ]);
+    if (!job) throw new NotFoundException('Job not found');
+    const { parsed } = await this.resumes.parsedForUser(userId);
+    const docs = await this.prisma.generatedDocument.findMany({
+      where: { userId, jobId, type: { in: ['TAILORED_RESUME', 'COVER_LETTER'] } },
+      orderBy: { createdAt: 'desc' },
+      select: { id: true, type: true, version: true, content: true },
+    });
+    const name = (parsed.fullName ?? user.name ?? '').trim();
+    const [firstName, ...rest] = name.split(/\s+/);
+    const link = (re: RegExp) => parsed.links.find((l) => re.test(l)) ?? null;
+    const jobCountries = job.countries.length ? job.countries : job.country ? [job.country] : [];
+    const authorized = prefs?.authorizedCountries ?? [];
+    const authorizedHere = jobCountries.length ? jobCountries.some((c) => authorized.includes(c)) : null;
+    const coverLetter = docs.find((d) => d.type === 'COVER_LETTER');
+    return {
+      job: { id: job.id, title: job.title, company: job.companyName, applyUrl: job.applyUrl ?? job.url, ats: job.ats },
+      fields: {
+        firstName: firstName ?? '',
+        lastName: rest.join(' '),
+        fullName: name,
+        email: parsed.email ?? user.email,
+        phone: parsed.phone ?? '',
+        location: parsed.location ?? '',
+        linkedin: link(/linkedin\.com/i),
+        github: link(/github\.com/i),
+        website: parsed.links.find((l) => !/linkedin|github/i.test(l)) ?? null,
+        currentTitle: parsed.experience[0]?.title ?? parsed.headline ?? '',
+        currentCompany: parsed.experience[0]?.company ?? '',
+        yearsOfExperience: (await this.prisma.candidateProfile.findUnique({ where: { userId }, select: { totalYearsExp: true } }))?.totalYearsExp ?? null,
+        authorizedToWork: authorizedHere,
+        requiresSponsorship: authorizedHere === null ? null : !authorizedHere,
+        willingToRelocate: prefs?.openToRelocation ?? null,
+      },
+      answers: {
+        whyThisCompany: `I'm drawn to ${job.companyName} because the ${job.title} role lines up with what I do best: ${parsed.skills.slice(0, 4).join(', ')}.`,
+        sponsorshipStatement:
+          authorizedHere === false
+            ? `I will require visa sponsorship to work in ${jobCountries.join(', ')}. ${job.visaStatus === 'SPONSORS' ? 'The posting indicates sponsorship is available.' : ''}`.trim()
+            : authorizedHere
+              ? 'I am authorized to work in this country and do not require sponsorship.'
+              : null,
+      },
+      documents: {
+        tailoredResumeId: docs.find((d) => d.type === 'TAILORED_RESUME')?.id ?? null,
+        coverLetterId: coverLetter?.id ?? null,
+        coverLetterText: (coverLetter?.content as { body?: string } | undefined)?.body ?? null,
+      },
+    };
   }
 
   list(userId: string, filters: { jobId?: string; type?: DocumentType }) {

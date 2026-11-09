@@ -1,0 +1,5078 @@
+{
+ "generatedAt": "2026-11-08T09:13:07.757Z",
+ "count": 634,
+ "boards": [
+  {
+   "name": "1Komma5",
+   "ats": "workable",
+   "slug": "1komma5",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 1
+  },
+  {
+   "name": "1Password",
+   "ats": "ashby",
+   "slug": "1password",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 78
+  },
+  {
+   "name": "9 Mothers",
+   "ats": "ashby",
+   "slug": "9-mothers",
+   "website": "https://9mothers.com",
+   "origin": "yc",
+   "openJobs": 9
+  },
+  {
+   "name": "Abacum",
+   "ats": "ashby",
+   "slug": "abacum",
+   "website": "https://www.abacum.ai/",
+   "origin": "yc",
+   "openJobs": 13
+  },
+  {
+   "name": "Abundant",
+   "ats": "ashby",
+   "slug": "abundant",
+   "website": "https://www.abundant.ai/",
+   "origin": "yc",
+   "openJobs": 9
+  },
+  {
+   "name": "Accord",
+   "ats": "ashby",
+   "slug": "accord",
+   "website": "https://inaccord.com",
+   "origin": "yc",
+   "openJobs": 5
+  },
+  {
+   "name": "Ada",
+   "ats": "personio",
+   "slug": "ada",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 1
+  },
+  {
+   "name": "Adaptyv",
+   "ats": "ashby",
+   "slug": "adaptyv",
+   "website": "https://www.adaptyvbio.com/",
+   "origin": "yc",
+   "openJobs": 34
+  },
+  {
+   "name": "Adyen",
+   "ats": "greenhouse",
+   "slug": "adyen",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 255
+  },
+  {
+   "name": "Affirm",
+   "ats": "greenhouse",
+   "slug": "affirm",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 222
+  },
+  {
+   "name": "AfterQuery",
+   "ats": "ashby",
+   "slug": "afterquery",
+   "website": "https://afterquery.com",
+   "origin": "yc",
+   "openJobs": 40
+  },
+  {
+   "name": "Agave",
+   "ats": "ashby",
+   "slug": "agave",
+   "website": "https://www.useagave.com",
+   "origin": "yc",
+   "openJobs": 10
+  },
+  {
+   "name": "Agency",
+   "ats": "greenhouse",
+   "slug": "agency",
+   "website": "https://GetAgency.com",
+   "origin": "yc",
+   "openJobs": 827
+  },
+  {
+   "name": "AgentMail",
+   "ats": "ashby",
+   "slug": "agentmail",
+   "website": "https://agentmail.to",
+   "origin": "yc",
+   "openJobs": 9
+  },
+  {
+   "name": "AIOS",
+   "ats": "ashby",
+   "slug": "aios",
+   "website": "https://aiosmedical.notion.site/",
+   "origin": "yc",
+   "openJobs": 18
+  },
+  {
+   "name": "AiPrise",
+   "ats": "ashby",
+   "slug": "aiprise",
+   "website": "https://aiprise.com/",
+   "origin": "yc",
+   "openJobs": 19
+  },
+  {
+   "name": "Airbnb",
+   "ats": "greenhouse",
+   "slug": "airbnb",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 205
+  },
+  {
+   "name": "Airbyte",
+   "ats": "ashby",
+   "slug": "airbyte",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 9
+  },
+  {
+   "name": "Airgoods",
+   "ats": "ashby",
+   "slug": "airgoods",
+   "website": "https://airgoods.com/",
+   "origin": "yc",
+   "openJobs": 3
+  },
+  {
+   "name": "Airtable",
+   "ats": "greenhouse",
+   "slug": "airtable",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 5
+  },
+  {
+   "name": "Airwallex",
+   "ats": "ashby",
+   "slug": "airwallex",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 493
+  },
+  {
+   "name": "Alan",
+   "ats": "ashby",
+   "slug": "alan",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 133
+  },
+  {
+   "name": "Albedo",
+   "ats": "greenhouse",
+   "slug": "albedo",
+   "website": "https://albedo.com",
+   "origin": "yc",
+   "openJobs": 7
+  },
+  {
+   "name": "Aleph",
+   "ats": "ashby",
+   "slug": "aleph",
+   "website": "https://getaleph.com/",
+   "origin": "yc",
+   "openJobs": 14
+  },
+  {
+   "name": "Aleph Alpha",
+   "ats": "ashby",
+   "slug": "alephalpha",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 4
+  },
+  {
+   "name": "Algolia",
+   "ats": "greenhouse",
+   "slug": "algolia",
+   "website": "http://www.algolia.com",
+   "origin": "yc",
+   "openJobs": 28
+  },
+  {
+   "name": "Alpaca",
+   "ats": "greenhouse",
+   "slug": "alpaca",
+   "website": "https://alpaca.markets/",
+   "origin": "yc",
+   "openJobs": 68
+  },
+  {
+   "name": "Ambral",
+   "ats": "ashby",
+   "slug": "ambral",
+   "website": "https://www.ambral.com/",
+   "origin": "yc",
+   "openJobs": 3
+  },
+  {
+   "name": "Amplitude",
+   "ats": "ashby",
+   "slug": "amplitude",
+   "website": "https://amplitude.com",
+   "origin": "yc",
+   "openJobs": 51
+  },
+  {
+   "name": "Andromeda Surgical",
+   "ats": "ashby",
+   "slug": "andromedasurgical",
+   "website": "http://www.andromedasurgical.com",
+   "origin": "yc",
+   "openJobs": 5
+  },
+  {
+   "name": "Anima",
+   "ats": "ashby",
+   "slug": "anima",
+   "website": "http://www.animahealth.com",
+   "origin": "yc",
+   "openJobs": 8
+  },
+  {
+   "name": "AnswerThis",
+   "ats": "ashby",
+   "slug": "answerthis",
+   "website": "https://answerthis.io/",
+   "origin": "yc",
+   "openJobs": 2
+  },
+  {
+   "name": "Anthrogen",
+   "ats": "ashby",
+   "slug": "anthrogen",
+   "website": "https://anthrogen.com",
+   "origin": "yc",
+   "openJobs": 8
+  },
+  {
+   "name": "Anthropic",
+   "ats": "greenhouse",
+   "slug": "anthropic",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 675
+  },
+  {
+   "name": "Anyscale",
+   "ats": "ashby",
+   "slug": "anyscale",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 24
+  },
+  {
+   "name": "AON3D",
+   "ats": "greenhouse",
+   "slug": "aon3d",
+   "website": "https://www.aon3d.com",
+   "origin": "yc",
+   "openJobs": 2
+  },
+  {
+   "name": "Apolink",
+   "ats": "ashby",
+   "slug": "apolink",
+   "website": "https://apolink.space",
+   "origin": "yc",
+   "openJobs": 2
+  },
+  {
+   "name": "Apollo.io",
+   "ats": "greenhouse",
+   "slug": "apolloio",
+   "website": "https://www.apollo.io/",
+   "origin": "yc",
+   "openJobs": 50
+  },
+  {
+   "name": "Aragorn AI",
+   "ats": "ashby",
+   "slug": "aragorn",
+   "website": "https://www.aragorn.ai",
+   "origin": "yc",
+   "openJobs": 1
+  },
+  {
+   "name": "Arini",
+   "ats": "ashby",
+   "slug": "arini",
+   "website": "https://www.arini.ai",
+   "origin": "yc",
+   "openJobs": 2
+  },
+  {
+   "name": "Arketa",
+   "ats": "ashby",
+   "slug": "arketa",
+   "website": "https://arketa.com",
+   "origin": "yc",
+   "openJobs": 8
+  },
+  {
+   "name": "ARQ",
+   "ats": "ashby",
+   "slug": "arq",
+   "website": "https://www.arqfinance.com/",
+   "origin": "yc",
+   "openJobs": 36
+  },
+  {
+   "name": "Artie",
+   "ats": "ashby",
+   "slug": "artie",
+   "website": "https://www.artie.com/",
+   "origin": "yc",
+   "openJobs": 6
+  },
+  {
+   "name": "Artisan",
+   "ats": "ashby",
+   "slug": "artisan",
+   "website": "https://artisan.co/?utm_source=ycombinator",
+   "origin": "yc",
+   "openJobs": 4
+  },
+  {
+   "name": "Artos",
+   "ats": "ashby",
+   "slug": "artosai",
+   "website": "https://www.artosai.com/",
+   "origin": "yc",
+   "openJobs": 5
+  },
+  {
+   "name": "Asana",
+   "ats": "greenhouse",
+   "slug": "asana",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 108
+  },
+  {
+   "name": "Ashby",
+   "ats": "ashby",
+   "slug": "ashby",
+   "website": "https://www.ashbyhq.com",
+   "origin": "yc",
+   "openJobs": 73
+  },
+  {
+   "name": "Asimov",
+   "ats": "ashby",
+   "slug": "asimov",
+   "website": "https://tryasimov.ai/",
+   "origin": "yc",
+   "openJobs": 8
+  },
+  {
+   "name": "Assembly",
+   "ats": "ashby",
+   "slug": "assembly",
+   "website": "https://www.assembly.com",
+   "origin": "yc",
+   "openJobs": 4
+  },
+  {
+   "name": "AssemblyAI",
+   "ats": "greenhouse",
+   "slug": "assemblyai",
+   "website": "https://www.assemblyai.com",
+   "origin": "yc",
+   "openJobs": 17
+  },
+  {
+   "name": "Astranis",
+   "ats": "greenhouse",
+   "slug": "astranis",
+   "website": "http://www.astranis.com",
+   "origin": "yc",
+   "openJobs": 189
+  },
+  {
+   "name": "Astro Mechanica",
+   "ats": "ashby",
+   "slug": "astro-mechanica",
+   "website": "https://astromecha.co/",
+   "origin": "yc",
+   "openJobs": 46
+  },
+  {
+   "name": "Atlas",
+   "ats": "ashby",
+   "slug": "atlas",
+   "website": "https://atlas.kitchen",
+   "origin": "yc",
+   "openJobs": 2
+  },
+  {
+   "name": "AtoB",
+   "ats": "ashby",
+   "slug": "atob",
+   "website": "https://atob.com/",
+   "origin": "yc",
+   "openJobs": 8
+  },
+  {
+   "name": "Atomic Industries",
+   "ats": "ashby",
+   "slug": "atomic",
+   "website": "http://atomic.industries",
+   "origin": "yc",
+   "openJobs": 7
+  },
+  {
+   "name": "Attain",
+   "ats": "greenhouse",
+   "slug": "attain",
+   "website": "https://joinattain.com/",
+   "origin": "yc",
+   "openJobs": 13
+  },
+  {
+   "name": "Auctor",
+   "ats": "ashby",
+   "slug": "auctor",
+   "website": "https://getauctor.com",
+   "origin": "yc",
+   "openJobs": 11
+  },
+  {
+   "name": "Aurelian",
+   "ats": "ashby",
+   "slug": "aurelian",
+   "website": "https://www.aurelian.com/",
+   "origin": "yc",
+   "openJobs": 8
+  },
+  {
+   "name": "authzed",
+   "ats": "ashby",
+   "slug": "authzed",
+   "website": "https://authzed.com",
+   "origin": "yc",
+   "openJobs": 5
+  },
+  {
+   "name": "Automat",
+   "ats": "ashby",
+   "slug": "automat",
+   "website": "https://www.runautomat.com/",
+   "origin": "yc",
+   "openJobs": 6
+  },
+  {
+   "name": "Autumn",
+   "ats": "ashby",
+   "slug": "autumn",
+   "website": "https://autumn.ai",
+   "origin": "yc",
+   "openJobs": 1
+  },
+  {
+   "name": "Avallon AI",
+   "ats": "ashby",
+   "slug": "avallon",
+   "website": "https://www.avallon.ai/",
+   "origin": "yc",
+   "openJobs": 4
+  },
+  {
+   "name": "Avoca",
+   "ats": "ashby",
+   "slug": "avoca",
+   "website": "https://www.avoca.ai/",
+   "origin": "yc",
+   "openJobs": 16
+  },
+  {
+   "name": "Axiom",
+   "ats": "greenhouse",
+   "slug": "axiom",
+   "website": "https://axiom.trade",
+   "origin": "yc",
+   "openJobs": 13
+  },
+  {
+   "name": "Axle",
+   "ats": "greenhouse",
+   "slug": "axle",
+   "website": "https://axle.insure",
+   "origin": "yc",
+   "openJobs": 60
+  },
+  {
+   "name": "Axle Health",
+   "ats": "ashby",
+   "slug": "axle-health",
+   "website": "https://www.axlehealth.com",
+   "origin": "yc",
+   "openJobs": 7
+  },
+  {
+   "name": "Babbel",
+   "ats": "ashby",
+   "slug": "babbel",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 10
+  },
+  {
+   "name": "Beam",
+   "ats": "greenhouse",
+   "slug": "beam",
+   "website": "https://beam.cloud",
+   "origin": "yc",
+   "openJobs": 4
+  },
+  {
+   "name": "Belvo",
+   "ats": "ashby",
+   "slug": "belvo",
+   "website": "https://belvo.com",
+   "origin": "yc",
+   "openJobs": 3
+  },
+  {
+   "name": "Benepass",
+   "ats": "ashby",
+   "slug": "benepass",
+   "website": "https://www.benepass.com",
+   "origin": "yc",
+   "openJobs": 4
+  },
+  {
+   "name": "Beyond Reach Labs",
+   "ats": "ashby",
+   "slug": "beyondreachlabs",
+   "website": "https://www.beyondreachlabs.com",
+   "origin": "yc",
+   "openJobs": 7
+  },
+  {
+   "name": "Bild AI",
+   "ats": "ashby",
+   "slug": "bild-ai",
+   "website": "https://www.bild.ai",
+   "origin": "yc",
+   "openJobs": 4
+  },
+  {
+   "name": "BillionToOne",
+   "ats": "ashby",
+   "slug": "billiontoone",
+   "website": "https://www.billiontoone.com",
+   "origin": "yc",
+   "openJobs": 85
+  },
+  {
+   "name": "BioRender",
+   "ats": "lever",
+   "slug": "biorender",
+   "website": "https://www.biorender.com",
+   "origin": "yc",
+   "openJobs": 1
+  },
+  {
+   "name": "Bird",
+   "ats": "greenhouse",
+   "slug": "bird",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 28
+  },
+  {
+   "name": "Bitmovin",
+   "ats": "greenhouse",
+   "slug": "bitmovin",
+   "website": "http://bitmovin.com",
+   "origin": "yc",
+   "openJobs": 11
+  },
+  {
+   "name": "Bitwarden",
+   "ats": "greenhouse",
+   "slug": "bitwarden",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 30
+  },
+  {
+   "name": "Blacksmith",
+   "ats": "ashby",
+   "slug": "blacksmith",
+   "website": "https://blacksmith.sh/",
+   "origin": "yc",
+   "openJobs": 20
+  },
+  {
+   "name": "Bland AI",
+   "ats": "ashby",
+   "slug": "bland",
+   "website": "https://bland.com",
+   "origin": "yc",
+   "openJobs": 16
+  },
+  {
+   "name": "Blee",
+   "ats": "ashby",
+   "slug": "blee",
+   "website": "https://www.blee.com",
+   "origin": "yc",
+   "openJobs": 5
+  },
+  {
+   "name": "Blissway",
+   "ats": "ashby",
+   "slug": "blissway",
+   "website": "https://www.blissway.com/",
+   "origin": "yc",
+   "openJobs": 11
+  },
+  {
+   "name": "Block",
+   "ats": "greenhouse",
+   "slug": "block",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 200
+  },
+  {
+   "name": "Bloom",
+   "ats": "lever",
+   "slug": "bloom",
+   "website": "https://bloom.diy/",
+   "origin": "yc",
+   "openJobs": 8
+  },
+  {
+   "name": "Blue",
+   "ats": "lever",
+   "slug": "blue",
+   "website": "https://heyblue.com/",
+   "origin": "yc",
+   "openJobs": 10
+  },
+  {
+   "name": "Bolna AI",
+   "ats": "ashby",
+   "slug": "bolna",
+   "website": "https://bolna.ai",
+   "origin": "yc",
+   "openJobs": 6
+  },
+  {
+   "name": "BootLoop",
+   "ats": "ashby",
+   "slug": "bootloop",
+   "website": "https://bootloop.ai/",
+   "origin": "yc",
+   "openJobs": 1
+  },
+  {
+   "name": "Brainbase Labs",
+   "ats": "ashby",
+   "slug": "brainbaselabs",
+   "website": "https://brainbaselabs.com",
+   "origin": "yc",
+   "openJobs": 6
+  },
+  {
+   "name": "Bree",
+   "ats": "ashby",
+   "slug": "bree",
+   "website": "https://www.trybree.com/",
+   "origin": "yc",
+   "openJobs": 13
+  },
+  {
+   "name": "Bretton AI",
+   "ats": "ashby",
+   "slug": "brettonai",
+   "website": "https://www.bretton.com/",
+   "origin": "yc",
+   "openJobs": 6
+  },
+  {
+   "name": "Brex",
+   "ats": "greenhouse",
+   "slug": "brex",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 268
+  },
+  {
+   "name": "Brighterway",
+   "ats": "ashby",
+   "slug": "brighterway",
+   "website": "https://www.brighterway.ai/",
+   "origin": "yc",
+   "openJobs": 10
+  },
+  {
+   "name": "Broccoli AI",
+   "ats": "ashby",
+   "slug": "broccoli",
+   "website": "https://www.broccoli.com/",
+   "origin": "yc",
+   "openJobs": 28
+  },
+  {
+   "name": "Brumby",
+   "ats": "ashby",
+   "slug": "brumby",
+   "website": "https://brumby.com",
+   "origin": "yc",
+   "openJobs": 4
+  },
+  {
+   "name": "Bunkerhill Health",
+   "ats": "ashby",
+   "slug": "bunkerhillhealth",
+   "website": "http://bunkerhillhealth.com",
+   "origin": "yc",
+   "openJobs": 8
+  },
+  {
+   "name": "Bunq",
+   "ats": "recruitee",
+   "slug": "bunq",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 23
+  },
+  {
+   "name": "burnt",
+   "ats": "greenhouse",
+   "slug": "burnt",
+   "website": "https://getburnt.ai/",
+   "origin": "yc",
+   "openJobs": 8
+  },
+  {
+   "name": "Bynder",
+   "ats": "ashby",
+   "slug": "bynder",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 22
+  },
+  {
+   "name": "Cabify",
+   "ats": "greenhouse",
+   "slug": "cabify",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 51
+  },
+  {
+   "name": "Calendly",
+   "ats": "greenhouse",
+   "slug": "calendly",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 7
+  },
+  {
+   "name": "Camber",
+   "ats": "ashby",
+   "slug": "camber",
+   "website": "https://www.camber.health/",
+   "origin": "yc",
+   "openJobs": 14
+  },
+  {
+   "name": "Cambio",
+   "ats": "ashby",
+   "slug": "cambio",
+   "website": "https://www.cambio.ai/",
+   "origin": "yc",
+   "openJobs": 4
+  },
+  {
+   "name": "Cambly",
+   "ats": "ashby",
+   "slug": "cambly",
+   "website": "http://www.cambly.com",
+   "origin": "yc",
+   "openJobs": 5
+  },
+  {
+   "name": "Campfire",
+   "ats": "ashby",
+   "slug": "campfire",
+   "website": "https://campfire.ai",
+   "origin": "yc",
+   "openJobs": 52
+  },
+  {
+   "name": "Canary Technologies",
+   "ats": "lever",
+   "slug": "canarytechnologies",
+   "website": "https://www.canarytechnologies.com",
+   "origin": "yc",
+   "openJobs": 13
+  },
+  {
+   "name": "Candid Health",
+   "ats": "ashby",
+   "slug": "candidhealth",
+   "website": "https://www.joincandidhealth.com",
+   "origin": "yc",
+   "openJobs": 30
+  },
+  {
+   "name": "Canva",
+   "ats": "smartrecruiters",
+   "slug": "canva",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 37
+  },
+  {
+   "name": "CaptivateIQ",
+   "ats": "ashby",
+   "slug": "captivateiq",
+   "website": "https://www.captivateiq.com",
+   "origin": "yc",
+   "openJobs": 22
+  },
+  {
+   "name": "Capy",
+   "ats": "ashby",
+   "slug": "capy",
+   "website": "https://capy.ai",
+   "origin": "yc",
+   "openJobs": 2
+  },
+  {
+   "name": "CarbonChain",
+   "ats": "greenhouse",
+   "slug": "carbonchain",
+   "website": "https://carbonchain.com",
+   "origin": "yc",
+   "openJobs": 2
+  },
+  {
+   "name": "Cardboard",
+   "ats": "ashby",
+   "slug": "cardboard",
+   "website": "https://cardboard.ai",
+   "origin": "yc",
+   "openJobs": 7
+  },
+  {
+   "name": "Careem",
+   "ats": "greenhouse",
+   "slug": "careem",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 14
+  },
+  {
+   "name": "Caribou",
+   "ats": "ashby",
+   "slug": "caribou",
+   "website": "https://usecaribou.com",
+   "origin": "yc",
+   "openJobs": 3
+  },
+  {
+   "name": "Casca",
+   "ats": "ashby",
+   "slug": "casca",
+   "website": "https://www.cascading.ai/",
+   "origin": "yc",
+   "openJobs": 6
+  },
+  {
+   "name": "Casco",
+   "ats": "ashby",
+   "slug": "casco",
+   "website": "https://casco.com",
+   "origin": "yc",
+   "openJobs": 1
+  },
+  {
+   "name": "Castle",
+   "ats": "ashby",
+   "slug": "castle",
+   "website": "https://castle.io",
+   "origin": "yc",
+   "openJobs": 2
+  },
+  {
+   "name": "Catawiki",
+   "ats": "greenhouse",
+   "slug": "catawiki",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 44
+  },
+  {
+   "name": "Celonis",
+   "ats": "greenhouse",
+   "slug": "celonis",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 233
+  },
+  {
+   "name": "Charge Robotics",
+   "ats": "ashby",
+   "slug": "charge-robotics",
+   "website": "https://chargerobotics.com/",
+   "origin": "yc",
+   "openJobs": 13
+  },
+  {
+   "name": "Chariot",
+   "ats": "ashby",
+   "slug": "chariot",
+   "website": "https://givechariot.com/",
+   "origin": "yc",
+   "openJobs": 18
+  },
+  {
+   "name": "Checkr",
+   "ats": "greenhouse",
+   "slug": "checkr",
+   "website": "http://www.checkr.com",
+   "origin": "yc",
+   "openJobs": 39
+  },
+  {
+   "name": "Chestnut",
+   "ats": "ashby",
+   "slug": "chestnut",
+   "website": "https://chestnutmortgage.com/",
+   "origin": "yc",
+   "openJobs": 4
+  },
+  {
+   "name": "Chime",
+   "ats": "greenhouse",
+   "slug": "chime",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 72
+  },
+  {
+   "name": "Cinder",
+   "ats": "ashby",
+   "slug": "cinder",
+   "website": "https://cinder.ai",
+   "origin": "yc",
+   "openJobs": 10
+  },
+  {
+   "name": "Circleback",
+   "ats": "ashby",
+   "slug": "circleback",
+   "website": "https://circleback.ai",
+   "origin": "yc",
+   "openJobs": 10
+  },
+  {
+   "name": "CircuitHub",
+   "ats": "ashby",
+   "slug": "circuithub",
+   "website": "https://circuithub.com",
+   "origin": "yc",
+   "openJobs": 13
+  },
+  {
+   "name": "Claim Health",
+   "ats": "ashby",
+   "slug": "claim-health",
+   "website": "https://www.claimhealth.com",
+   "origin": "yc",
+   "openJobs": 10
+  },
+  {
+   "name": "ClaimSorted",
+   "ats": "ashby",
+   "slug": "claimsorted",
+   "website": "https://claimsorted.com",
+   "origin": "yc",
+   "openJobs": 19
+  },
+  {
+   "name": "Clara",
+   "ats": "greenhouse",
+   "slug": "clara",
+   "website": "http://askclara.com",
+   "origin": "yc",
+   "openJobs": 154
+  },
+  {
+   "name": "Clarion",
+   "ats": "ashby",
+   "slug": "clarion",
+   "website": "https://clarionhealth.com",
+   "origin": "yc",
+   "openJobs": 7
+  },
+  {
+   "name": "ClassDojo",
+   "ats": "ashby",
+   "slug": "classdojo",
+   "website": "http://www.classdojo.com",
+   "origin": "yc",
+   "openJobs": 12
+  },
+  {
+   "name": "Clearly AI",
+   "ats": "ashby",
+   "slug": "clearly-ai",
+   "website": "https://clearly-ai.com",
+   "origin": "yc",
+   "openJobs": 2
+  },
+  {
+   "name": "Clerk",
+   "ats": "ashby",
+   "slug": "clerk",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 2
+  },
+  {
+   "name": "Climeworks",
+   "ats": "recruitee",
+   "slug": "climeworks",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 3
+  },
+  {
+   "name": "Clipboard",
+   "ats": "ashby",
+   "slug": "clipboard",
+   "website": "https://www.clipboardworks.com/careers",
+   "origin": "yc",
+   "openJobs": 37
+  },
+  {
+   "name": "Cloudflare",
+   "ats": "greenhouse",
+   "slug": "cloudflare",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 464
+  },
+  {
+   "name": "Coast",
+   "ats": "greenhouse",
+   "slug": "coast",
+   "website": "https://trycoast.com",
+   "origin": "yc",
+   "openJobs": 20
+  },
+  {
+   "name": "Cockroach Labs",
+   "ats": "greenhouse",
+   "slug": "cockroachlabs",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 12
+  },
+  {
+   "name": "Codes Health",
+   "ats": "ashby",
+   "slug": "codes-health",
+   "website": "https://www.codeshealth.com/",
+   "origin": "yc",
+   "openJobs": 16
+  },
+  {
+   "name": "Cohere",
+   "ats": "ashby",
+   "slug": "cohere",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 124
+  },
+  {
+   "name": "Coinbase",
+   "ats": "greenhouse",
+   "slug": "coinbase",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 284
+  },
+  {
+   "name": "CoinTracker",
+   "ats": "ashby",
+   "slug": "cointracker",
+   "website": "https://cointracker.com",
+   "origin": "yc",
+   "openJobs": 1
+  },
+  {
+   "name": "Comena",
+   "ats": "ashby",
+   "slug": "comena",
+   "website": "https://comena.ai",
+   "origin": "yc",
+   "openJobs": 8
+  },
+  {
+   "name": "Commercetools",
+   "ats": "greenhouse",
+   "slug": "commercetools",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 35
+  },
+  {
+   "name": "CommodityAI",
+   "ats": "ashby",
+   "slug": "commodityai",
+   "website": "https://commodityai.io/",
+   "origin": "yc",
+   "openJobs": 1
+  },
+  {
+   "name": "Complete",
+   "ats": "ashby",
+   "slug": "complete",
+   "website": "https://complete.so",
+   "origin": "yc",
+   "openJobs": 6
+  },
+  {
+   "name": "Complir",
+   "ats": "ashby",
+   "slug": "complir",
+   "website": "https://complir.io/",
+   "origin": "yc",
+   "openJobs": 1
+  },
+  {
+   "name": "Concourse",
+   "ats": "ashby",
+   "slug": "concourse",
+   "website": "https://concourse.ai/",
+   "origin": "yc",
+   "openJobs": 7
+  },
+  {
+   "name": "Conduit",
+   "ats": "ashby",
+   "slug": "conduit",
+   "website": "https://conduit.ai/",
+   "origin": "yc",
+   "openJobs": 1
+  },
+  {
+   "name": "Confido",
+   "ats": "ashby",
+   "slug": "confido",
+   "website": "https://www.confidotech.com",
+   "origin": "yc",
+   "openJobs": 38
+  },
+  {
+   "name": "Contentful",
+   "ats": "greenhouse",
+   "slug": "contentful",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 29
+  },
+  {
+   "name": "Contentsquare",
+   "ats": "lever",
+   "slug": "contentsquare",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 29
+  },
+  {
+   "name": "Conveo",
+   "ats": "ashby",
+   "slug": "conveo",
+   "website": "https://conveo.ai/",
+   "origin": "yc",
+   "openJobs": 12
+  },
+  {
+   "name": "Cosine",
+   "ats": "ashby",
+   "slug": "cosine",
+   "website": "http://www.cosine.sh",
+   "origin": "yc",
+   "openJobs": 4
+  },
+  {
+   "name": "CRED",
+   "ats": "lever",
+   "slug": "cred",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 14
+  },
+  {
+   "name": "Credal.ai",
+   "ats": "ashby",
+   "slug": "credal",
+   "website": "https://credal.ai",
+   "origin": "yc",
+   "openJobs": 6
+  },
+  {
+   "name": "CTGT",
+   "ats": "ashby",
+   "slug": "ctgt",
+   "website": "https://www.ctgt.ai/",
+   "origin": "yc",
+   "openJobs": 3
+  },
+  {
+   "name": "Culture Amp",
+   "ats": "greenhouse",
+   "slug": "cultureamp",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 32
+  },
+  {
+   "name": "Curri",
+   "ats": "ashby",
+   "slug": "curri",
+   "website": "http://www.curri.com",
+   "origin": "yc",
+   "openJobs": 25
+  },
+  {
+   "name": "Darwin",
+   "ats": "ashby",
+   "slug": "darwin",
+   "website": "https://darwinrobotics.ai",
+   "origin": "yc",
+   "openJobs": 1
+  },
+  {
+   "name": "Databricks",
+   "ats": "greenhouse",
+   "slug": "databricks",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 922
+  },
+  {
+   "name": "Datadog",
+   "ats": "greenhouse",
+   "slug": "datadog",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 401
+  },
+  {
+   "name": "Datafold",
+   "ats": "ashby",
+   "slug": "datafold",
+   "website": "https://datafold.com",
+   "origin": "yc",
+   "openJobs": 2
+  },
+  {
+   "name": "Dataleap",
+   "ats": "ashby",
+   "slug": "dataleap",
+   "website": "https://dataleap.ai/",
+   "origin": "yc",
+   "openJobs": 9
+  },
+  {
+   "name": "David AI",
+   "ats": "ashby",
+   "slug": "david-ai",
+   "website": "https://www.withdavid.ai/",
+   "origin": "yc",
+   "openJobs": 14
+  },
+  {
+   "name": "Decoda Health",
+   "ats": "ashby",
+   "slug": "decodahealth",
+   "website": "https://decodahealth.com/",
+   "origin": "yc",
+   "openJobs": 4
+  },
+  {
+   "name": "Dedalus Labs",
+   "ats": "ashby",
+   "slug": "dedalus-labs",
+   "website": "https://www.dedaluslabs.ai/",
+   "origin": "yc",
+   "openJobs": 4
+  },
+  {
+   "name": "Deepgram",
+   "ats": "ashby",
+   "slug": "deepgram",
+   "website": "https://www.deepgram.com",
+   "origin": "yc",
+   "openJobs": 68
+  },
+  {
+   "name": "DeepL",
+   "ats": "ashby",
+   "slug": "deepl",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 8
+  },
+  {
+   "name": "Deepnote",
+   "ats": "ashby",
+   "slug": "deepnote",
+   "website": "https://www.deepnote.com/",
+   "origin": "yc",
+   "openJobs": 3
+  },
+  {
+   "name": "Delivery Hero",
+   "ats": "smartrecruiters",
+   "slug": "deliveryhero",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 899
+  },
+  {
+   "name": "Deputy",
+   "ats": "lever",
+   "slug": "deputy",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 2
+  },
+  {
+   "name": "DiligenceSquared",
+   "ats": "ashby",
+   "slug": "diligencesquared",
+   "website": "https://diligencesquared.com/",
+   "origin": "yc",
+   "openJobs": 8
+  },
+  {
+   "name": "Diligent",
+   "ats": "greenhouse",
+   "slug": "diligent",
+   "website": "https://godiligent.ai",
+   "origin": "yc",
+   "openJobs": 6
+  },
+  {
+   "name": "Discord",
+   "ats": "greenhouse",
+   "slug": "discord",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 27
+  },
+  {
+   "name": "Dispatch",
+   "ats": "ashby",
+   "slug": "dispatch",
+   "website": "https://dispatch.space/",
+   "origin": "yc",
+   "openJobs": 7
+  },
+  {
+   "name": "Ditto",
+   "ats": "ashby",
+   "slug": "ditto",
+   "website": "http://dittowords.com",
+   "origin": "yc",
+   "openJobs": 6
+  },
+  {
+   "name": "Docker",
+   "ats": "ashby",
+   "slug": "docker",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 50
+  },
+  {
+   "name": "Doctolib",
+   "ats": "ashby",
+   "slug": "doctolib",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 152
+  },
+  {
+   "name": "Dodo",
+   "ats": "ashby",
+   "slug": "dodo",
+   "website": "https://www.dodo.ai/",
+   "origin": "yc",
+   "openJobs": 6
+  },
+  {
+   "name": "Domu Technology Inc.",
+   "ats": "ashby",
+   "slug": "domu",
+   "website": "https://www.domu.ai/",
+   "origin": "yc",
+   "openJobs": 2
+  },
+  {
+   "name": "doola",
+   "ats": "lever",
+   "slug": "doola",
+   "website": "https://www.doola.com/",
+   "origin": "yc",
+   "openJobs": 7
+  },
+  {
+   "name": "Doppler",
+   "ats": "ashby",
+   "slug": "doppler",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 6
+  },
+  {
+   "name": "Dots 💸",
+   "ats": "greenhouse",
+   "slug": "dots",
+   "website": "https://usedots.com",
+   "origin": "yc",
+   "openJobs": 1
+  },
+  {
+   "name": "Double",
+   "ats": "ashby",
+   "slug": "double",
+   "website": "https://www.doublehq.com",
+   "origin": "yc",
+   "openJobs": 5
+  },
+  {
+   "name": "Dropbox",
+   "ats": "greenhouse",
+   "slug": "dropbox",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 33
+  },
+  {
+   "name": "Duffel",
+   "ats": "ashby",
+   "slug": "duffel",
+   "website": "https://duffel.com/",
+   "origin": "yc",
+   "openJobs": 10
+  },
+  {
+   "name": "Duolingo",
+   "ats": "greenhouse",
+   "slug": "duolingo",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 59
+  },
+  {
+   "name": "Dyneti Technologies",
+   "ats": "ashby",
+   "slug": "dyneti",
+   "website": "http://www.dyneti.com",
+   "origin": "yc",
+   "openJobs": 9
+  },
+  {
+   "name": "Eight Sleep",
+   "ats": "ashby",
+   "slug": "eightsleep",
+   "website": "http://eightsleep.com",
+   "origin": "yc",
+   "openJobs": 33
+  },
+  {
+   "name": "Ekho",
+   "ats": "ashby",
+   "slug": "ekho",
+   "website": "https://www.ekho.com",
+   "origin": "yc",
+   "openJobs": 3
+  },
+  {
+   "name": "Elastic",
+   "ats": "greenhouse",
+   "slug": "elastic",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 425
+  },
+  {
+   "name": "Electric Air",
+   "ats": "ashby",
+   "slug": "electricair",
+   "website": "https://www.electricair.io/",
+   "origin": "yc",
+   "openJobs": 5
+  },
+  {
+   "name": "ElevenLabs",
+   "ats": "ashby",
+   "slug": "elevenlabs",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 137
+  },
+  {
+   "name": "Ello",
+   "ats": "ashby",
+   "slug": "ello",
+   "website": "https://www.ello.com",
+   "origin": "yc",
+   "openJobs": 5
+  },
+  {
+   "name": "Eloquent AI",
+   "ats": "ashby",
+   "slug": "eloquentai",
+   "website": "https://www.eloquentai.co/",
+   "origin": "yc",
+   "openJobs": 13
+  },
+  {
+   "name": "Elyos AI",
+   "ats": "ashby",
+   "slug": "elyos",
+   "website": "https://www.elyos.ai/",
+   "origin": "yc",
+   "openJobs": 10
+  },
+  {
+   "name": "Encord",
+   "ats": "ashby",
+   "slug": "encord",
+   "website": "https://encord.com",
+   "origin": "yc",
+   "openJobs": 38
+  },
+  {
+   "name": "Enode",
+   "ats": "ashby",
+   "slug": "enode",
+   "website": "http://www.enode.com",
+   "origin": "yc",
+   "openJobs": 5
+  },
+  {
+   "name": "Enpal",
+   "ats": "ashby",
+   "slug": "enpal",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 166
+  },
+  {
+   "name": "Epsilon3",
+   "ats": "lever",
+   "slug": "epsilon3",
+   "website": "https://www.epsilon3.io/",
+   "origin": "yc",
+   "openJobs": 4
+  },
+  {
+   "name": "Escape",
+   "ats": "ashby",
+   "slug": "escape",
+   "website": "https://escape.tech",
+   "origin": "yc",
+   "openJobs": 7
+  },
+  {
+   "name": "Event Horizon Labs",
+   "ats": "ashby",
+   "slug": "event-horizon-labs",
+   "website": "https://www.ehl.markets/",
+   "origin": "yc",
+   "openJobs": 1
+  },
+  {
+   "name": "Eventual",
+   "ats": "ashby",
+   "slug": "eventual",
+   "website": "https://www.daft.ai/",
+   "origin": "yc",
+   "openJobs": 4
+  },
+  {
+   "name": "Faire",
+   "ats": "greenhouse",
+   "slug": "faire",
+   "website": "https://www.faire.com/",
+   "origin": "yc",
+   "openJobs": 68
+  },
+  {
+   "name": "FamPay",
+   "ats": "lever",
+   "slug": "fampay",
+   "website": "https://fampay.in",
+   "origin": "yc",
+   "openJobs": 17
+  },
+  {
+   "name": "Fernstone",
+   "ats": "ashby",
+   "slug": "fernstone",
+   "website": "https://www.fernstone.com",
+   "origin": "yc",
+   "openJobs": 4
+  },
+  {
+   "name": "Fieldguide",
+   "ats": "ashby",
+   "slug": "fieldguide",
+   "website": "http://fieldguide.com",
+   "origin": "yc",
+   "openJobs": 42
+  },
+  {
+   "name": "Figma",
+   "ats": "greenhouse",
+   "slug": "figma",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 145
+  },
+  {
+   "name": "Finch",
+   "ats": "ashby",
+   "slug": "finch",
+   "website": "https://tryfinch.com",
+   "origin": "yc",
+   "openJobs": 3
+  },
+  {
+   "name": "Finn",
+   "ats": "lever",
+   "slug": "finn",
+   "website": "https://getfinn.us/",
+   "origin": "yc",
+   "openJobs": 30
+  },
+  {
+   "name": "Finni Health",
+   "ats": "ashby",
+   "slug": "finni-health",
+   "website": "https://www.finnihealth.com/",
+   "origin": "yc",
+   "openJobs": 134
+  },
+  {
+   "name": "FINNY AI",
+   "ats": "ashby",
+   "slug": "finny",
+   "website": "https://www.finny.com/",
+   "origin": "yc",
+   "openJobs": 2
+  },
+  {
+   "name": "Finto",
+   "ats": "ashby",
+   "slug": "finto",
+   "website": "https://www.gofinto.com/",
+   "origin": "yc",
+   "openJobs": 7
+  },
+  {
+   "name": "Firecrawl",
+   "ats": "ashby",
+   "slug": "firecrawl",
+   "website": "https://www.firecrawl.dev",
+   "origin": "yc",
+   "openJobs": 25
+  },
+  {
+   "name": "FirstWork",
+   "ats": "ashby",
+   "slug": "firstwork",
+   "website": "https://firstwork.com",
+   "origin": "yc",
+   "openJobs": 13
+  },
+  {
+   "name": "Fiverr",
+   "ats": "smartrecruiters",
+   "slug": "fiverr",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 3
+  },
+  {
+   "name": "Fivetran",
+   "ats": "greenhouse",
+   "slug": "fivetran",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 167
+  },
+  {
+   "name": "Flai",
+   "ats": "ashby",
+   "slug": "flai",
+   "website": "https://www.useflai.com/",
+   "origin": "yc",
+   "openJobs": 15
+  },
+  {
+   "name": "Fleek",
+   "ats": "ashby",
+   "slug": "fleek",
+   "website": "https://www.joinfleek.com/",
+   "origin": "yc",
+   "openJobs": 5
+  },
+  {
+   "name": "Fleetline",
+   "ats": "ashby",
+   "slug": "fleetline",
+   "website": "https://fleetline.ai",
+   "origin": "yc",
+   "openJobs": 1
+  },
+  {
+   "name": "FleetWorks",
+   "ats": "ashby",
+   "slug": "fleetworks",
+   "website": "https://fleetworks.ai",
+   "origin": "yc",
+   "openJobs": 7
+  },
+  {
+   "name": "Flex",
+   "ats": "ashby",
+   "slug": "flex",
+   "website": "https://www.withflex.com/shop",
+   "origin": "yc",
+   "openJobs": 34
+  },
+  {
+   "name": "Flexport",
+   "ats": "greenhouse",
+   "slug": "flexport",
+   "website": "https://www.flexport.com/careers/jobs/",
+   "origin": "yc",
+   "openJobs": 190
+  },
+  {
+   "name": "Flint",
+   "ats": "ashby",
+   "slug": "flint",
+   "website": "http://flintk12.com/",
+   "origin": "yc",
+   "openJobs": 10
+  },
+  {
+   "name": "Flix",
+   "ats": "greenhouse",
+   "slug": "flix",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 162
+  },
+  {
+   "name": "Flowtel",
+   "ats": "ashby",
+   "slug": "flowtel",
+   "website": "https://flowtel.ai",
+   "origin": "yc",
+   "openJobs": 1
+  },
+  {
+   "name": "FlutterFlow",
+   "ats": "ashby",
+   "slug": "flutterflow",
+   "website": "https://flutterflow.io",
+   "origin": "yc",
+   "openJobs": 3
+  },
+  {
+   "name": "Formance",
+   "ats": "ashby",
+   "slug": "formance",
+   "website": "https://formance.com",
+   "origin": "yc",
+   "openJobs": 6
+  },
+  {
+   "name": "Forto",
+   "ats": "ashby",
+   "slug": "forto",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 8
+  },
+  {
+   "name": "Fortuna Health",
+   "ats": "ashby",
+   "slug": "fortuna-health",
+   "website": "https://fortunahealth.com/",
+   "origin": "yc",
+   "openJobs": 4
+  },
+  {
+   "name": "Fours",
+   "ats": "ashby",
+   "slug": "fours",
+   "website": "https://fours.com",
+   "origin": "yc",
+   "openJobs": 14
+  },
+  {
+   "name": "Freshpaint",
+   "ats": "ashby",
+   "slug": "freshpaint",
+   "website": "https://freshpaint.io",
+   "origin": "yc",
+   "openJobs": 5
+  },
+  {
+   "name": "Freshworks",
+   "ats": "smartrecruiters",
+   "slug": "freshworks",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 123
+  },
+  {
+   "name": "Frontify",
+   "ats": "ashby",
+   "slug": "frontify",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 16
+  },
+  {
+   "name": "FurtherAI",
+   "ats": "ashby",
+   "slug": "furtherai",
+   "website": "https://www.furtherai.com/",
+   "origin": "yc",
+   "openJobs": 9
+  },
+  {
+   "name": "Garage",
+   "ats": "ashby",
+   "slug": "garage",
+   "website": "https://www.shopgarage.com/",
+   "origin": "yc",
+   "openJobs": 18
+  },
+  {
+   "name": "Gecko Robotics",
+   "ats": "ashby",
+   "slug": "gecko-robotics",
+   "website": "https://www.geckorobotics.com",
+   "origin": "yc",
+   "openJobs": 21
+  },
+  {
+   "name": "General Astronautics",
+   "ats": "ashby",
+   "slug": "generalastronautics",
+   "website": "https://generalastro.com/",
+   "origin": "yc",
+   "openJobs": 5
+  },
+  {
+   "name": "General Proximity",
+   "ats": "greenhouse",
+   "slug": "generalproximity",
+   "website": "https://www.generalproximity.bio/",
+   "origin": "yc",
+   "openJobs": 8
+  },
+  {
+   "name": "Gigs",
+   "ats": "ashby",
+   "slug": "gigs",
+   "website": "https://gigs.com",
+   "origin": "yc",
+   "openJobs": 48
+  },
+  {
+   "name": "Ginkgo Bioworks",
+   "ats": "greenhouse",
+   "slug": "ginkgobioworks",
+   "website": "http://ginkgobioworks.com",
+   "origin": "yc",
+   "openJobs": 20
+  },
+  {
+   "name": "GitLab",
+   "ats": "greenhouse",
+   "slug": "gitlab",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 248
+  },
+  {
+   "name": "GiveCampus",
+   "ats": "greenhouse",
+   "slug": "givecampus",
+   "website": "http://go.givecampus.com",
+   "origin": "yc",
+   "openJobs": 12
+  },
+  {
+   "name": "Glimpse",
+   "ats": "ashby",
+   "slug": "glimpse",
+   "website": "https://tryglimpse.com/",
+   "origin": "yc",
+   "openJobs": 7
+  },
+  {
+   "name": "GOAT Group",
+   "ats": "greenhouse",
+   "slug": "goatgroup",
+   "website": "https://www.goatgroup.com/",
+   "origin": "yc",
+   "openJobs": 18
+  },
+  {
+   "name": "GoCardless",
+   "ats": "greenhouse",
+   "slug": "gocardless",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 26
+  },
+  {
+   "name": "GoLinks",
+   "ats": "ashby",
+   "slug": "golinks",
+   "website": "https://www.golinks.io",
+   "origin": "yc",
+   "openJobs": 3
+  },
+  {
+   "name": "Gong",
+   "ats": "smartrecruiters",
+   "slug": "gong",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 7
+  },
+  {
+   "name": "GovDash",
+   "ats": "ashby",
+   "slug": "govdash",
+   "website": "https://govdash.com/",
+   "origin": "yc",
+   "openJobs": 2
+  },
+  {
+   "name": "GovEagle",
+   "ats": "ashby",
+   "slug": "goveagle",
+   "website": "https://www.goveagle.com/",
+   "origin": "yc",
+   "openJobs": 3
+  },
+  {
+   "name": "Grab",
+   "ats": "smartrecruiters",
+   "slug": "grab",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 448
+  },
+  {
+   "name": "Grafana Labs",
+   "ats": "greenhouse",
+   "slug": "grafanalabs",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 134
+  },
+  {
+   "name": "Great Question",
+   "ats": "ashby",
+   "slug": "greatquestion",
+   "website": "https://greatquestion.co",
+   "origin": "yc",
+   "openJobs": 6
+  },
+  {
+   "name": "Greenboard",
+   "ats": "ashby",
+   "slug": "greenboard",
+   "website": "https://www.greenboard.com",
+   "origin": "yc",
+   "openJobs": 5
+  },
+  {
+   "name": "Greptile",
+   "ats": "ashby",
+   "slug": "greptile",
+   "website": "https://www.greptile.com",
+   "origin": "yc",
+   "openJobs": 18
+  },
+  {
+   "name": "Gridware",
+   "ats": "lever",
+   "slug": "gridware",
+   "website": "https://www.gridware.io",
+   "origin": "yc",
+   "openJobs": 16
+  },
+  {
+   "name": "Groww",
+   "ats": "greenhouse",
+   "slug": "groww",
+   "website": "https://groww.in",
+   "origin": "yc",
+   "openJobs": 9
+  },
+  {
+   "name": "GUILD",
+   "ats": "ashby",
+   "slug": "guild",
+   "website": "https://www.guildai.co",
+   "origin": "yc",
+   "openJobs": 2
+  },
+  {
+   "name": "Gusto",
+   "ats": "greenhouse",
+   "slug": "gusto",
+   "website": "https://gusto.com",
+   "origin": "yc",
+   "openJobs": 83
+  },
+  {
+   "name": "HackerRank",
+   "ats": "greenhouse",
+   "slug": "hackerrank",
+   "website": "http://hackerrank.com",
+   "origin": "yc",
+   "openJobs": 29
+  },
+  {
+   "name": "Halluminate",
+   "ats": "ashby",
+   "slug": "halluminate",
+   "website": "https://halluminate.ai/",
+   "origin": "yc",
+   "openJobs": 10
+  },
+  {
+   "name": "Halter",
+   "ats": "ashby",
+   "slug": "halter",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 259
+  },
+  {
+   "name": "Handoff",
+   "ats": "lever",
+   "slug": "handoff",
+   "website": "https://www.handoff.ai/",
+   "origin": "yc",
+   "openJobs": 8
+  },
+  {
+   "name": "Happl",
+   "ats": "ashby",
+   "slug": "happl",
+   "website": "https://happl.com/",
+   "origin": "yc",
+   "openJobs": 4
+  },
+  {
+   "name": "Harper",
+   "ats": "ashby",
+   "slug": "harperinsure",
+   "website": "https://www.harperinsure.com/",
+   "origin": "yc",
+   "openJobs": 37
+  },
+  {
+   "name": "Haven",
+   "ats": "greenhouse",
+   "slug": "haven",
+   "website": "https://www.usehaven.ai/",
+   "origin": "yc",
+   "openJobs": 3
+  },
+  {
+   "name": "Hazel",
+   "ats": "greenhouse",
+   "slug": "hazel",
+   "website": "https://hazelai.com",
+   "origin": "yc",
+   "openJobs": 19
+  },
+  {
+   "name": "Healthtech 1",
+   "ats": "ashby",
+   "slug": "healthtech-1",
+   "website": "https://www.healthtech1.uk/",
+   "origin": "yc",
+   "openJobs": 6
+  },
+  {
+   "name": "Hedge",
+   "ats": "ashby",
+   "slug": "hedge",
+   "website": "https://www.hedgespecialty.com/",
+   "origin": "yc",
+   "openJobs": 16
+  },
+  {
+   "name": "HelloFresh",
+   "ats": "greenhouse",
+   "slug": "hellofresh",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 380
+  },
+  {
+   "name": "Heron",
+   "ats": "ashby",
+   "slug": "herondata",
+   "website": "https://www.herondata.io",
+   "origin": "yc",
+   "openJobs": 2
+  },
+  {
+   "name": "Hex",
+   "ats": "ashby",
+   "slug": "hex",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 39
+  },
+  {
+   "name": "Hive",
+   "ats": "greenhouse",
+   "slug": "hive",
+   "website": "http://www.hive.co",
+   "origin": "yc",
+   "openJobs": 10
+  },
+  {
+   "name": "HockeyStack",
+   "ats": "ashby",
+   "slug": "hockeystack",
+   "website": "https://hockeystack.com",
+   "origin": "yc",
+   "openJobs": 3
+  },
+  {
+   "name": "Homebase",
+   "ats": "ashby",
+   "slug": "homebase",
+   "website": "http://www.gethomebase.com/",
+   "origin": "yc",
+   "openJobs": 18
+  },
+  {
+   "name": "Hootsuite",
+   "ats": "greenhouse",
+   "slug": "hootsuite",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 9
+  },
+  {
+   "name": "Hotplate",
+   "ats": "ashby",
+   "slug": "hotplate",
+   "website": "http://www.hotplate.com/",
+   "origin": "yc",
+   "openJobs": 4
+  },
+  {
+   "name": "HUD",
+   "ats": "ashby",
+   "slug": "hud",
+   "website": "https://www.hud.ai",
+   "origin": "yc",
+   "openJobs": 38
+  },
+  {
+   "name": "Hugging Face",
+   "ats": "workable",
+   "slug": "huggingface",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 6
+  },
+  {
+   "name": "Humaans",
+   "ats": "ashby",
+   "slug": "humaans",
+   "website": "https://humaans.io",
+   "origin": "yc",
+   "openJobs": 12
+  },
+  {
+   "name": "Human Archive",
+   "ats": "ashby",
+   "slug": "humanarchive",
+   "website": "https://www.humanarchive.ai/",
+   "origin": "yc",
+   "openJobs": 22
+  },
+  {
+   "name": "Human Interest",
+   "ats": "greenhouse",
+   "slug": "humaninterest",
+   "website": "http://humaninterest.com",
+   "origin": "yc",
+   "openJobs": 61
+  },
+  {
+   "name": "Hyperbound",
+   "ats": "ashby",
+   "slug": "hyperbound",
+   "website": "https://hyperbound.ai",
+   "origin": "yc",
+   "openJobs": 9
+  },
+  {
+   "name": "Hypercubic",
+   "ats": "ashby",
+   "slug": "hypercubic",
+   "website": "https://www.hypercubic.ai/",
+   "origin": "yc",
+   "openJobs": 2
+  },
+  {
+   "name": "Icarus",
+   "ats": "greenhouse",
+   "slug": "icarus",
+   "website": "https://www.icarus.one/",
+   "origin": "yc",
+   "openJobs": 27
+  },
+  {
+   "name": "idler",
+   "ats": "ashby",
+   "slug": "idler",
+   "website": "https://idler.ai/",
+   "origin": "yc",
+   "openJobs": 3
+  },
+  {
+   "name": "Immutable",
+   "ats": "lever",
+   "slug": "immutable",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 4
+  },
+  {
+   "name": "IMT Care",
+   "ats": "greenhouse",
+   "slug": "imt",
+   "website": "https://www.imt.care",
+   "origin": "yc",
+   "openJobs": 2
+  },
+  {
+   "name": "Infera",
+   "ats": "ashby",
+   "slug": "infera",
+   "website": "https://www.infera.bio",
+   "origin": "yc",
+   "openJobs": 1
+  },
+  {
+   "name": "Infinite",
+   "ats": "ashby",
+   "slug": "infinite",
+   "website": "https://infinite.net",
+   "origin": "yc",
+   "openJobs": 3
+  },
+  {
+   "name": "Infisical",
+   "ats": "ashby",
+   "slug": "infisical",
+   "website": "https://infisical.com",
+   "origin": "yc",
+   "openJobs": 12
+  },
+  {
+   "name": "InfluxData",
+   "ats": "ashby",
+   "slug": "influxdata",
+   "website": "https://influxdata.com",
+   "origin": "yc",
+   "openJobs": 9
+  },
+  {
+   "name": "Inkeep",
+   "ats": "ashby",
+   "slug": "inkeep",
+   "website": "https://inkeep.com",
+   "origin": "yc",
+   "openJobs": 3
+  },
+  {
+   "name": "Innate",
+   "ats": "ashby",
+   "slug": "innate",
+   "website": "https://innate.bot",
+   "origin": "yc",
+   "openJobs": 3
+  },
+  {
+   "name": "Instacart",
+   "ats": "greenhouse",
+   "slug": "instacart",
+   "website": "https://www.instacart.com",
+   "origin": "yc",
+   "openJobs": 90
+  },
+  {
+   "name": "Instawork",
+   "ats": "greenhouse",
+   "slug": "instawork",
+   "website": "http://instawork.com",
+   "origin": "yc",
+   "openJobs": 55
+  },
+  {
+   "name": "Intercom",
+   "ats": "greenhouse",
+   "slug": "intercom",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 109
+  },
+  {
+   "name": "Interfere",
+   "ats": "ashby",
+   "slug": "interfere",
+   "website": "https://interfere.com",
+   "origin": "yc",
+   "openJobs": 7
+  },
+  {
+   "name": "Invert",
+   "ats": "ashby",
+   "slug": "invert",
+   "website": "http://www.invertbio.com/",
+   "origin": "yc",
+   "openJobs": 6
+  },
+  {
+   "name": "Invopop",
+   "ats": "ashby",
+   "slug": "invopop",
+   "website": "https://www.invopop.com/",
+   "origin": "yc",
+   "openJobs": 2
+  },
+  {
+   "name": "Jeevy Fabrication",
+   "ats": "ashby",
+   "slug": "jeevyfabrication",
+   "website": "https://www.jeevyfabrication.com/",
+   "origin": "yc",
+   "openJobs": 3
+  },
+  {
+   "name": "JetBrains",
+   "ats": "greenhouse",
+   "slug": "jetbrains",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 32
+  },
+  {
+   "name": "Jiga",
+   "ats": "ashby",
+   "slug": "jiga",
+   "website": "https://jiga.io",
+   "origin": "yc",
+   "openJobs": 8
+  },
+  {
+   "name": "Juicebox",
+   "ats": "ashby",
+   "slug": "juicebox",
+   "website": "https://juicebox.ai/",
+   "origin": "yc",
+   "openJobs": 38
+  },
+  {
+   "name": "Julius",
+   "ats": "ashby",
+   "slug": "julius",
+   "website": "https://julius.ai",
+   "origin": "yc",
+   "openJobs": 6
+  },
+  {
+   "name": "Junction",
+   "ats": "ashby",
+   "slug": "junction",
+   "website": "https://www.junction.com/",
+   "origin": "yc",
+   "openJobs": 16
+  },
+  {
+   "name": "Juno",
+   "ats": "greenhouse",
+   "slug": "juno",
+   "website": "https://junocompanion.com/",
+   "origin": "yc",
+   "openJobs": 12
+  },
+  {
+   "name": "Kalshi",
+   "ats": "ashby",
+   "slug": "kalshi",
+   "website": "https://www.kalshi.com",
+   "origin": "yc",
+   "openJobs": 32
+  },
+  {
+   "name": "Kastle",
+   "ats": "ashby",
+   "slug": "kastle",
+   "website": "https://kastle.ai/",
+   "origin": "yc",
+   "openJobs": 18
+  },
+  {
+   "name": "Kingdom",
+   "ats": "ashby",
+   "slug": "kingdom",
+   "website": "https://kingdomsuperculture.com",
+   "origin": "yc",
+   "openJobs": 5
+  },
+  {
+   "name": "Kivo Health",
+   "ats": "ashby",
+   "slug": "kivo-health",
+   "website": "https://kivohealth.com",
+   "origin": "yc",
+   "openJobs": 4
+  },
+  {
+   "name": "Klarify",
+   "ats": "ashby",
+   "slug": "klarify",
+   "website": "https://www.klarify.ca/",
+   "origin": "yc",
+   "openJobs": 2
+  },
+  {
+   "name": "Knowtex",
+   "ats": "ashby",
+   "slug": "knowtex",
+   "website": "http://www.knowtex.ai/",
+   "origin": "yc",
+   "openJobs": 4
+  },
+  {
+   "name": "Kodex",
+   "ats": "ashby",
+   "slug": "kodex",
+   "website": "https://www.kodexglobal.com",
+   "origin": "yc",
+   "openJobs": 7
+  },
+  {
+   "name": "Kombo",
+   "ats": "ashby",
+   "slug": "kombo",
+   "website": "https://kombo.dev",
+   "origin": "yc",
+   "openJobs": 17
+  },
+  {
+   "name": "Kong",
+   "ats": "ashby",
+   "slug": "kong",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 107
+  },
+  {
+   "name": "Lance",
+   "ats": "ashby",
+   "slug": "lance",
+   "website": "https://www.lance.live",
+   "origin": "yc",
+   "openJobs": 7
+  },
+  {
+   "name": "Langdock",
+   "ats": "ashby",
+   "slug": "langdock",
+   "website": "https://langdock.com",
+   "origin": "yc",
+   "openJobs": 11
+  },
+  {
+   "name": "Lapel",
+   "ats": "ashby",
+   "slug": "lapel",
+   "website": "https://lapel.com/",
+   "origin": "yc",
+   "openJobs": 8
+  },
+  {
+   "name": "Latent",
+   "ats": "ashby",
+   "slug": "latent",
+   "website": "https://latenthealth.com",
+   "origin": "yc",
+   "openJobs": 24
+  },
+  {
+   "name": "Lattice",
+   "ats": "greenhouse",
+   "slug": "lattice",
+   "website": "https://lattice.com",
+   "origin": "yc",
+   "openJobs": 6
+  },
+  {
+   "name": "LaunchDarkly",
+   "ats": "greenhouse",
+   "slug": "launchdarkly",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 44
+  },
+  {
+   "name": "Ledgy",
+   "ats": "greenhouse",
+   "slug": "ledgy",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 3
+  },
+  {
+   "name": "Legalist",
+   "ats": "greenhouse",
+   "slug": "legalist",
+   "website": "https://www.legalist.com",
+   "origin": "yc",
+   "openJobs": 3
+  },
+  {
+   "name": "Legion Health",
+   "ats": "ashby",
+   "slug": "legionhealth",
+   "website": "https://legionhealth.com",
+   "origin": "yc",
+   "openJobs": 157
+  },
+  {
+   "name": "Legora",
+   "ats": "ashby",
+   "slug": "legora",
+   "website": "https://www.legora.com/",
+   "origin": "yc",
+   "openJobs": 317
+  },
+  {
+   "name": "Lightdash",
+   "ats": "ashby",
+   "slug": "lightdash",
+   "website": "http://lightdash.com/",
+   "origin": "yc",
+   "openJobs": 3
+  },
+  {
+   "name": "Lightspeed",
+   "ats": "ashby",
+   "slug": "lightspeed",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 10
+  },
+  {
+   "name": "Limrun",
+   "ats": "greenhouse",
+   "slug": "limrun",
+   "website": "https://lim.run",
+   "origin": "yc",
+   "openJobs": 4
+  },
+  {
+   "name": "Linear",
+   "ats": "ashby",
+   "slug": "linear",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 32
+  },
+  {
+   "name": "LiteLLM",
+   "ats": "ashby",
+   "slug": "litellm",
+   "website": "https://www.litellm.ai/",
+   "origin": "yc",
+   "openJobs": 12
+  },
+  {
+   "name": "LiveFlow",
+   "ats": "ashby",
+   "slug": "liveflow",
+   "website": "https://www.liveflow.com",
+   "origin": "yc",
+   "openJobs": 5
+  },
+  {
+   "name": "Lob",
+   "ats": "greenhouse",
+   "slug": "lob",
+   "website": "http://lob.com",
+   "origin": "yc",
+   "openJobs": 5
+  },
+  {
+   "name": "Lucis",
+   "ats": "ashby",
+   "slug": "lucis",
+   "website": "https://www.lucis.life",
+   "origin": "yc",
+   "openJobs": 13
+  },
+  {
+   "name": "Luminai",
+   "ats": "ashby",
+   "slug": "luminai",
+   "website": "https://www.luminai.com",
+   "origin": "yc",
+   "openJobs": 16
+  },
+  {
+   "name": "Luminal",
+   "ats": "ashby",
+   "slug": "luminal",
+   "website": "https://luminal.com",
+   "origin": "yc",
+   "openJobs": 5
+  },
+  {
+   "name": "Lunar",
+   "ats": "ashby",
+   "slug": "lunar",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 15
+  },
+  {
+   "name": "Lyft",
+   "ats": "greenhouse",
+   "slug": "lyft",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 166
+  },
+  {
+   "name": "Mach9",
+   "ats": "ashby",
+   "slug": "mach9",
+   "website": "https://www.mach9.ai/",
+   "origin": "yc",
+   "openJobs": 15
+  },
+  {
+   "name": "Magic",
+   "ats": "ashby",
+   "slug": "magic",
+   "website": "https://getmagic.com/",
+   "origin": "yc",
+   "openJobs": 11
+  },
+  {
+   "name": "Magic Patterns",
+   "ats": "ashby",
+   "slug": "magicpatterns",
+   "website": "https://www.magicpatterns.com/",
+   "origin": "yc",
+   "openJobs": 7
+  },
+  {
+   "name": "MangoDesk",
+   "ats": "ashby",
+   "slug": "mangodesk",
+   "website": "https://www.mangodesk.com/",
+   "origin": "yc",
+   "openJobs": 2
+  },
+  {
+   "name": "Marble",
+   "ats": "ashby",
+   "slug": "marble",
+   "website": "https://joinmarble.ai/",
+   "origin": "yc",
+   "openJobs": 4
+  },
+  {
+   "name": "Mashgin",
+   "ats": "lever",
+   "slug": "mashgin",
+   "website": "http://mashgin.com",
+   "origin": "yc",
+   "openJobs": 10
+  },
+  {
+   "name": "May Mobility",
+   "ats": "greenhouse",
+   "slug": "maymobility",
+   "website": "http://maymobility.com",
+   "origin": "yc",
+   "openJobs": 37
+  },
+  {
+   "name": "Mednet",
+   "ats": "ashby",
+   "slug": "mednet",
+   "website": "https://www.themednet.org",
+   "origin": "yc",
+   "openJobs": 3
+  },
+  {
+   "name": "Meesho",
+   "ats": "lever",
+   "slug": "meesho",
+   "website": "http://www.meesho.com",
+   "origin": "yc",
+   "openJobs": 53
+  },
+  {
+   "name": "Mem0",
+   "ats": "ashby",
+   "slug": "mem0",
+   "website": "https://mem0.ai",
+   "origin": "yc",
+   "openJobs": 1
+  },
+  {
+   "name": "Mercura",
+   "ats": "ashby",
+   "slug": "mercura",
+   "website": "https://www.mercura.ai",
+   "origin": "yc",
+   "openJobs": 9
+  },
+  {
+   "name": "Mercury",
+   "ats": "greenhouse",
+   "slug": "mercury",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 78
+  },
+  {
+   "name": "Meru Health",
+   "ats": "greenhouse",
+   "slug": "meruhealth",
+   "website": "http://www.meruhealth.com",
+   "origin": "yc",
+   "openJobs": 1
+  },
+  {
+   "name": "Mesh",
+   "ats": "ashby",
+   "slug": "mesh",
+   "website": "http://www.usemesh.com",
+   "origin": "yc",
+   "openJobs": 25
+  },
+  {
+   "name": "Metal",
+   "ats": "ashby",
+   "slug": "metal",
+   "website": "https://metal.ai/",
+   "origin": "yc",
+   "openJobs": 1
+  },
+  {
+   "name": "Meticulous",
+   "ats": "ashby",
+   "slug": "meticulous",
+   "website": "https://www.meticulous.ai",
+   "origin": "yc",
+   "openJobs": 6
+  },
+  {
+   "name": "Metriport",
+   "ats": "ashby",
+   "slug": "metriport",
+   "website": "https://metriport.com/",
+   "origin": "yc",
+   "openJobs": 17
+  },
+  {
+   "name": "Middesk",
+   "ats": "ashby",
+   "slug": "middesk",
+   "website": "http://www.middesk.com",
+   "origin": "yc",
+   "openJobs": 18
+  },
+  {
+   "name": "Mintlify",
+   "ats": "ashby",
+   "slug": "mintlify",
+   "website": "https://mintlify.com",
+   "origin": "yc",
+   "openJobs": 15
+  },
+  {
+   "name": "Miro",
+   "ats": "ashby",
+   "slug": "miro",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 21
+  },
+  {
+   "name": "Miso Labs",
+   "ats": "ashby",
+   "slug": "misolabs",
+   "website": "https://misolabs.ai",
+   "origin": "yc",
+   "openJobs": 1
+  },
+  {
+   "name": "Mixpanel",
+   "ats": "greenhouse",
+   "slug": "mixpanel",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 44
+  },
+  {
+   "name": "Modal",
+   "ats": "ashby",
+   "slug": "modal",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 44
+  },
+  {
+   "name": "Modern Health",
+   "ats": "greenhouse",
+   "slug": "modernhealth",
+   "website": "https://www.modernhealth.com/",
+   "origin": "yc",
+   "openJobs": 2
+  },
+  {
+   "name": "Modern Treasury",
+   "ats": "ashby",
+   "slug": "moderntreasury",
+   "website": "http://www.moderntreasury.com/",
+   "origin": "yc",
+   "openJobs": 8
+  },
+  {
+   "name": "Mollie",
+   "ats": "ashby",
+   "slug": "mollie",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 51
+  },
+  {
+   "name": "Momentic",
+   "ats": "ashby",
+   "slug": "momentic",
+   "website": "https://momentic.ai",
+   "origin": "yc",
+   "openJobs": 5
+  },
+  {
+   "name": "Monday",
+   "ats": "personio",
+   "slug": "monday",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 9
+  },
+  {
+   "name": "MongoDB",
+   "ats": "greenhouse",
+   "slug": "mongodb",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 374
+  },
+  {
+   "name": "Monzo",
+   "ats": "greenhouse",
+   "slug": "monzo",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 58
+  },
+  {
+   "name": "Morph",
+   "ats": "greenhouse",
+   "slug": "morph",
+   "website": "https://morphllm.com",
+   "origin": "yc",
+   "openJobs": 4
+  },
+  {
+   "name": "MorphoAI",
+   "ats": "ashby",
+   "slug": "morpho",
+   "website": "https://morpho.ai/",
+   "origin": "yc",
+   "openJobs": 12
+  },
+  {
+   "name": "Mosaic",
+   "ats": "ashby",
+   "slug": "mosaic",
+   "website": "https://mosaic.so",
+   "origin": "yc",
+   "openJobs": 5
+  },
+  {
+   "name": "Moss",
+   "ats": "ashby",
+   "slug": "moss",
+   "website": "https://moss.dev",
+   "origin": "yc",
+   "openJobs": 33
+  },
+  {
+   "name": "Multiply Labs",
+   "ats": "lever",
+   "slug": "multiplylabs",
+   "website": "http://multiplylabs.com/",
+   "origin": "yc",
+   "openJobs": 13
+  },
+  {
+   "name": "Mural",
+   "ats": "ashby",
+   "slug": "mural",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 12
+  },
+  {
+   "name": "Mutiny",
+   "ats": "ashby",
+   "slug": "mutiny",
+   "website": "https://www.mutinyhq.com",
+   "origin": "yc",
+   "openJobs": 7
+  },
+  {
+   "name": "Mytos",
+   "ats": "lever",
+   "slug": "mytos",
+   "website": "https://www.mytos.bio",
+   "origin": "yc",
+   "openJobs": 13
+  },
+  {
+   "name": "N26",
+   "ats": "greenhouse",
+   "slug": "n26",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 36
+  },
+  {
+   "name": "Nabis",
+   "ats": "greenhouse",
+   "slug": "nabis",
+   "website": "https://www.nabis.com/",
+   "origin": "yc",
+   "openJobs": 18
+  },
+  {
+   "name": "Nango",
+   "ats": "ashby",
+   "slug": "nango",
+   "website": "https://nango.dev",
+   "origin": "yc",
+   "openJobs": 7
+  },
+  {
+   "name": "Nash",
+   "ats": "ashby",
+   "slug": "nash",
+   "website": "https://www.usenash.com/",
+   "origin": "yc",
+   "openJobs": 23
+  },
+  {
+   "name": "Nectar",
+   "ats": "ashby",
+   "slug": "nectar",
+   "website": "https://nectarclimate.com",
+   "origin": "yc",
+   "openJobs": 23
+  },
+  {
+   "name": "Neon",
+   "ats": "lever",
+   "slug": "neon",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 7
+  },
+  {
+   "name": "Netlify",
+   "ats": "greenhouse",
+   "slug": "netlify",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 5
+  },
+  {
+   "name": "Netomi",
+   "ats": "lever",
+   "slug": "netomi",
+   "website": "https://netomi.com",
+   "origin": "yc",
+   "openJobs": 20
+  },
+  {
+   "name": "Newton",
+   "ats": "greenhouse",
+   "slug": "newton",
+   "website": "https://joinnewton.com",
+   "origin": "yc",
+   "openJobs": 3
+  },
+  {
+   "name": "Nexthink",
+   "ats": "smartrecruiters",
+   "slug": "nexthink",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 64
+  },
+  {
+   "name": "Ninja Van",
+   "ats": "lever",
+   "slug": "ninjavan",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 141
+  },
+  {
+   "name": "Nira Energy",
+   "ats": "greenhouse",
+   "slug": "niraenergy",
+   "website": "https://www.niraenergy.com/",
+   "origin": "yc",
+   "openJobs": 4
+  },
+  {
+   "name": "Nium",
+   "ats": "lever",
+   "slug": "nium",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 25
+  },
+  {
+   "name": "Nomic Bio",
+   "ats": "ashby",
+   "slug": "nomic",
+   "website": "http://www.nomic.bio",
+   "origin": "yc",
+   "openJobs": 7
+  },
+  {
+   "name": "Nord Security",
+   "ats": "ashby",
+   "slug": "nord-security",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 126
+  },
+  {
+   "name": "Notabene",
+   "ats": "ashby",
+   "slug": "notabene",
+   "website": "https://notabene.id",
+   "origin": "yc",
+   "openJobs": 7
+  },
+  {
+   "name": "Notion",
+   "ats": "ashby",
+   "slug": "notion",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 154
+  },
+  {
+   "name": "Nova Credit",
+   "ats": "greenhouse",
+   "slug": "novacredit",
+   "website": "http://www.novacredit.com/",
+   "origin": "yc",
+   "openJobs": 8
+  },
+  {
+   "name": "Novig",
+   "ats": "ashby",
+   "slug": "novig",
+   "website": "https://www.novig.com",
+   "origin": "yc",
+   "openJobs": 12
+  },
+  {
+   "name": "Nowadays",
+   "ats": "ashby",
+   "slug": "nowadays",
+   "website": "http://nowadays.ai/",
+   "origin": "yc",
+   "openJobs": 3
+  },
+  {
+   "name": "Nox Metals",
+   "ats": "ashby",
+   "slug": "nox-metals",
+   "website": "https://noxmetals.co/",
+   "origin": "yc",
+   "openJobs": 36
+  },
+  {
+   "name": "Numeral",
+   "ats": "ashby",
+   "slug": "numeral",
+   "website": "https://www.numeral.com/",
+   "origin": "yc",
+   "openJobs": 21
+  },
+  {
+   "name": "Odeko",
+   "ats": "greenhouse",
+   "slug": "odeko",
+   "website": "http://www.odeko.com",
+   "origin": "yc",
+   "openJobs": 25
+  },
+  {
+   "name": "Odys Aviation",
+   "ats": "ashby",
+   "slug": "odys-aviation",
+   "website": "https://www.odysaviation.com/",
+   "origin": "yc",
+   "openJobs": 16
+  },
+  {
+   "name": "OffDeal",
+   "ats": "ashby",
+   "slug": "offdeal",
+   "website": "https://offdeal.io",
+   "origin": "yc",
+   "openJobs": 5
+  },
+  {
+   "name": "Offstream",
+   "ats": "ashby",
+   "slug": "offstream",
+   "website": "https://www.useoffstream.com/",
+   "origin": "yc",
+   "openJobs": 1
+  },
+  {
+   "name": "Okta",
+   "ats": "greenhouse",
+   "slug": "okta",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 375
+  },
+  {
+   "name": "One Robot",
+   "ats": "ashby",
+   "slug": "onerobot",
+   "website": "https://www.onerobot.io/",
+   "origin": "yc",
+   "openJobs": 3
+  },
+  {
+   "name": "OneChronos",
+   "ats": "ashby",
+   "slug": "onechronos",
+   "website": "https://www.onechronos.com/",
+   "origin": "yc",
+   "openJobs": 1
+  },
+  {
+   "name": "Oneleet",
+   "ats": "ashby",
+   "slug": "oneleet",
+   "website": "https://www.oneleet.com/?utm_source=yc&utm_medium=bookface",
+   "origin": "yc",
+   "openJobs": 13
+  },
+  {
+   "name": "OneSchema",
+   "ats": "ashby",
+   "slug": "oneschema",
+   "website": "https://www.oneschema.co",
+   "origin": "yc",
+   "openJobs": 2
+  },
+  {
+   "name": "OpenAI",
+   "ats": "ashby",
+   "slug": "openai",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 818
+  },
+  {
+   "name": "Opencall",
+   "ats": "ashby",
+   "slug": "opencall",
+   "website": "https://opencall.ai",
+   "origin": "yc",
+   "openJobs": 5
+  },
+  {
+   "name": "OpenWork",
+   "ats": "greenhouse",
+   "slug": "openwork",
+   "website": "https://openworklabs.com",
+   "origin": "yc",
+   "openJobs": 17
+  },
+  {
+   "name": "Ophelia",
+   "ats": "greenhouse",
+   "slug": "ophelia",
+   "website": "https://ophelia.com",
+   "origin": "yc",
+   "openJobs": 16
+  },
+  {
+   "name": "Orbital Operations",
+   "ats": "greenhouse",
+   "slug": "orbitaloperations",
+   "website": "https://www.orbitalops.tech/",
+   "origin": "yc",
+   "openJobs": 5
+  },
+  {
+   "name": "Osmosis",
+   "ats": "greenhouse",
+   "slug": "osmosis",
+   "website": "https://osmosis.ai/",
+   "origin": "yc",
+   "openJobs": 7
+  },
+  {
+   "name": "Outreach",
+   "ats": "lever",
+   "slug": "outreach",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 21
+  },
+  {
+   "name": "Outset",
+   "ats": "ashby",
+   "slug": "outset",
+   "website": "https://outset.ai/",
+   "origin": "yc",
+   "openJobs": 34
+  },
+  {
+   "name": "Overview",
+   "ats": "ashby",
+   "slug": "overview",
+   "website": "https://overview.ai",
+   "origin": "yc",
+   "openJobs": 63
+  },
+  {
+   "name": "Padlet",
+   "ats": "ashby",
+   "slug": "padlet",
+   "website": "https://padlet.com",
+   "origin": "yc",
+   "openJobs": 20
+  },
+  {
+   "name": "PagerDuty",
+   "ats": "greenhouse",
+   "slug": "pagerduty",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 47
+  },
+  {
+   "name": "Pair Team",
+   "ats": "greenhouse",
+   "slug": "pairteam",
+   "website": "https://pairteam.com/",
+   "origin": "yc",
+   "openJobs": 1
+  },
+  {
+   "name": "Paradigm",
+   "ats": "ashby",
+   "slug": "paradigm",
+   "website": "https://www.paradigmai.com/",
+   "origin": "yc",
+   "openJobs": 7
+  },
+  {
+   "name": "Parallel Bio",
+   "ats": "ashby",
+   "slug": "parallel-bio",
+   "website": "http://parallel.bio",
+   "origin": "yc",
+   "openJobs": 9
+  },
+  {
+   "name": "Parameter",
+   "ats": "ashby",
+   "slug": "parameter",
+   "website": "https://parameter.ai?utm_source=ycombinator&utm_medium=referral&utm_campaign=parameter-profile",
+   "origin": "yc",
+   "openJobs": 7
+  },
+  {
+   "name": "PatSnap",
+   "ats": "recruitee",
+   "slug": "patsnap",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 44
+  },
+  {
+   "name": "Pax Historia",
+   "ats": "ashby",
+   "slug": "pax-historia",
+   "website": "https://www.paxhistoria.co",
+   "origin": "yc",
+   "openJobs": 2
+  },
+  {
+   "name": "Pelago",
+   "ats": "greenhouse",
+   "slug": "pelago",
+   "website": "https://www.pelagohealth.com",
+   "origin": "yc",
+   "openJobs": 13
+  },
+  {
+   "name": "People.ai",
+   "ats": "lever",
+   "slug": "people-ai",
+   "website": "https://people.ai",
+   "origin": "yc",
+   "openJobs": 6
+  },
+  {
+   "name": "PermitFlow",
+   "ats": "ashby",
+   "slug": "permitflow",
+   "website": "http://www.permitflow.com",
+   "origin": "yc",
+   "openJobs": 35
+  },
+  {
+   "name": "Perplexity",
+   "ats": "ashby",
+   "slug": "perplexity",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 137
+  },
+  {
+   "name": "Personio",
+   "ats": "recruitee",
+   "slug": "personio",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 1
+  },
+  {
+   "name": "Pharos",
+   "ats": "ashby",
+   "slug": "pharos",
+   "website": "https://pharos.health/",
+   "origin": "yc",
+   "openJobs": 3
+  },
+  {
+   "name": "Phoenix",
+   "ats": "ashby",
+   "slug": "phoenix",
+   "website": "https://phoenix.ca",
+   "origin": "yc",
+   "openJobs": 9
+  },
+  {
+   "name": "Phonely",
+   "ats": "ashby",
+   "slug": "phonely",
+   "website": "https://phonely.ai",
+   "origin": "yc",
+   "openJobs": 17
+  },
+  {
+   "name": "Picnic",
+   "ats": "smartrecruiters",
+   "slug": "picnic",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 2
+  },
+  {
+   "name": "PicnicAI",
+   "ats": "greenhouse",
+   "slug": "picnicai",
+   "website": "https://picnic.ai",
+   "origin": "yc",
+   "openJobs": 1
+  },
+  {
+   "name": "Pinecone",
+   "ats": "ashby",
+   "slug": "pinecone",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 6
+  },
+  {
+   "name": "Pinterest",
+   "ats": "greenhouse",
+   "slug": "pinterest",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 168
+  },
+  {
+   "name": "Pirros",
+   "ats": "ashby",
+   "slug": "pirros",
+   "website": "http://pirros.com",
+   "origin": "yc",
+   "openJobs": 4
+  },
+  {
+   "name": "Pivot Robotics",
+   "ats": "ashby",
+   "slug": "pivotrobotics",
+   "website": "https://pivotrobotics.com",
+   "origin": "yc",
+   "openJobs": 5
+  },
+  {
+   "name": "Plaid",
+   "ats": "ashby",
+   "slug": "plaid",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 141
+  },
+  {
+   "name": "PlanetScale",
+   "ats": "greenhouse",
+   "slug": "planetscale",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 12
+  },
+  {
+   "name": "Pleo",
+   "ats": "ashby",
+   "slug": "pleo",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 38
+  },
+  {
+   "name": "Pocket",
+   "ats": "ashby",
+   "slug": "pocket",
+   "website": "https://heypocket.com/now",
+   "origin": "yc",
+   "openJobs": 17
+  },
+  {
+   "name": "PointOne",
+   "ats": "ashby",
+   "slug": "pointone",
+   "website": "https://pointone.com/",
+   "origin": "yc",
+   "openJobs": 14
+  },
+  {
+   "name": "Polymath",
+   "ats": "ashby",
+   "slug": "polymath",
+   "website": "https://polymathlabs.ai/",
+   "origin": "yc",
+   "openJobs": 4
+  },
+  {
+   "name": "Popl",
+   "ats": "ashby",
+   "slug": "popl",
+   "website": "https://popl.co/",
+   "origin": "yc",
+   "openJobs": 6
+  },
+  {
+   "name": "Porter",
+   "ats": "greenhouse",
+   "slug": "porter",
+   "website": "https://porter.run",
+   "origin": "yc",
+   "openJobs": 5
+  },
+  {
+   "name": "Posh",
+   "ats": "ashby",
+   "slug": "posh",
+   "website": "https://www.poshenergy.com",
+   "origin": "yc",
+   "openJobs": 9
+  },
+  {
+   "name": "PostEra",
+   "ats": "lever",
+   "slug": "postera",
+   "website": "https://postera.ai/",
+   "origin": "yc",
+   "openJobs": 2
+  },
+  {
+   "name": "PostHog",
+   "ats": "ashby",
+   "slug": "posthog",
+   "website": "https://www.posthog.com",
+   "origin": "yc",
+   "openJobs": 10
+  },
+  {
+   "name": "Postscript",
+   "ats": "greenhouse",
+   "slug": "postscript",
+   "website": "https://postscript.io",
+   "origin": "yc",
+   "openJobs": 3
+  },
+  {
+   "name": "Prelim",
+   "ats": "ashby",
+   "slug": "prelim",
+   "website": "https://prelim.com/",
+   "origin": "yc",
+   "openJobs": 7
+  },
+  {
+   "name": "Probably Genetic",
+   "ats": "ashby",
+   "slug": "probablygenetic",
+   "website": "https://www.probablygenetic.com/",
+   "origin": "yc",
+   "openJobs": 4
+  },
+  {
+   "name": "Prodigal",
+   "ats": "greenhouse",
+   "slug": "prodigal",
+   "website": "https://prodigaltech.com/",
+   "origin": "yc",
+   "openJobs": 14
+  },
+  {
+   "name": "Prolific",
+   "ats": "greenhouse",
+   "slug": "prolific",
+   "website": "https://www.prolific.com",
+   "origin": "yc",
+   "openJobs": 28
+  },
+  {
+   "name": "Promise",
+   "ats": "ashby",
+   "slug": "promise",
+   "website": "http://promise-pay.com",
+   "origin": "yc",
+   "openJobs": 12
+  },
+  {
+   "name": "Proof of Human",
+   "ats": "ashby",
+   "slug": "proofofhuman",
+   "website": "https://poh.org",
+   "origin": "yc",
+   "openJobs": 3
+  },
+  {
+   "name": "Prospa",
+   "ats": "greenhouse",
+   "slug": "prospa",
+   "website": "https://getprospa.com",
+   "origin": "yc",
+   "openJobs": 6
+  },
+  {
+   "name": "Prosper",
+   "ats": "lever",
+   "slug": "prosper",
+   "website": "https://www.getprosper.ai?utm_source=yc&utm_medium=directory&utm_campaign=yc_directory",
+   "origin": "yc",
+   "openJobs": 11
+  },
+  {
+   "name": "Proton",
+   "ats": "greenhouse",
+   "slug": "proton",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 13
+  },
+  {
+   "name": "Provision",
+   "ats": "ashby",
+   "slug": "provision",
+   "website": "https://provision.com",
+   "origin": "yc",
+   "openJobs": 4
+  },
+  {
+   "name": "Pulse",
+   "ats": "ashby",
+   "slug": "pulse",
+   "website": "https://www.runpulse.com/",
+   "origin": "yc",
+   "openJobs": 11
+  },
+  {
+   "name": "Pure",
+   "ats": "ashby",
+   "slug": "pure",
+   "website": "https://www.collectpure.com/",
+   "origin": "yc",
+   "openJobs": 5
+  },
+  {
+   "name": "Pushpay",
+   "ats": "greenhouse",
+   "slug": "pushpay",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 21
+  },
+  {
+   "name": "Pylon",
+   "ats": "ashby",
+   "slug": "pylon",
+   "website": "https://usepylon.com/?utm_source=bookface&utm_medium=referral&utm_campaign=pylon-profile",
+   "origin": "yc",
+   "openJobs": 25
+  },
+  {
+   "name": "Qonto",
+   "ats": "ashby",
+   "slug": "qonto",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 53
+  },
+  {
+   "name": "Quartzy",
+   "ats": "lever",
+   "slug": "quartzy",
+   "website": "https://www.quartzy.com",
+   "origin": "yc",
+   "openJobs": 1
+  },
+  {
+   "name": "Quicknode",
+   "ats": "ashby",
+   "slug": "quicknode",
+   "website": "https://www.quicknode.com",
+   "origin": "yc",
+   "openJobs": 2
+  },
+  {
+   "name": "Quindar",
+   "ats": "ashby",
+   "slug": "quindar",
+   "website": "https://www.quindar.space",
+   "origin": "yc",
+   "openJobs": 20
+  },
+  {
+   "name": "Qventus",
+   "ats": "greenhouse",
+   "slug": "qventus",
+   "website": "http://qventus.com",
+   "origin": "yc",
+   "openJobs": 18
+  },
+  {
+   "name": "RADAR",
+   "ats": "ashby",
+   "slug": "radar",
+   "website": "https://goradar.com",
+   "origin": "yc",
+   "openJobs": 19
+  },
+  {
+   "name": "Railway",
+   "ats": "ashby",
+   "slug": "railway",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 7
+  },
+  {
+   "name": "Raindrop",
+   "ats": "ashby",
+   "slug": "raindrop",
+   "website": "https://www.raindrop.ai",
+   "origin": "yc",
+   "openJobs": 9
+  },
+  {
+   "name": "Raisin",
+   "ats": "greenhouse",
+   "slug": "raisin",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 31
+  },
+  {
+   "name": "Rally",
+   "ats": "ashby",
+   "slug": "rallyuxr",
+   "website": "https://www.rallyuxr.com/",
+   "origin": "yc",
+   "openJobs": 1
+  },
+  {
+   "name": "Ramp",
+   "ats": "greenhouse",
+   "slug": "ramp",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 1
+  },
+  {
+   "name": "Reach",
+   "ats": "ashby",
+   "slug": "reach",
+   "website": "https://reachpower.com",
+   "origin": "yc",
+   "openJobs": 6
+  },
+  {
+   "name": "Reacher",
+   "ats": "ashby",
+   "slug": "reacher",
+   "website": "https://reacherapp.com/",
+   "origin": "yc",
+   "openJobs": 13
+  },
+  {
+   "name": "Ready",
+   "ats": "ashby",
+   "slug": "ready",
+   "website": "https://ready.net",
+   "origin": "yc",
+   "openJobs": 6
+  },
+  {
+   "name": "Reality Defender",
+   "ats": "ashby",
+   "slug": "realitydefender",
+   "website": "http://www.realitydefender.com",
+   "origin": "yc",
+   "openJobs": 5
+  },
+  {
+   "name": "Recall.ai",
+   "ats": "ashby",
+   "slug": "recall",
+   "website": "https://www.recall.ai",
+   "origin": "yc",
+   "openJobs": 5
+  },
+  {
+   "name": "Recidiviz",
+   "ats": "greenhouse",
+   "slug": "recidiviz",
+   "website": "https://www.recidiviz.org/",
+   "origin": "yc",
+   "openJobs": 12
+  },
+  {
+   "name": "Reddit",
+   "ats": "greenhouse",
+   "slug": "reddit",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 163
+  },
+  {
+   "name": "Reducto",
+   "ats": "ashby",
+   "slug": "reducto",
+   "website": "https://reducto.ai",
+   "origin": "yc",
+   "openJobs": 36
+  },
+  {
+   "name": "Reflex",
+   "ats": "greenhouse",
+   "slug": "reflex",
+   "website": "https://reflex.dev",
+   "origin": "yc",
+   "openJobs": 3
+  },
+  {
+   "name": "Reform",
+   "ats": "ashby",
+   "slug": "reform",
+   "website": "https://www.reformhq.com",
+   "origin": "yc",
+   "openJobs": 2
+  },
+  {
+   "name": "Relace",
+   "ats": "ashby",
+   "slug": "relace",
+   "website": "https://relace.ai",
+   "origin": "yc",
+   "openJobs": 2
+  },
+  {
+   "name": "Remote",
+   "ats": "greenhouse",
+   "slug": "remote",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 2
+  },
+  {
+   "name": "Render",
+   "ats": "ashby",
+   "slug": "render",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 35
+  },
+  {
+   "name": "Replit",
+   "ats": "ashby",
+   "slug": "replit",
+   "website": "https://replit.com",
+   "origin": "yc",
+   "openJobs": 28
+  },
+  {
+   "name": "Replo",
+   "ats": "ashby",
+   "slug": "replo",
+   "website": "https://replo.app/",
+   "origin": "yc",
+   "openJobs": 2
+  },
+  {
+   "name": "Rescale",
+   "ats": "ashby",
+   "slug": "rescale",
+   "website": "https://rescale.com",
+   "origin": "yc",
+   "openJobs": 18
+  },
+  {
+   "name": "Retell AI",
+   "ats": "ashby",
+   "slug": "retell-ai",
+   "website": "https://retellai.com",
+   "origin": "yc",
+   "openJobs": 18
+  },
+  {
+   "name": "RevenueCat",
+   "ats": "ashby",
+   "slug": "revenuecat",
+   "website": "https://www.revenuecat.com/",
+   "origin": "yc",
+   "openJobs": 19
+  },
+  {
+   "name": "Revise Robotics",
+   "ats": "ashby",
+   "slug": "reviserobotics",
+   "website": "https://www.reviserobotics.com/",
+   "origin": "yc",
+   "openJobs": 2
+  },
+  {
+   "name": "Riot",
+   "ats": "lever",
+   "slug": "tryriot",
+   "website": "https://tryriot.com/",
+   "origin": "yc",
+   "openJobs": 23
+  },
+  {
+   "name": "Riskified",
+   "ats": "greenhouse",
+   "slug": "riskified",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 37
+  },
+  {
+   "name": "Rivet",
+   "ats": "ashby",
+   "slug": "rivet",
+   "website": "https://rivet.dev",
+   "origin": "yc",
+   "openJobs": 26
+  },
+  {
+   "name": "Rivia.AI",
+   "ats": "ashby",
+   "slug": "rivia",
+   "website": "https://rivia.ai",
+   "origin": "yc",
+   "openJobs": 11
+  },
+  {
+   "name": "Robinhood",
+   "ats": "greenhouse",
+   "slug": "robinhood",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 150
+  },
+  {
+   "name": "Roboflow",
+   "ats": "ashby",
+   "slug": "roboflow",
+   "website": "https://roboflow.com",
+   "origin": "yc",
+   "openJobs": 38
+  },
+  {
+   "name": "Rocket Lab",
+   "ats": "greenhouse",
+   "slug": "rocketlab",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 540
+  },
+  {
+   "name": "Rollstack",
+   "ats": "ashby",
+   "slug": "rollstack",
+   "website": "https://www.rollstack.com",
+   "origin": "yc",
+   "openJobs": 2
+  },
+  {
+   "name": "Runa",
+   "ats": "ashby",
+   "slug": "runa",
+   "website": "http://runahr.com/",
+   "origin": "yc",
+   "openJobs": 1
+  },
+  {
+   "name": "Runway",
+   "ats": "ashby",
+   "slug": "runway",
+   "website": "https://runway.team",
+   "origin": "yc",
+   "openJobs": 3
+  },
+  {
+   "name": "Ryvn",
+   "ats": "ashby",
+   "slug": "ryvn",
+   "website": "https://ryvn.ai",
+   "origin": "yc",
+   "openJobs": 1
+  },
+  {
+   "name": "SafetyKit",
+   "ats": "ashby",
+   "slug": "safetykit",
+   "website": "https://www.safetykit.com/",
+   "origin": "yc",
+   "openJobs": 9
+  },
+  {
+   "name": "SalesPatriot",
+   "ats": "ashby",
+   "slug": "salespatriot",
+   "website": "https://www.salespatriot.com/",
+   "origin": "yc",
+   "openJobs": 8
+  },
+  {
+   "name": "Salient",
+   "ats": "ashby",
+   "slug": "salient",
+   "website": "https://www.trysalient.com",
+   "origin": "yc",
+   "openJobs": 13
+  },
+  {
+   "name": "Sapling.ai",
+   "ats": "lever",
+   "slug": "sapling",
+   "website": "https://sapling.ai",
+   "origin": "yc",
+   "openJobs": 1
+  },
+  {
+   "name": "Satispay",
+   "ats": "ashby",
+   "slug": "satispay",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 77
+  },
+  {
+   "name": "Scale AI",
+   "ats": "greenhouse",
+   "slug": "scaleai",
+   "website": "http://scale.com",
+   "origin": "yc",
+   "openJobs": 168
+  },
+  {
+   "name": "Scandit",
+   "ats": "greenhouse",
+   "slug": "scandit",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 9
+  },
+  {
+   "name": "Seek",
+   "ats": "smartrecruiters",
+   "slug": "seek",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 34
+  },
+  {
+   "name": "Sendbird",
+   "ats": "greenhouse",
+   "slug": "sendbird",
+   "website": "https://sendbird.com",
+   "origin": "yc",
+   "openJobs": 4
+  },
+  {
+   "name": "Sentry",
+   "ats": "ashby",
+   "slug": "sentry",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 39
+  },
+  {
+   "name": "Serif Health",
+   "ats": "ashby",
+   "slug": "serifhealth",
+   "website": "https://www.serifhealth.com",
+   "origin": "yc",
+   "openJobs": 3
+  },
+  {
+   "name": "SF Tensor",
+   "ats": "ashby",
+   "slug": "sf-tensor",
+   "website": "https://sf-tensor.com",
+   "origin": "yc",
+   "openJobs": 7
+  },
+  {
+   "name": "Shadeform",
+   "ats": "ashby",
+   "slug": "shadeform",
+   "website": "https://www.shadeform.ai/",
+   "origin": "yc",
+   "openJobs": 6
+  },
+  {
+   "name": "Shepherd",
+   "ats": "ashby",
+   "slug": "shepherd",
+   "website": "https://shepherdinsurance.com",
+   "origin": "yc",
+   "openJobs": 25
+  },
+  {
+   "name": "Short Story",
+   "ats": "ashby",
+   "slug": "shortstory",
+   "website": "https://shortstorybox.com",
+   "origin": "yc",
+   "openJobs": 19
+  },
+  {
+   "name": "Sieve",
+   "ats": "ashby",
+   "slug": "sieve",
+   "website": "https://sievedata.com/",
+   "origin": "yc",
+   "openJobs": 15
+  },
+  {
+   "name": "Sift",
+   "ats": "ashby",
+   "slug": "sift",
+   "website": "https://sift.com/",
+   "origin": "yc",
+   "openJobs": 7
+  },
+  {
+   "name": "SigNoz",
+   "ats": "ashby",
+   "slug": "signoz",
+   "website": "https://signoz.io",
+   "origin": "yc",
+   "openJobs": 13
+  },
+  {
+   "name": "Sim",
+   "ats": "ashby",
+   "slug": "sim",
+   "website": "https://sim.ai",
+   "origin": "yc",
+   "openJobs": 5
+  },
+  {
+   "name": "Simple AI",
+   "ats": "ashby",
+   "slug": "simple-ai",
+   "website": "https://www.usesimple.ai",
+   "origin": "yc",
+   "openJobs": 10
+  },
+  {
+   "name": "Skyways",
+   "ats": "lever",
+   "slug": "skyways",
+   "website": "http://skyways.com",
+   "origin": "yc",
+   "openJobs": 20
+  },
+  {
+   "name": "Slice",
+   "ats": "greenhouse",
+   "slug": "slice",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 24
+  },
+  {
+   "name": "Slope",
+   "ats": "ashby",
+   "slug": "slope",
+   "website": "http://www.slopepay.com",
+   "origin": "yc",
+   "openJobs": 2
+  },
+  {
+   "name": "Smartcuts",
+   "ats": "lever",
+   "slug": "smartcuts",
+   "website": "https://trysmartcuts.com/",
+   "origin": "yc",
+   "openJobs": 2
+  },
+  {
+   "name": "SnapMagic",
+   "ats": "ashby",
+   "slug": "snapmagic",
+   "website": "https://www.snapmagic.com",
+   "origin": "yc",
+   "openJobs": 7
+  },
+  {
+   "name": "Snappr",
+   "ats": "lever",
+   "slug": "snappr",
+   "website": "https://www.snappr.com",
+   "origin": "yc",
+   "openJobs": 18
+  },
+  {
+   "name": "Snowflake",
+   "ats": "ashby",
+   "slug": "snowflake",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 372
+  },
+  {
+   "name": "Snyk",
+   "ats": "ashby",
+   "slug": "snyk",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 39
+  },
+  {
+   "name": "SoFi",
+   "ats": "greenhouse",
+   "slug": "sofi",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 46
+  },
+  {
+   "name": "Sola",
+   "ats": "ashby",
+   "slug": "sola",
+   "website": "https://www.sola-solutions.com/",
+   "origin": "yc",
+   "openJobs": 7
+  },
+  {
+   "name": "Solidroad",
+   "ats": "ashby",
+   "slug": "solidroad",
+   "website": "https://solidroad.com",
+   "origin": "yc",
+   "openJobs": 9
+  },
+  {
+   "name": "Solve Intelligence",
+   "ats": "ashby",
+   "slug": "solveintelligence",
+   "website": "https://www.solveintelligence.com/",
+   "origin": "yc",
+   "openJobs": 18
+  },
+  {
+   "name": "Spaceium Inc",
+   "ats": "greenhouse",
+   "slug": "spaceium",
+   "website": "https://spaceium.com",
+   "origin": "yc",
+   "openJobs": 11
+  },
+  {
+   "name": "Spade",
+   "ats": "ashby",
+   "slug": "spade",
+   "website": "https://www.spade.com",
+   "origin": "yc",
+   "openJobs": 13
+  },
+  {
+   "name": "Speak",
+   "ats": "ashby",
+   "slug": "speak",
+   "website": "http://speak.com",
+   "origin": "yc",
+   "openJobs": 30
+  },
+  {
+   "name": "Spellbrush",
+   "ats": "ashby",
+   "slug": "spellbrush",
+   "website": "https://spellbrush.com",
+   "origin": "yc",
+   "openJobs": 11
+  },
+  {
+   "name": "Sphere",
+   "ats": "ashby",
+   "slug": "sphere",
+   "website": "https://www.getsphere.com/",
+   "origin": "yc",
+   "openJobs": 17
+  },
+  {
+   "name": "Spotify",
+   "ats": "lever",
+   "slug": "spotify",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 85
+  },
+  {
+   "name": "SpruceID",
+   "ats": "ashby",
+   "slug": "spruceid",
+   "website": "https://www.spruceid.com",
+   "origin": "yc",
+   "openJobs": 7
+  },
+  {
+   "name": "Spur",
+   "ats": "ashby",
+   "slug": "spur",
+   "website": "https://www.spurtest.com/",
+   "origin": "yc",
+   "openJobs": 3
+  },
+  {
+   "name": "Stability AI",
+   "ats": "greenhouse",
+   "slug": "stabilityai",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 1
+  },
+  {
+   "name": "Stable",
+   "ats": "ashby",
+   "slug": "stable",
+   "website": "https://useStable.com",
+   "origin": "yc",
+   "openJobs": 7
+  },
+  {
+   "name": "Staffbase",
+   "ats": "greenhouse",
+   "slug": "staffbase",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 29
+  },
+  {
+   "name": "Starling Bank",
+   "ats": "workable",
+   "slug": "starling-bank",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 102
+  },
+  {
+   "name": "Stepful",
+   "ats": "ashby",
+   "slug": "stepful",
+   "website": "https://www.stepful.com",
+   "origin": "yc",
+   "openJobs": 36
+  },
+  {
+   "name": "Stilta",
+   "ats": "ashby",
+   "slug": "stilta",
+   "website": "https://stilta.com",
+   "origin": "yc",
+   "openJobs": 3
+  },
+  {
+   "name": "Stream",
+   "ats": "ashby",
+   "slug": "stream",
+   "website": "http://www.stream.claims",
+   "origin": "yc",
+   "openJobs": 7
+  },
+  {
+   "name": "Stripe",
+   "ats": "greenhouse",
+   "slug": "stripe",
+   "website": "http://stripe.com",
+   "origin": "yc",
+   "openJobs": 766
+  },
+  {
+   "name": "SumUp",
+   "ats": "greenhouse",
+   "slug": "sumup",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 342
+  },
+  {
+   "name": "Supabase",
+   "ats": "ashby",
+   "slug": "supabase",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 70
+  },
+  {
+   "name": "Svix",
+   "ats": "ashby",
+   "slug": "svix",
+   "website": "https://www.svix.com",
+   "origin": "yc",
+   "openJobs": 3
+  },
+  {
+   "name": "Swayable",
+   "ats": "greenhouse",
+   "slug": "swayable",
+   "website": "http://swayable.com",
+   "origin": "yc",
+   "openJobs": 18
+  },
+  {
+   "name": "Sweep",
+   "ats": "ashby",
+   "slug": "sweep",
+   "website": "https://sweep.dev/",
+   "origin": "yc",
+   "openJobs": 7
+  },
+  {
+   "name": "Sweetspot",
+   "ats": "ashby",
+   "slug": "sweetspot",
+   "website": "https://www.sweetspot.so/",
+   "origin": "yc",
+   "openJobs": 1
+  },
+  {
+   "name": "Swiggy",
+   "ats": "smartrecruiters",
+   "slug": "swiggy",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 190
+  },
+  {
+   "name": "Sygaldry Technologies",
+   "ats": "ashby",
+   "slug": "sygaldry-technologies",
+   "website": "https://www.sygaldry.com",
+   "origin": "yc",
+   "openJobs": 17
+  },
+  {
+   "name": "Synthesia",
+   "ats": "ashby",
+   "slug": "synthesia",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 32
+  },
+  {
+   "name": "Tailor",
+   "ats": "ashby",
+   "slug": "tailor",
+   "website": "https://www.tailor.tech/",
+   "origin": "yc",
+   "openJobs": 54
+  },
+  {
+   "name": "Tailscale",
+   "ats": "greenhouse",
+   "slug": "tailscale",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 76
+  },
+  {
+   "name": "Taktile",
+   "ats": "ashby",
+   "slug": "taktile",
+   "website": "http://www.taktile.com",
+   "origin": "yc",
+   "openJobs": 36
+  },
+  {
+   "name": "Tamara",
+   "ats": "greenhouse",
+   "slug": "tamara",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 40
+  },
+  {
+   "name": "Tamarind Bio",
+   "ats": "ashby",
+   "slug": "tamarindbio",
+   "website": "https://www.tamarind.bio",
+   "origin": "yc",
+   "openJobs": 7
+  },
+  {
+   "name": "Tank Payments",
+   "ats": "ashby",
+   "slug": "tank-payments",
+   "website": "https://www.tankpayments.com/",
+   "origin": "yc",
+   "openJobs": 1
+  },
+  {
+   "name": "Tavus",
+   "ats": "ashby",
+   "slug": "tavus",
+   "website": "https://www.tavus.io",
+   "origin": "yc",
+   "openJobs": 19
+  },
+  {
+   "name": "Tekton Dynamics",
+   "ats": "ashby",
+   "slug": "tekton-dynamics",
+   "website": "https://www.tekton-dynamics.com",
+   "origin": "yc",
+   "openJobs": 2
+  },
+  {
+   "name": "telli",
+   "ats": "ashby",
+   "slug": "telli",
+   "website": "https://telli.com",
+   "origin": "yc",
+   "openJobs": 17
+  },
+  {
+   "name": "Tempo",
+   "ats": "greenhouse",
+   "slug": "tempo",
+   "website": "https://www.tempo.new",
+   "origin": "yc",
+   "openJobs": 6
+  },
+  {
+   "name": "Temporal",
+   "ats": "ashby",
+   "slug": "temporal",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 81
+  },
+  {
+   "name": "Tennr",
+   "ats": "ashby",
+   "slug": "tennr",
+   "website": "https://www.tennr.com",
+   "origin": "yc",
+   "openJobs": 23
+  },
+  {
+   "name": "Tenor",
+   "ats": "ashby",
+   "slug": "tenor",
+   "website": "https://heytenor.com/",
+   "origin": "yc",
+   "openJobs": 1
+  },
+  {
+   "name": "Terminal",
+   "ats": "ashby",
+   "slug": "terminal",
+   "website": "https://www.withterminal.com/",
+   "origin": "yc",
+   "openJobs": 6
+  },
+  {
+   "name": "Text.ai",
+   "ats": "lever",
+   "slug": "text",
+   "website": "https://www.text.ai/",
+   "origin": "yc",
+   "openJobs": 7
+  },
+  {
+   "name": "Thera",
+   "ats": "ashby",
+   "slug": "thera",
+   "website": "https://www.getthera.com",
+   "origin": "yc",
+   "openJobs": 6
+  },
+  {
+   "name": "Thunder Compute",
+   "ats": "ashby",
+   "slug": "thundercompute",
+   "website": "https://www.thundercompute.com",
+   "origin": "yc",
+   "openJobs": 1
+  },
+  {
+   "name": "Thunes",
+   "ats": "greenhouse",
+   "slug": "thunes",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 43
+  },
+  {
+   "name": "Thunkable",
+   "ats": "lever",
+   "slug": "thunkable",
+   "website": "http://thunkable.com",
+   "origin": "yc",
+   "openJobs": 2
+  },
+  {
+   "name": "Titan",
+   "ats": "ashby",
+   "slug": "titan",
+   "website": "http://www.titan.com",
+   "origin": "yc",
+   "openJobs": 11
+  },
+  {
+   "name": "Together AI",
+   "ats": "greenhouse",
+   "slug": "togetherai",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 78
+  },
+  {
+   "name": "Topline Pro",
+   "ats": "ashby",
+   "slug": "topline-pro",
+   "website": "https://www.toplinepro.com",
+   "origin": "yc",
+   "openJobs": 10
+  },
+  {
+   "name": "Tovala",
+   "ats": "lever",
+   "slug": "tovala",
+   "website": "http://www.tovala.com",
+   "origin": "yc",
+   "openJobs": 12
+  },
+  {
+   "name": "Trellis AI",
+   "ats": "ashby",
+   "slug": "runtrellis",
+   "website": "https://runtrellis.com/",
+   "origin": "yc",
+   "openJobs": 15
+  },
+  {
+   "name": "Triomics",
+   "ats": "ashby",
+   "slug": "triomics",
+   "website": "https://triomics.com/",
+   "origin": "yc",
+   "openJobs": 14
+  },
+  {
+   "name": "Trivago",
+   "ats": "greenhouse",
+   "slug": "trivago",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 15
+  },
+  {
+   "name": "TRM Labs",
+   "ats": "ashby",
+   "slug": "trm-labs",
+   "website": "https://trmlabs.com/",
+   "origin": "yc",
+   "openJobs": 115
+  },
+  {
+   "name": "Tsenta",
+   "ats": "ashby",
+   "slug": "tsenta",
+   "website": "https://tsenta.com",
+   "origin": "yc",
+   "openJobs": 1
+  },
+  {
+   "name": "Tuesday Labs",
+   "ats": "ashby",
+   "slug": "tuesday-labs",
+   "website": "https://www.tuesdaylabs.com",
+   "origin": "yc",
+   "openJobs": 1
+  },
+  {
+   "name": "Turion Space",
+   "ats": "ashby",
+   "slug": "turion-space",
+   "website": "https://turionspace.com/",
+   "origin": "yc",
+   "openJobs": 18
+  },
+  {
+   "name": "Twenty",
+   "ats": "ashby",
+   "slug": "twenty",
+   "website": "https://twenty.com",
+   "origin": "yc",
+   "openJobs": 48
+  },
+  {
+   "name": "Twilio",
+   "ats": "greenhouse",
+   "slug": "twilio",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 128
+  },
+  {
+   "name": "Two Dots",
+   "ats": "lever",
+   "slug": "twodots",
+   "website": "https://www.twodots.com",
+   "origin": "yc",
+   "openJobs": 4
+  },
+  {
+   "name": "Typeform",
+   "ats": "greenhouse",
+   "slug": "typeform",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 6
+  },
+  {
+   "name": "Uber",
+   "ats": "smartrecruiters",
+   "slug": "uber",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 1
+  },
+  {
+   "name": "Ultra",
+   "ats": "ashby",
+   "slug": "ultra",
+   "website": "https://ultra.tech",
+   "origin": "yc",
+   "openJobs": 3
+  },
+  {
+   "name": "Unusual",
+   "ats": "lever",
+   "slug": "unusual",
+   "website": "https://unusual.ai",
+   "origin": "yc",
+   "openJobs": 8
+  },
+  {
+   "name": "UpCodes",
+   "ats": "ashby",
+   "slug": "upcodes",
+   "website": "https://up.codes/",
+   "origin": "yc",
+   "openJobs": 3
+  },
+  {
+   "name": "Uplane",
+   "ats": "ashby",
+   "slug": "uplane",
+   "website": "https://uplane.com",
+   "origin": "yc",
+   "openJobs": 16
+  },
+  {
+   "name": "Usul",
+   "ats": "ashby",
+   "slug": "usul",
+   "website": "https://www.usul.com",
+   "origin": "yc",
+   "openJobs": 6
+  },
+  {
+   "name": "Vanta",
+   "ats": "ashby",
+   "slug": "vanta",
+   "website": "https://vanta.com",
+   "origin": "yc",
+   "openJobs": 85
+  },
+  {
+   "name": "Vapi",
+   "ats": "ashby",
+   "slug": "vapi",
+   "website": "https://vapi.ai",
+   "origin": "yc",
+   "openJobs": 5
+  },
+  {
+   "name": "Vector",
+   "ats": "ashby",
+   "slug": "vector",
+   "website": "https://vector.co",
+   "origin": "yc",
+   "openJobs": 4
+  },
+  {
+   "name": "Vera Health",
+   "ats": "ashby",
+   "slug": "verahealth",
+   "website": "https://www.vera-health.ai",
+   "origin": "yc",
+   "openJobs": 8
+  },
+  {
+   "name": "Vercel",
+   "ats": "greenhouse",
+   "slug": "vercel",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 87
+  },
+  {
+   "name": "VergeSense",
+   "ats": "lever",
+   "slug": "vergesense",
+   "website": "http://www.vergesense.com",
+   "origin": "yc",
+   "openJobs": 1
+  },
+  {
+   "name": "Veritus",
+   "ats": "ashby",
+   "slug": "veritus",
+   "website": "https://www.veritus.com",
+   "origin": "yc",
+   "openJobs": 5
+  },
+  {
+   "name": "Verse Medical",
+   "ats": "ashby",
+   "slug": "versemedical",
+   "website": "http://versemedical.com/",
+   "origin": "yc",
+   "openJobs": 32
+  },
+  {
+   "name": "Vetcove",
+   "ats": "ashby",
+   "slug": "vetcove",
+   "website": "https://www.vetcove.com",
+   "origin": "yc",
+   "openJobs": 29
+  },
+  {
+   "name": "Vitalize",
+   "ats": "ashby",
+   "slug": "vitalize",
+   "website": "https://vitalize.care",
+   "origin": "yc",
+   "openJobs": 18
+  },
+  {
+   "name": "voize",
+   "ats": "ashby",
+   "slug": "voize",
+   "website": "https://voize.de/",
+   "origin": "yc",
+   "openJobs": 45
+  },
+  {
+   "name": "Volta Labs, Inc.",
+   "ats": "lever",
+   "slug": "voltalabs",
+   "website": "http://voltalabs.com",
+   "origin": "yc",
+   "openJobs": 3
+  },
+  {
+   "name": "Vooma",
+   "ats": "ashby",
+   "slug": "vooma",
+   "website": "https://www.vooma.ai",
+   "origin": "yc",
+   "openJobs": 11
+  },
+  {
+   "name": "Vori",
+   "ats": "ashby",
+   "slug": "vori",
+   "website": "https://www.vori.com",
+   "origin": "yc",
+   "openJobs": 11
+  },
+  {
+   "name": "Vorticity",
+   "ats": "ashby",
+   "slug": "vorticity",
+   "website": "http://vorticity.xyz/",
+   "origin": "yc",
+   "openJobs": 1
+  },
+  {
+   "name": "Wealthsimple",
+   "ats": "ashby",
+   "slug": "wealthsimple",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 42
+  },
+  {
+   "name": "Weave",
+   "ats": "ashby",
+   "slug": "weave",
+   "website": "https://weaveos.com",
+   "origin": "yc",
+   "openJobs": 29
+  },
+  {
+   "name": "Weaviate",
+   "ats": "ashby",
+   "slug": "weaviate",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 2
+  },
+  {
+   "name": "Webflow",
+   "ats": "ashby",
+   "slug": "webflow",
+   "website": "https://webflow.com",
+   "origin": "yc",
+   "openJobs": 22
+  },
+  {
+   "name": "Wise",
+   "ats": "greenhouse",
+   "slug": "wise",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 18
+  },
+  {
+   "name": "Wolt",
+   "ats": "greenhouse",
+   "slug": "wolt",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 206
+  },
+  {
+   "name": "Wonderly",
+   "ats": "ashby",
+   "slug": "wonderly",
+   "website": "https://www.wonderly.com/",
+   "origin": "yc",
+   "openJobs": 9
+  },
+  {
+   "name": "Xendit",
+   "ats": "greenhouse",
+   "slug": "xendit",
+   "website": "https://www.xendit.co/",
+   "origin": "yc",
+   "openJobs": 17
+  },
+  {
+   "name": "Xero",
+   "ats": "ashby",
+   "slug": "xero",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 107
+  },
+  {
+   "name": "Y Combinator",
+   "ats": "ashby",
+   "slug": "ycombinator",
+   "website": "https://www.ycombinator.com",
+   "origin": "yc",
+   "openJobs": 9
+  },
+  {
+   "name": "Zapier",
+   "ats": "ashby",
+   "slug": "zapier",
+   "website": "http://zapier.com",
+   "origin": "yc",
+   "openJobs": 10
+  },
+  {
+   "name": "Zeit AI",
+   "ats": "ashby",
+   "slug": "zeit-ai",
+   "website": "https://zeit-ai.com/",
+   "origin": "yc",
+   "openJobs": 6
+  },
+  {
+   "name": "Zensors",
+   "ats": "ashby",
+   "slug": "zensors",
+   "website": "https://www.zensors.com",
+   "origin": "yc",
+   "openJobs": 6
+  },
+  {
+   "name": "Zeta",
+   "ats": "lever",
+   "slug": "zeta",
+   "website": null,
+   "origin": "curated",
+   "openJobs": 28
+  },
+  {
+   "name": "Ziina",
+   "ats": "ashby",
+   "slug": "ziina",
+   "website": "https://www.ziina.com",
+   "origin": "yc",
+   "openJobs": 13
+  },
+  {
+   "name": "Zip",
+   "ats": "ashby",
+   "slug": "zip",
+   "website": "https://ziphq.com/",
+   "origin": "yc",
+   "openJobs": 96
+  },
+  {
+   "name": "Zippi",
+   "ats": "lever",
+   "slug": "zippi",
+   "website": "https://www.zippi.com.br",
+   "origin": "yc",
+   "openJobs": 4
+  }
+ ]
+}

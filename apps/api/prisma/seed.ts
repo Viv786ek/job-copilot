@@ -1,35 +1,29 @@
 import { PrismaClient } from '@prisma/client';
-import * as bcrypt from 'bcryptjs';
+import { readFileSync } from 'fs';
+import { resolve } from 'path';
 
 const prisma = new PrismaClient();
 
-/** Seeds a demo account and a starter set of career pages (public Greenhouse/Lever/Ashby boards). */
+/**
+ * Loads the verified company job boards produced by the discovery CLI
+ * (packages/connectors/data/companies.json). No users or credentials are seeded.
+ */
 async function main() {
-  const companies = [
-    { name: 'Razorpay', atsType: 'lever', atsBoardId: 'razorpay' },
-    { name: 'Postman', atsType: 'greenhouse', atsBoardId: 'postman' },
-    { name: 'Groww', atsType: 'greenhouse', atsBoardId: 'groww' },
-    { name: 'Notion', atsType: 'ashby', atsBoardId: 'notion' },
-    { name: 'Vercel', atsType: 'greenhouse', atsBoardId: 'vercel' },
-  ];
-  for (const c of companies) {
-    const slug = `${c.atsType}-${c.atsBoardId}`;
-    await prisma.company.upsert({ where: { slug }, update: {}, create: { ...c, slug } });
+  const file = resolve(__dirname, '../../../packages/connectors/data/companies.json');
+  const { boards } = JSON.parse(readFileSync(file, 'utf8')) as {
+    boards: Array<{ name: string; ats: string; slug: string; website?: string | null; origin?: string; openJobs?: number }>;
+  };
+  let n = 0;
+  for (const b of boards) {
+    const slug = `${b.ats}-${b.slug}`.toLowerCase();
+    await prisma.company.upsert({
+      where: { slug },
+      update: { name: b.name, website: b.website ?? undefined, openJobs: b.openJobs ?? undefined },
+      create: { slug, name: b.name, website: b.website ?? null, atsType: b.ats, atsBoardId: b.slug, origin: b.origin ?? 'curated', openJobs: b.openJobs ?? null },
+    });
+    n++;
   }
-
-  const email = 'demo@jobcopilot.dev';
-  await prisma.user.upsert({
-    where: { email },
-    update: {},
-    create: {
-      email,
-      name: 'Demo User',
-      passwordHash: await bcrypt.hash('DemoPass123!', 12),
-      preferences: { create: { titles: ['Full Stack Developer'], locations: ['Bengaluru'], minMatchScore: 60 } },
-      profile: { create: { skills: [], primaryRoles: [], embedding: [] } },
-    },
-  });
-  console.log(`Seeded ${companies.length} career pages and ${email} (password in prisma/seed.ts)`);
+  console.log(`Seeded ${n} verified company job boards. Run the worker (or POST /api/v1/internal/harvest) to fetch jobs.`);
 }
 
 main()

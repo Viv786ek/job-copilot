@@ -32,6 +32,20 @@ const FeedSchema = z.object({
   q: z.string().max(100).optional(),
   page: z.coerce.number().int().min(1).optional(),
   pageSize: z.coerce.number().int().min(1).max(50).optional(),
+  /** Comma-separated ISO 3166 alpha-2 codes; any country, nothing hardcoded. */
+  countries: z
+    .string()
+    .optional()
+    .transform((v) => (v ? v.split(',').map((c) => c.trim().toUpperCase()).filter((c) => /^[A-Z]{2}$/.test(c)) : undefined)),
+  includeRemote: z.enum(['true', 'false']).optional().transform((v) => v !== 'false'),
+  workModes: z
+    .string()
+    .optional()
+    .transform((v) => (v ? v.split(',').filter((m) => ['REMOTE', 'HYBRID', 'ONSITE'].includes(m)) : undefined)),
+  visa: z.enum(['any', 'likely', 'sponsors', 'exclude-no']).optional(),
+  relocation: z.enum(['true', 'false']).optional().transform((v) => v === 'true'),
+  postedWithinDays: z.coerce.number().int().min(1).max(365).optional(),
+  sort: z.enum(['score', 'recent']).optional(),
 });
 
 const FlagsSchema = z.object({ saved: z.boolean().optional(), dismissed: z.boolean().optional() });
@@ -70,9 +84,20 @@ export class JobsController {
     return { queued: true };
   }
 
+  @Throttle({ default: { limit: 20, ttl: 3_600_000 } })
   @Post('career-pages')
   addCareerPage(@Body(new ZodPipe(CareerPageSchema)) body: z.infer<typeof CareerPageSchema>) {
     return this.jobs.addCareerPage(body.url, body.name);
+  }
+
+  @Get('countries')
+  countries() {
+    return this.jobs.countries();
+  }
+
+  @Get('sources')
+  sources() {
+    return this.jobs.sourcesStatus();
   }
 
   @Get(':id')

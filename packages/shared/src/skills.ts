@@ -41,7 +41,7 @@ export const SKILL_TAXONOMY: Record<string, string[]> = {
   GCP: ['gcp', 'google cloud', 'google cloud platform'],
   Terraform: ['terraform'],
   'CI/CD': ['ci/cd', 'cicd', 'continuous integration', 'github actions', 'jenkins'],
-  Git: ['git', 'github', 'gitlab'],
+  Git: ['git'],
   Linux: ['linux', 'unix'],
   HTML: ['html', 'html5'],
   CSS: ['css', 'css3', 'scss', 'sass'],
@@ -70,6 +70,64 @@ export const SKILL_TAXONOMY: Record<string, string[]> = {
   'System Design': ['system design', 'distributed systems'],
   'Data Structures & Algorithms': ['dsa', 'data structures', 'algorithms'],
   Agile: ['agile', 'scrum'],
+  Kotlin: ['kotlin'],
+  Swift: ['swift', 'swiftui'],
+  'Objective-C': ['objective-c'],
+  Android: ['android', 'android sdk'],
+  iOS: ['ios'],
+  'React Native': ['react native', 'react-native'],
+  Flutter: ['flutter', 'dart'],
+  Rust: ['rust'],
+  Scala: ['scala'],
+  Ruby: ['ruby'],
+  'Ruby on Rails': ['rails', 'ruby on rails', 'ror'],
+  PHP: ['php'],
+  Laravel: ['laravel'],
+  Elixir: ['elixir', 'phoenix framework'],
+  Svelte: ['svelte', 'sveltekit'],
+  jQuery: ['jquery'],
+  Webpack: ['webpack', 'vite', 'rollup'],
+  Storybook: ['storybook'],
+  'Material UI': ['material ui', 'mui'],
+  RxJS: ['rxjs'],
+  gRPC: ['grpc', 'protobuf', 'protocol buffers'],
+  WebSockets: ['websocket', 'websockets', 'socket.io'],
+  OAuth: ['oauth', 'oauth2', 'openid connect', 'oidc', 'jwt'],
+  Elasticsearch: ['elasticsearch', 'opensearch', 'elk'],
+  DynamoDB: ['dynamodb'],
+  Cassandra: ['cassandra'],
+  Snowflake: ['snowflake'],
+  BigQuery: ['bigquery'],
+  Databricks: ['databricks'],
+  dbt: ['dbt'],
+  Hadoop: ['hadoop', 'hive', 'hdfs'],
+  Looker: ['looker'],
+  Firebase: ['firebase', 'firestore'],
+  Supabase: ['supabase'],
+  Nginx: ['nginx'],
+  Helm: ['helm'],
+  Ansible: ['ansible'],
+  Prometheus: ['prometheus', 'grafana'],
+  Datadog: ['datadog'],
+  Serverless: ['serverless', 'aws lambda', 'lambda functions', 'cloud functions'],
+  Microfrontends: ['micro frontends', 'microfrontends', 'module federation'],
+  Selenium: ['selenium'],
+  Cypress: ['cypress'],
+  Playwright: ['playwright'],
+  'Hugging Face': ['hugging face', 'huggingface', 'transformers library'],
+  'Computer Vision': ['computer vision', 'opencv'],
+  MLOps: ['mlops', 'mlflow', 'kubeflow'],
+  SageMaker: ['sagemaker', 'vertex ai'],
+  'Fine-tuning': ['fine-tuning', 'fine tuning', 'lora', 'peft'],
+  'Vector Databases': ['vector database', 'pinecone', 'weaviate', 'pgvector', 'qdrant', 'faiss', 'chroma'],
+  Figma: ['figma'],
+  Jira: ['jira', 'confluence'],
+  Salesforce: ['salesforce', 'apex'],
+  SAP: ['sap', 's/4hana', 'abap'],
+  Solidity: ['solidity', 'web3', 'ethereum'],
+  'Product Management': ['product management', 'product roadmap', 'product strategy'],
+  Accessibility: ['accessibility', 'wcag', 'a11y'],
+  Security: ['application security', 'owasp', 'penetration testing', 'devsecops'],
 };
 
 const aliasIndex: Map<string, string> = (() => {
@@ -113,7 +171,18 @@ const aliasPatterns: Array<[RegExp, string]> = [...aliasIndex.entries()]
   ]);
 
 /** Deterministic keyword scan, used as fallback and cross-check for LLM extraction. */
+let lastText: string | null = null;
+let lastResult: string[] = [];
+
 export function extractKnownSkills(text: string): string[] {
+  // Matching calls this with the same resume text for every job; memoize the last input.
+  if (text === lastText) return lastResult;
+  lastResult = extractKnownSkillsUncached(text);
+  lastText = text;
+  return lastResult;
+}
+
+function extractKnownSkillsUncached(text: string): string[] {
   const found = new Set<string>();
   for (const [re, canonical] of aliasPatterns) {
     if (re.test(text)) found.add(canonical);

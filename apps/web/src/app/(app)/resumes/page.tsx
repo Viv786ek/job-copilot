@@ -37,8 +37,8 @@ export default function ResumesPage() {
       return api<Resume>('/resumes', { method: 'POST', body: fd });
     },
     onSuccess: () => {
-      toast.success('Uploaded. Parsing your resume…');
-      qc.invalidateQueries({ queryKey: ['resumes'] });
+      toast.success('Resume parsed. Your job matches are updated.');
+      ['resumes', 'resume', 'profile', 'feed', 'dashboard'].forEach((k) => qc.invalidateQueries({ queryKey: [k] }));
     },
     onError: (e) => toast.error((e as Error).message),
   });
@@ -58,7 +58,7 @@ export default function ResumesPage() {
   function onFiles(files: FileList | null) {
     const f = files?.[0];
     if (!f) return;
-    if (!/\.(pdf|docx)$/i.test(f.name)) return toast.error('Upload a PDF or DOCX file');
+    if (!/\.(pdf|docx|txt)$/i.test(f.name)) return toast.error('Upload a PDF, DOCX or TXT file');
     if (f.size > 5 * 1024 * 1024) return toast.error('Max file size is 5 MB');
     upload.mutate(f);
   }
@@ -90,8 +90,8 @@ export default function ResumesPage() {
       >
         {upload.isPending ? <Loader2 className="h-8 w-8 animate-spin text-primary" /> : <UploadCloud className="h-8 w-8 text-primary" />}
         <p className="mt-3 font-medium">Drop your resume here or click to browse</p>
-        <p className="text-sm text-muted-foreground">PDF or DOCX, up to 5 MB. Text-based files work best.</p>
-        <input ref={inputRef} type="file" accept=".pdf,.docx" className="hidden" onChange={(e) => onFiles(e.target.files)} />
+        <p className="text-sm text-muted-foreground">PDF, DOCX or TXT, up to 5 MB. In this edition the file is read in your browser and never uploaded.</p>
+        <input ref={inputRef} type="file" accept=".pdf,.docx,.txt" className="hidden" onChange={(e) => onFiles(e.target.files)} />
       </div>
 
       {list.data && list.data.length === 0 && (

@@ -1,16 +1,11 @@
-import {
-  enforceHonesty,
-  type InterviewPrep,
-  type JdAnalysis,
-  type Outreach,
-  type ParsedResume,
-  skillKey,
-  type TailoredResume,
-} from '@copilot/shared';
+import { enforceHonesty } from './guardrails';
+import type { InterviewPrep, JdAnalysis, Outreach, ParsedResume, TailoredResume } from './schemas';
+import { skillKey } from './skills';
 
 /**
- * Template generators used ONLY by the static demo. Production uses the LLM prompts in
- * apps/api/src/modules/ai/prompts.ts. Output still passes through the real honesty guardrails.
+ * Deterministic document generators: used when no LLM is configured (browser edition, or a server
+ * without AI keys). They only rearrange and quote facts from the parsed resume, and their output
+ * still passes through the honesty guardrails.
  */
 
 interface JobLite {
@@ -114,13 +109,17 @@ const QUESTION_BANK: Record<string, string[]> = {
 };
 
 export function interviewPrep(r: ParsedResume, job: JobLite, jd: JdAnalysis): InterviewPrep {
-  const skills = [...jd.requiredSkills, ...jd.preferredSkills];
+  const jdSkills = [...jd.requiredSkills, ...jd.preferredSkills];
+  // Postings that name no tools: prepare on the candidate's own core stack instead.
+  const skills = jdSkills.length ? jdSkills : r.skills.slice(0, 5);
   const technical = skills
     .flatMap((s) => (QUESTION_BANK[s] ?? [`Walk me through a project where you used ${s}. What trade-offs did you make?`]).map((q) => ({ s, q })))
     .slice(0, 10)
     .map(({ s, q }) => ({
       question: q,
-      whyAsked: `${s} is ${jd.requiredSkills.includes(s) ? 'a must-have' : 'a nice-to-have'} for this role.`,
+      whyAsked: !jdSkills.length
+        ? `${s} is central to your resume; expect depth questions on it.`
+        : `${s} is ${jd.requiredSkills.includes(s) ? 'a must-have' : 'a nice-to-have'} for this role.`,
       answerHints: r.skills.some((k) => skillKey(k) === skillKey(s))
         ? [`Anchor your answer in real work, e.g. "${r.experience.find((e) => e.skills.some((k) => skillKey(k) === skillKey(s)))?.bullets[0] ?? 'a recent project'}".`, 'Explain the trade-off you chose and what you would do differently.']
         : ['This is a gap on your resume. Be honest about it and show how you would ramp up quickly.'],

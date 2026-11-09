@@ -5,3 +5,8 @@ export * from './matching';
 export * from './guardrails';
 export * from './resume-health';
 export * from './heuristics';
+export * from './geo';
+export * from './visa';
+export * from './resume-parser';
+export * as templates from './templates';
+export { prompts } from './prompts';

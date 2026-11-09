@@ -10,6 +10,7 @@ export const JOBS = {
   INGEST_SOURCE: 'ingest-source',
   SEARCH_FOR_USER: 'search-for-user',
   SCHEDULED_SWEEP: 'scheduled-sweep',
+  HARVEST_ALL: 'harvest-all',
   ANALYZE_JOB: 'analyze-job',
   AUTO_DOCS: 'auto-docs',
   DAILY_DIGEST: 'daily-digest',

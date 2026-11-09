@@ -1,9 +1,19 @@
-name: Deploy demo to GitHub Pages
+name: Harvest jobs & deploy to GitHub Pages
 
+# Every 6 hours: fetch fresh jobs from every public source, enrich (country, visa, skills),
+# and publish the static app + dataset. Nothing is committed back to the repository.
 on:
   push:
     branches: [main]
+  schedule:
+    - cron: '15 */6 * * *' # job harvest
+    - cron: '30 2 * * 1' # weekly: re-discover company job boards before harvesting
   workflow_dispatch:
+    inputs:
+      discover:
+        description: Re-run company board discovery first
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -12,11 +22,21 @@ permissions:
 
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      # Optional free keys (Settings → Secrets → Actions). Sources without keys are skipped.
+      ADZUNA_APP_ID: ${{ secrets.ADZUNA_APP_ID }}
+      ADZUNA_APP_KEY: ${{ secrets.ADZUNA_APP_KEY }}
+      JOOBLE_API_KEY: ${{ secrets.JOOBLE_API_KEY }}
+      REED_API_KEY: ${{ secrets.REED_API_KEY }}
+      USAJOBS_API_KEY: ${{ secrets.USAJOBS_API_KEY }}
+      USAJOBS_EMAIL: ${{ secrets.USAJOBS_EMAIL }}
+      FIRECRAWL_API_KEY: ${{ secrets.FIRECRAWL_API_KEY }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -24,12 +44,28 @@ jobs:
           node-version: 20
           cache: npm
       - run: npm ci
-      - run: npm run build -w @copilot/shared
-      - name: Build static demo
+      - run: npm run build -w @copilot/shared && npm run build -w @copilot/connectors
+
+      - name: Restore discovered company boards
+        uses: actions/cache@v4
+        with:
+          path: packages/connectors/data/companies.json
+          key: companies-${{ github.run_id }}
+          restore-keys: companies-
+
+      - name: Discover company job boards
+        if: github.event.schedule == '30 2 * * 1' || inputs.discover
+        run: node packages/connectors/dist/cli/discover.js --merge
+
+      - name: Harvest jobs
+        run: node packages/connectors/dist/cli/harvest.js --out apps/web/public/data
+
+      - name: Build static app
         working-directory: apps/web
         env:
           NEXT_PUBLIC_BASE_PATH: /${{ github.event.repository.name }}
         run: npm run build:pages
+
       - uses: actions/upload-pages-artifact@v3
         with:
           path: apps/web/out

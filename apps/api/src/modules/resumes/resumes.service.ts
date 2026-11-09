@@ -1,11 +1,11 @@
 import { BadRequestException, Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
-import { extractKnownSkills, normalizeSkills, ParsedResume, ParsedResumeSchema } from '@copilot/shared';
+import { extractKnownSkills, normalizeSkills, ParsedResume, ParsedResumeSchema, parseResumeText } from '@copilot/shared';
 import { CacheService } from '../../core/cache.service';
 import { PrismaService } from '../../core/prisma.service';
 import { StorageService } from '../../core/storage.service';
 import { AiService } from '../ai/ai.service';
-import { prompts } from '../ai/prompts';
+import { prompts } from '@copilot/shared';
 import { NotificationsService } from '../notifications/notifications.module';
 import { QueueService } from '../queue/queue.module';
 import { computeYearsOfExperience, scoreResumeHealth } from './resume-health';
@@ -50,11 +50,7 @@ export class ResumesService {
     try {
       const buf = await this.storage.getBuffer(resume.storageKey);
       const rawText = await extractText(buf);
-      const { data } = await this.ai.generateJson(ParsedResumeSchema, prompts.parseResume(rawText), {
-        feature: 'resume.parse',
-        userId: resume.userId,
-        temperature: 0,
-      });
+      const data = await this.parse(rawText, resume.userId);
 
       // Union of LLM skills and deterministic matches that literally appear in the text.
       const skills = normalizeSkills([
@@ -118,6 +114,19 @@ export class ResumesService {
       await this.prisma.resume.update({ where: { id: resumeId }, data: { status: 'FAILED', errorMessage: message.slice(0, 500) } });
       throw err;
     }
+  }
+
+  /** LLM parsing when configured (more accurate), deterministic parser otherwise or on failure. */
+  private async parse(rawText: string, userId: string): Promise<ParsedResume> {
+    if (this.ai.isConfigured()) {
+      try {
+        const { data } = await this.ai.generateJson(ParsedResumeSchema, prompts.parseResume(rawText), { feature: 'resume.parse', userId, temperature: 0 });
+        return data;
+      } catch (e) {
+        this.logger.warn(`LLM resume parse failed, using deterministic parser: ${(e as Error).message}`);
+      }
+    }
+    return parseResumeText(rawText);
   }
 
   profileText(p: ParsedResume): string {

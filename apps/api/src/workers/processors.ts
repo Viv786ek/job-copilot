@@ -30,7 +30,7 @@ export class ResumeProcessor extends LoggingWorker {
   }
 }
 
-@Processor(QUEUES.JOBS, { concurrency: 3, limiter: { max: 20, duration: 60_000 } })
+@Processor(QUEUES.JOBS, { concurrency: 2, lockDuration: 30 * 60_000 })
 export class JobSearchProcessor extends LoggingWorker {
   constructor(
     private readonly jobs: JobsService,
@@ -44,8 +44,9 @@ export class JobSearchProcessor extends LoggingWorker {
     switch (job.name) {
       case JOBS.SEARCH_FOR_USER:
         return this.jobs.searchForUser(job.data.userId!);
+      case JOBS.HARVEST_ALL:
+        return this.jobs.harvestAll();
       case JOBS.SCHEDULED_SWEEP: {
-        await this.jobs.crawlCareerPages();
         const users = await this.prisma.user.findMany({
           where: { profile: { activeResumeId: { not: null } }, preferences: { digestFrequency: { not: 'OFF' } } },
           select: { id: true },

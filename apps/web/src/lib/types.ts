@@ -14,13 +14,19 @@ export interface JobSummary {
   salaryMax: number | null;
   salaryCurrency: string | null;
   visaSponsorship: boolean | null;
+  visaStatus?: 'SPONSORS' | 'LIKELY' | 'UNKNOWN' | 'NO_SPONSORSHIP';
+  visaConfidence?: number;
+  relocation?: boolean;
+  countries?: string[];
+  remoteScope?: 'GLOBAL' | 'REGION' | 'COUNTRY' | null;
   postedAt: string | null;
 }
 
 export interface JobMatchRow {
   id: string;
-  score: number;
-  atsScore: number;
+  /** null when no resume has been uploaded yet */
+  score: number | null;
+  atsScore: number | null;
   breakdown: Record<string, number>;
   matchedSkills: string[];
   missingSkills: string[];
@@ -35,6 +41,7 @@ export interface FeedResponse {
   total: number;
   page: number;
   pageSize: number;
+  hasProfile?: boolean;
 }
 
 export interface Resume {
@@ -93,4 +100,5 @@ export interface DashboardStats {
   followUpsDue: number;
   weekly: Array<{ week: string; applied: number; responses: number }>;
   topMissingSkills: Array<{ skill: string; count: number }>;
+  hasResume?: boolean;
 }

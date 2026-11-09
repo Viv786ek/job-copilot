@@ -9,7 +9,7 @@ import { PageHeader } from '@/components/app/shared';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/progress';
 import { download, useApi, useToken } from '@/lib/api';
-import { DEMO } from '@/lib/session';
+import { LOCAL_MODE } from '@/lib/session';
 import type { GeneratedDoc } from '@/lib/types';
 
 export default function DocumentPage() {
@@ -31,7 +31,7 @@ function DocumentDetail() {
   async function downloadDocx() {
     const { url } = await api<{ url: string }>(`/documents/${id}/docx`);
     const kind = doc!.type === 'TAILORED_RESUME' ? 'Resume' : 'Cover-Letter';
-    download(url, `${doc!.job?.companyName ?? 'Job'}-${kind}-v${doc!.version}.${DEMO ? 'doc' : 'docx'}`);
+    download(url, `${doc!.job?.companyName ?? 'Job'}-${kind}-v${doc!.version}.${LOCAL_MODE ? 'doc' : 'docx'}`);
   }
 
   return (

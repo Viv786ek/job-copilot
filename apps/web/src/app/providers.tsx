@@ -4,7 +4,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { SessionProvider } from 'next-auth/react';
 import { useState } from 'react';
 import { Toaster } from 'sonner';
-import { DEMO } from '@/lib/session';
+import { LOCAL_MODE } from '@/lib/session';
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const [client] = useState(
@@ -20,5 +20,5 @@ export function Providers({ children }: { children: React.ReactNode }) {
     </QueryClientProvider>
   );
   // The static demo has no Auth.js endpoint to talk to.
-  return DEMO ? app : <SessionProvider>{app}</SessionProvider>;
+  return LOCAL_MODE ? app : <SessionProvider>{app}</SessionProvider>;
 }

@@ -28,6 +28,9 @@ export class MatchingService {
       preferredLocations: user.preferences?.locations ?? [],
       remoteOnly: user.preferences?.remoteOnly ?? false,
       needsVisaSponsorship: user.preferences?.needsVisaSponsorship ?? false,
+      targetCountries: user.preferences?.countries ?? [],
+      authorizedCountries: user.preferences?.authorizedCountries ?? [],
+      openToRelocation: user.preferences?.openToRelocation ?? false,
     };
   }
 
@@ -45,6 +48,9 @@ export class MatchingService {
       workMode: job.workMode,
       visaSponsorship: job.visaSponsorship,
       country: job.country,
+      countries: job.countries,
+      remoteScope: job.remoteScope as JobFeatures['remoteScope'],
+      visaStatus: job.visaStatus as JobFeatures['visaStatus'],
     };
   }
 
@@ -66,9 +72,13 @@ export class MatchingService {
     });
   }
 
-  async matchJobForUser(userId: string, jobId: string): Promise<MatchResult> {
+  matchJobForUser(userId: string, jobId: string): Promise<MatchResult>;
+  matchJobForUser(userId: string, jobId: string, opts: { minScore: number }): Promise<MatchResult | null>;
+  /** Scores and stores a match. With `minScore`, weak matches are not stored and null is returned. */
+  async matchJobForUser(userId: string, jobId: string, opts?: { minScore: number }): Promise<MatchResult | null> {
     const job = await this.prisma.job.findUniqueOrThrow({ where: { id: jobId } });
     const result = computeMatch(await this.candidateFeatures(userId), this.jobFeatures(job));
+    if (opts && result.score < opts.minScore) return null;
     await this.persist(userId, jobId, result);
     return result;
   }

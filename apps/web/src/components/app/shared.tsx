@@ -16,7 +16,8 @@ export function PageHeader({ title, description, actions }: { title: string; des
   );
 }
 
-export function ScoreRing({ score, size = 64, label }: { score: number; size?: number; label?: string }) {
+export function ScoreRing({ score: raw, size = 64, label }: { score: number | null | undefined; size?: number; label?: string }) {
+  const score = raw ?? 0;
   const r = size / 2 - 5;
   const c = 2 * Math.PI * r;
   const offset = c * (1 - Math.max(0, Math.min(100, score)) / 100);
@@ -35,8 +36,8 @@ export function ScoreRing({ score, size = 64, label }: { score: number; size?: n
           className={cn('fill-none stroke-current transition-all', scoreTone(score))}
         />
       </svg>
-      <span className={cn('absolute inset-0 flex items-center justify-center font-semibold', scoreTone(score))} style={{ height: size, fontSize: size / 4 }}>
-        {score}
+      <span className={cn('absolute inset-0 flex items-center justify-center font-semibold', raw == null ? 'text-muted-foreground' : scoreTone(score))} style={{ height: size, fontSize: size / 4 }}>
+        {raw == null ? '—' : score}
       </span>
       {label && <span className="mt-1 text-xs text-muted-foreground">{label}</span>}
     </div>
@@ -74,9 +75,9 @@ export function MatchBreakdown({ breakdown }: { breakdown: Record<string, number
         <div key={key}>
           <div className="mb-1 flex justify-between text-sm">
             <span>{label}</span>
-            <span className="text-muted-foreground">{key === 'semantic' && !breakdown[key] ? 'n/a (no embeddings)' : `${breakdown[key] ?? 0}%`}</span>
+            <span className="text-muted-foreground">{(breakdown[key] ?? -1) < 0 ? 'not applicable' : `${breakdown[key]}%`}</span>
           </div>
-          <Progress value={breakdown[key] ?? 0} />
+          <Progress value={Math.max(0, breakdown[key] ?? 0)} />
         </div>
       ))}
     </div>

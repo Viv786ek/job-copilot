@@ -24,8 +24,8 @@ const EnvSchema = z.object({
     .default('true')
     .transform((v) => v === 'true'),
 
-  AI_PRIMARY_PROVIDER: z.enum(['openai', 'anthropic', 'gemini']).default('openai'),
-  AI_FALLBACK_PROVIDERS: z.string().default('anthropic,gemini'),
+  AI_PRIMARY_PROVIDER: z.enum(['openai', 'anthropic', 'gemini', 'local']).default('gemini'),
+  AI_FALLBACK_PROVIDERS: z.string().default('local,openai,anthropic'),
   OPENAI_API_KEY: z.string().optional(),
   OPENAI_MODEL: z.string().default('gpt-4.1-mini'),
   OPENAI_EMBEDDING_MODEL: z.string().default('text-embedding-3-small'),
@@ -33,8 +33,19 @@ const EnvSchema = z.object({
   ANTHROPIC_MODEL: z.string().default('claude-sonnet-5-5'),
   GEMINI_API_KEY: z.string().optional(),
   GEMINI_MODEL: z.string().default('gemini-2.5-flash'),
+  /** Any OpenAI-compatible endpoint: Ollama (http://localhost:11434/v1), LM Studio, Groq, OpenRouter free models. */
+  OPENAI_COMPAT_BASE_URL: z.string().url().optional(),
+  OPENAI_COMPAT_API_KEY: z.string().optional(),
+  OPENAI_COMPAT_MODEL: z.string().default('llama3.1:8b'),
   AI_CACHE_TTL_SECONDS: z.coerce.number().default(60 * 60 * 24 * 7),
 
+  // Job sources: all optional. Keyless sources always run; these add coverage when present.
+  FIRECRAWL_API_KEY: z.string().optional(),
+  PLAYWRIGHT_ENABLED: z.enum(['true', 'false']).default('false'),
+  JOOBLE_API_KEY: z.string().optional(),
+  REED_API_KEY: z.string().optional(),
+  USAJOBS_API_KEY: z.string().optional(),
+  USAJOBS_EMAIL: z.string().optional(),
   ADZUNA_APP_ID: z.string().optional(),
   ADZUNA_APP_KEY: z.string().optional(),
 

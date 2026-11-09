@@ -1,6 +1,7 @@
 import { Body, Controller, Get, HttpCode, Module, Param, Post, Query } from '@nestjs/common';
 import { ApiHeader, ApiTags } from '@nestjs/swagger';
-import { APPLICATION_STATUSES, JOB_SOURCES } from '@copilot/shared';
+import { APPLICATION_STATUSES } from '@copilot/shared';
+import { enrichJob, type RawJob, type SourceId } from '@copilot/connectors';
 import { z } from 'zod';
 import { Internal } from '../../common/auth';
 import { ZodPipe } from '../../common/zod.pipe';
@@ -12,7 +13,7 @@ import { JobsService } from '../jobs/jobs.service';
 import { QueueService } from '../queue/queue.module';
 
 const RawJobSchema = z.object({
-  source: z.enum(JOB_SOURCES),
+  source: z.string().min(2).max(30),
   externalId: z.string().min(1),
   url: z.string().url(),
   title: z.string().min(1),
@@ -29,6 +30,15 @@ const RawJobSchema = z.object({
   postedAt: z.coerce.date().nullish(),
 });
 const IngestBody = z.object({ jobs: z.array(RawJobSchema).max(500) });
+const BoardSchema = z.object({
+  name: z.string().min(1),
+  ats: z.enum(['greenhouse', 'lever', 'ashby', 'workable', 'smartrecruiters', 'recruitee', 'personio']),
+  slug: z.string().min(1).max(100),
+  website: z.string().nullish(),
+  origin: z.string().optional(),
+  openJobs: z.number().optional(),
+});
+const CompaniesBody = z.object({ boards: z.array(BoardSchema).max(20_000) });
 const FollowUpSentBody = z.object({ channel: z.enum(['email', 'linkedin', 'manual']).default('email') });
 const StatusBody = z.object({ status: z.enum(APPLICATION_STATUSES), message: z.string().max(1000).optional() });
 
@@ -50,8 +60,40 @@ export class InternalController {
   ) {}
 
   @Post('jobs/ingest')
-  ingest(@Body(new ZodPipe(IngestBody)) b: z.infer<typeof IngestBody>) {
-    return this.jobs.ingest(b.jobs);
+  async ingest(@Body(new ZodPipe(IngestBody)) b: z.infer<typeof IngestBody>) {
+    const raw: RawJob[] = b.jobs.map((j) => ({
+      source: j.source.toUpperCase() as SourceId,
+      externalId: j.externalId,
+      url: j.url,
+      title: j.title,
+      company: j.companyName,
+      location: j.location ?? null,
+      countryHint: j.country ?? null,
+      remoteHint: j.workMode === 'REMOTE' ? true : null,
+      hybridHint: j.workMode === 'HYBRID' ? true : null,
+      employmentType: j.employmentType ?? null,
+      salaryMin: j.salaryMin ?? null,
+      salaryMax: j.salaryMax ?? null,
+      salaryCurrency: j.salaryCurrency ?? null,
+      description: j.description,
+      postedAt: j.postedAt ? j.postedAt.toISOString() : null,
+    }));
+    const r = await this.jobs.ingest(raw.map((j) => enrichJob(j)));
+    return { created: r.created.length, updated: r.updated, skipped: r.skipped };
+  }
+
+  /** Full discovery run across all company boards and feeds (also scheduled in the worker). */
+  @HttpCode(202)
+  @Post('harvest')
+  async harvestNow() {
+    await this.queue.harvestAll();
+    return { queued: true };
+  }
+
+  /** Loads verified boards produced by `copilot-discover` (packages/connectors/data/companies.json). */
+  @Post('companies/sync')
+  syncCompanies(@Body(new ZodPipe(CompaniesBody)) b: z.infer<typeof CompaniesBody>) {
+    return this.jobs.syncCompanies(b.boards);
   }
 
   @HttpCode(202)
@@ -86,9 +128,11 @@ export class InternalController {
     return { queued: true };
   }
 
+  @HttpCode(202)
   @Post('career-pages/crawl')
-  crawl() {
-    return this.jobs.crawlCareerPages();
+  async crawl() {
+    await this.queue.harvestAll();
+    return { queued: true };
   }
 
   @Get('follow-ups/due')

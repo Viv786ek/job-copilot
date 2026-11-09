@@ -5,6 +5,8 @@ import { ExternalLink, KanbanSquare, Loader2, Sparkles } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Suspense, useState } from 'react';
 import { toast } from 'sonner';
+import { ApplyKit, CompanyInsights, VisaPanel, type JobInsights } from '@/components/app/job-panels';
+import { visaLabel } from '@/components/app/country-picker';
 import { DocView } from '@/components/app/doc-views';
 import { MatchBreakdown, PageHeader, ScoreRing } from '@/components/app/shared';
 import { Badge } from '@/components/ui/badge';
@@ -14,7 +16,7 @@ import { Skeleton } from '@/components/ui/progress';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { download, useApi, useToken } from '@/lib/api';
 import type { GeneratedDoc, JdAnalysis } from '@/lib/types';
-import { DEMO } from '@/lib/session';
+import { LOCAL_MODE } from '@/lib/session';
 import { formatSalary } from '@/lib/utils';
 
 interface JobDetail {
@@ -22,7 +24,10 @@ interface JobDetail {
     id: string; title: string; companyName: string; location: string | null; workMode: string | null; source: string; url: string;
     description: string; analysis: JdAnalysis | null; salaryMin: number | null; salaryMax: number | null; salaryCurrency: string | null;
     visaSponsorship: boolean | null;
+    visaStatus?: string; visaConfidence?: number; visaTypes?: string[]; visaEvidence?: string[]; sponsorRegister?: string | null;
+    relocation?: boolean; countries?: string[]; remoteScope?: string | null; applyUrl?: string | null; requiresAuthorizationIn?: string[];
   };
+  insights?: JobInsights;
   match: { score: number; atsScore: number; breakdown: Record<string, number>; matchedSkills: string[]; missingSkills: string[]; missingKeywords: string[]; recommendations: string[] } | null;
   documents: Array<{ id: string; type: GeneratedDoc['type']; version: number }>;
 }
@@ -89,7 +94,7 @@ function JobDetail() {
           <>
             {job.url.startsWith('http') && (
               <Button variant="outline" asChild>
-                <a href={job.url} target="_blank" rel="noopener noreferrer">
+                <a href={job.applyUrl || job.url} target="_blank" rel="noopener noreferrer">
                   <ExternalLink /> Original posting
                 </a>
               </Button>
@@ -105,14 +110,18 @@ function JobDetail() {
         <Badge variant="outline">{job.source}</Badge>
         {job.workMode && <Badge variant="secondary">{job.workMode}</Badge>}
         {a?.seniority && a.seniority !== 'UNKNOWN' && <Badge variant="secondary">{a.seniority}</Badge>}
-        {job.visaSponsorship === true && <Badge variant="success">Visa sponsorship</Badge>}
+        {job.countries?.map((c) => <Badge key={c} variant="outline">{c}</Badge>)}
+        {visaLabel(job.visaStatus, job.visaConfidence) && <Badge variant={visaLabel(job.visaStatus, job.visaConfidence)!.variant}>{visaLabel(job.visaStatus, job.visaConfidence)!.text}</Badge>}
+        {job.relocation && <Badge variant="success">Relocation support</Badge>}
         {formatSalary(job.salaryMin, job.salaryMax, job.salaryCurrency) && <Badge variant="secondary">{formatSalary(job.salaryMin, job.salaryMax, job.salaryCurrency)}</Badge>}
       </div>
 
       <Tabs value={tab} onValueChange={setTab}>
         <TabsList className="h-auto flex-wrap">
           <TabsTrigger value="match">Match & gaps</TabsTrigger>
+          <TabsTrigger value="visa">Visa & company</TabsTrigger>
           <TabsTrigger value="jd">JD analysis</TabsTrigger>
+          <TabsTrigger value="apply">Apply</TabsTrigger>
           {GENERATORS.map((g) => (
             <TabsTrigger key={g.tab} value={g.tab}>
               {g.label}
@@ -172,6 +181,17 @@ function JobDetail() {
           ) : (
             <p className="text-sm text-muted-foreground">Match not computed yet. Upload a resume first.</p>
           )}
+        </TabsContent>
+
+        <TabsContent value="visa">
+          <div className="grid gap-4 lg:grid-cols-2">
+            <VisaPanel job={job} />
+            {data.insights && <CompanyInsights company={job.companyName} insights={data.insights} />}
+          </div>
+        </TabsContent>
+
+        <TabsContent value="apply">
+          <ApplyKit job={job} />
         </TabsContent>
 
         <TabsContent value="jd">
@@ -238,7 +258,7 @@ function GeneratedPanel({ docId, label, busy, onGenerate }: { docId?: string; la
 
   async function downloadDocx() {
     const { url } = await api<{ url: string }>(`/documents/${docId}/docx`);
-    download(url, `${doc?.job?.companyName ?? 'Job'}-${label.replace(/\s+/g, '-')}.${DEMO ? 'doc' : 'docx'}`);
+    download(url, `${doc?.job?.companyName ?? 'Job'}-${label.replace(/\s+/g, '-')}.${LOCAL_MODE ? 'doc' : 'docx'}`);
   }
 
   return (
@@ -246,8 +266,8 @@ function GeneratedPanel({ docId, label, busy, onGenerate }: { docId?: string; la
       <Button onClick={onGenerate} disabled={busy}>
         {busy ? <Loader2 className="animate-spin" /> : <Sparkles />} {docId ? `Regenerate ${label.toLowerCase()}` : `Generate ${label.toLowerCase()}`}
       </Button>
-      {busy && <p className="text-sm text-muted-foreground">{DEMO ? 'Generating…' : 'Writing from your real experience… this takes 10–30 seconds.'}</p>}
-      {DEMO && !doc && <p className="text-sm text-muted-foreground">Demo mode uses a template generator in your browser. The deployed product uses OpenAI, Claude or Gemini.</p>}
+      {busy && <p className="text-sm text-muted-foreground">{LOCAL_MODE ? 'Generating…' : 'Writing from your real experience… this takes 10–30 seconds.'}</p>}
+      {LOCAL_MODE && !doc && <p className="text-sm text-muted-foreground">Uses your Gemini key if you added one in Settings; otherwise the built-in generator, which only rearranges facts from your resume.</p>}
       {doc && <DocView doc={doc} onDownload={doc.type === 'TAILORED_RESUME' || doc.type === 'COVER_LETTER' ? downloadDocx : undefined} />}
     </div>
   );

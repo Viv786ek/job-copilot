@@ -57,7 +57,9 @@ export function analyzeJdHeuristic(description: string, title?: string): JdAnaly
     .map((l) => l.replace(/^[-•*·]\s+/, ''))
     .slice(0, 8);
 
-  const atsKeywords = [...new Set([...requiredSkills, ...preferredSkills, ...(title ? [title.trim()] : [])])];
+  // Core role only ("Full-Stack Engineer (Frontend Leaning) - Studio" → "Full-Stack Engineer"): what a recruiter searches for.
+  const coreTitle = title?.replace(/\(.*?\)|\[.*?\]/g, '').split(/\s[-–|,:]\s|,/)[0].trim();
+  const atsKeywords = [...new Set([...requiredSkills, ...preferredSkills, ...(coreTitle && coreTitle.split(/\s+/).length <= 4 ? [coreTitle] : [])])];
 
   return {
     title: title ?? null,

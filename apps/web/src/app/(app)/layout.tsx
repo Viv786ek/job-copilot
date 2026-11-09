@@ -1,4 +1,4 @@
-import { DemoBanner } from '@/components/app/demo-banner';
+import { EditionBanner } from '@/components/app/edition-banner';
 import { Sidebar } from '@/components/app/sidebar';
 
 // Access control lives in middleware.ts (Auth.js `authorized` callback), so this layout
@@ -9,7 +9,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       <Sidebar />
       <main className="flex-1 overflow-x-hidden px-4 py-6 sm:px-8 lg:py-8">
         <div className="mx-auto max-w-6xl">
-          <DemoBanner />
+          <EditionBanner />
           {children}
         </div>
       </main>

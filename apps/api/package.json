@@ -20,6 +20,7 @@
     "@anthropic-ai/sdk": "^0.32.1",
     "@aws-sdk/client-s3": "^3.677.0",
     "@aws-sdk/s3-request-presigner": "^3.677.0",
+    "@copilot/connectors": "*",
     "@copilot/shared": "*",
     "@google/generative-ai": "^0.21.0",
     "@nestjs/bullmq": "^10.2.1",
@@ -65,10 +66,16 @@
     "typescript": "^5.6.3"
   },
   "jest": {
-    "moduleFileExtensions": ["js", "json", "ts"],
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
     "rootDir": "src",
     "testRegex": ".*\\.spec\\.ts$",
-    "transform": { "^.+\\.ts$": "ts-jest" },
+    "transform": {
+      "^.+\\.ts$": "ts-jest"
+    },
     "testEnvironment": "node"
   }
 }

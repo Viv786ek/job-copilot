@@ -34,7 +34,7 @@ jobs:
           node-version: 20
           cache: npm
       - run: npm ci
-      - run: npm run build -w @copilot/shared
+      - run: npm run build -w @copilot/shared && npm run build -w @copilot/connectors
       - name: Prisma generate + migrations apply cleanly
         working-directory: apps/api
         run: npx prisma generate && npx prisma migrate deploy
@@ -42,5 +42,8 @@ jobs:
         run: npm run typecheck -w @copilot/api && npm run typecheck -w @copilot/web
       - name: Unit tests
         run: npm test -w @copilot/api
+      - name: Live source smoke test (non-blocking)
+        continue-on-error: true
+        run: node packages/connectors/dist/cli/smoke.js
       - name: Build
         run: npm run build -w @copilot/api && npm run build -w @copilot/web

@@ -45,6 +45,11 @@ export class DocumentsController {
     return this.docs.createApplicationDraft(u.id, b.jobId);
   }
 
+  @Get('apply-kit/:jobId')
+  applyKit(@CurrentUser() u: AuthUser, @Param('jobId') jobId: string) {
+    return this.docs.applyKit(u.id, jobId);
+  }
+
   @Get()
   list(@CurrentUser() u: AuthUser, @Query(new ZodPipe(ListQuery)) q: z.infer<typeof ListQuery>) {
     return this.docs.list(u.id, q);

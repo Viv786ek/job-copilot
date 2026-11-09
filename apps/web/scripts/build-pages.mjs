@@ -27,7 +27,7 @@ try {
     env: {
       ...process.env,
       BUILD_TARGET: 'pages',
-      NEXT_PUBLIC_DEMO_MODE: 'true',
+      NEXT_PUBLIC_LOCAL_MODE: 'true',
       NEXT_PUBLIC_BASE_PATH: process.env.NEXT_PUBLIC_BASE_PATH ?? '/job-copilot',
       NEXT_TELEMETRY_DISABLED: '1',
     },

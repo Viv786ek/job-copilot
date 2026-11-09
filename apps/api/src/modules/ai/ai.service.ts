@@ -44,11 +44,18 @@ export class AiService {
         .map((s) => s.trim())
         .filter(Boolean) as AiProviderName[]),
     ];
+    // Any configured provider not named in the env still joins the end of the chain.
+    for (const p of this.providers) if (!order.includes(p.name)) order.push(p.name);
     const seen = new Set<string>();
     return order
       .filter((n) => (seen.has(n) ? false : (seen.add(n), true)))
       .map((n) => this.providers.find((p) => p.name === n))
       .filter((p): p is LlmProvider => !!p && p.isConfigured());
+  }
+
+  /** True when at least one LLM provider has credentials. Callers fall back to deterministic logic otherwise. */
+  isConfigured(): boolean {
+    return this.providers.some((p) => p.isConfigured());
   }
 
   async generateJson<S extends ZodTypeAny>(

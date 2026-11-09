@@ -11,8 +11,8 @@ import { extractKnownSkills, normalizeSkill, skillKey } from './skills';
  *
  *   requiredSkills  40   coverage of must-have skills
  *   preferredSkills 10   coverage of nice-to-have skills
- *   experience      15   years vs. JD minimum (soft penalty below, small penalty when far above max)
- *   title           10   token overlap between target roles and job title
+ *   experience      10   years vs. JD minimum (soft penalty below, small penalty when far above max)
+ *   title           15   token overlap between target roles and job title
  *   semantic        15   cosine(profile embedding, job embedding)
  *   location        10   remote/location/visa fit
  *
@@ -21,8 +21,8 @@ import { extractKnownSkills, normalizeSkill, skillKey } from './skills';
 export const WEIGHTS = {
   requiredSkills: 40,
   preferredSkills: 10,
-  experience: 15,
-  title: 10,
+  experience: 10,
+  title: 15,
   semantic: 15,
   location: 10,
 } as const;
@@ -36,9 +36,17 @@ export interface CandidateFeatures {
   preferredLocations: string[];
   remoteOnly: boolean;
   needsVisaSponsorship: boolean;
+  /** ISO codes the candidate wants to work in. */
+  targetCountries?: string[];
+  /** ISO codes where the candidate already has the right to work (citizenship, PR, existing visa). */
+  authorizedCountries?: string[];
+  openToRelocation?: boolean;
 }
 
 export interface JobFeatures {
+  countries?: string[];
+  remoteScope?: 'GLOBAL' | 'REGION' | 'COUNTRY' | null;
+  visaStatus?: 'SPONSORS' | 'LIKELY' | 'UNKNOWN' | 'NO_SPONSORSHIP';
   title: string;
   requiredSkills: string[];
   preferredSkills: string[];
@@ -96,26 +104,72 @@ function experienceFit(years: number, min: number | null, max: number | null): n
   return Math.max(0, 1 - gap / Math.max(min, 2));
 }
 
+/** Generic role nouns carry little signal on their own ("Sales Engineer" vs "Software Engineer"). */
+const GENERIC = new Set(['engineer', 'manager', 'specialist', 'analyst', 'consultant', 'associate', 'officer', 'executive', 'head', 'director', 'team', 'member']);
+const SYNONYM: Record<string, string> = { developer: 'engineer', dev: 'engineer', programmer: 'engineer', swe: 'software', sde: 'software', fullstack: 'full', 'full-stack': 'full', frontend: 'front', backend: 'back', 'front-end': 'front', 'back-end': 'back' };
+/** Tokens of the same role family partially match each other. */
+const FAMILIES: Array<Set<string>> = [
+  new Set(['software', 'full', 'stack', 'front', 'back', 'web', 'platform', 'mobile', 'ios', 'android', 'application', 'api', 'cloud', 'infrastructure', 'devops', 'sre', 'systems', 'java', 'python', 'react', 'node', 'javascript', 'typescript', 'golang', '.net']),
+  new Set(['data', 'analytics', 'bi', 'business', 'intelligence', 'insights', 'reporting']),
+  new Set(['machine', 'learning', 'ml', 'ai', 'research', 'scientist', 'nlp', 'llm', 'vision']),
+  new Set(['product', 'program', 'project', 'delivery']),
+  new Set(['design', 'designer', 'ux', 'ui', 'visual', 'interaction']),
+];
+
+const normTokens = (s: string) => tokens(s.replace(/full[\s-]?stack/gi, 'full stack')).map((t) => SYNONYM[t] ?? t);
+
 function titleFit(targets: string[], jobTitle: string): number {
-  const jt = new Set(tokens(jobTitle));
+  const jt = new Set(normTokens(jobTitle));
   if (!jt.size || !targets.length) return 0.5;
   let best = 0;
   for (const t of targets) {
-    const tt = tokens(t);
+    const tt = [...new Set(normTokens(t))];
     if (!tt.length) continue;
-    const overlap = tt.filter((x) => jt.has(x)).length;
-    best = Math.max(best, overlap / Math.max(tt.length, jt.size));
+    let got = 0;
+    let total = 0;
+    for (const tok of tt) {
+      const w = GENERIC.has(tok) ? 0.3 : 1;
+      total += w;
+      if (jt.has(tok)) got += w;
+      else if (FAMILIES.some((f) => f.has(tok) && [...jt].some((x) => f.has(x)))) got += 0.7 * w;
+    }
+    best = Math.max(best, got / total);
   }
-  return Math.min(1, best * 1.25);
+  return Math.min(1, best * 1.1);
 }
 
+const VISA_FIT: Record<string, number> = { SPONSORS: 1, LIKELY: 0.75, UNKNOWN: 0.35, NO_SPONSORSHIP: 0 };
+
+/**
+ * Location + work authorization. A role in a country where the candidate is not authorized
+ * is only a fit if the employer sponsors; an explicit "no sponsorship" zeroes it.
+ */
 function locationFit(c: CandidateFeatures, j: JobFeatures): number {
-  if (c.needsVisaSponsorship && j.visaSponsorship === false) return 0;
-  if (j.workMode === 'REMOTE') return 1;
+  const jobCountries = j.countries?.length ? j.countries : j.country ? [j.country] : [];
+  const authorized = c.authorizedCountries ?? [];
+  const targets = c.targetCountries ?? [];
+  const visa = j.visaStatus ?? (j.visaSponsorship === true ? 'SPONSORS' : j.visaSponsorship === false ? 'NO_SPONSORSHIP' : 'UNKNOWN');
+
+  if (j.workMode === 'REMOTE') {
+    if (j.remoteScope === 'GLOBAL' || !jobCountries.length) return 1;
+    const reachable = [...authorized, ...targets];
+    if (!reachable.length || jobCountries.some((cc) => reachable.includes(cc))) return 1;
+    // Country-restricted remote: you generally need the right to work there.
+    return Math.min(0.6, VISA_FIT[visa]);
+  }
   if (c.remoteOnly) return j.workMode === 'HYBRID' ? 0.3 : 0;
-  if (!c.preferredLocations.length || !j.location) return 0.7;
-  const loc = j.location.toLowerCase();
-  return c.preferredLocations.some((p) => loc.includes(p.toLowerCase())) ? 1 : 0.3;
+
+  let geo = 0.7;
+  if (targets.length && jobCountries.length) geo = jobCountries.some((cc) => targets.includes(cc)) ? 1 : c.openToRelocation ? 0.6 : 0.2;
+  else if (c.preferredLocations.length && j.location) {
+    const loc = j.location.toLowerCase();
+    geo = c.preferredLocations.some((p) => loc.includes(p.toLowerCase())) ? 1 : 0.3;
+  }
+
+  const needsSponsorship =
+    jobCountries.length > 0 && (authorized.length ? !jobCountries.some((cc) => authorized.includes(cc)) : c.needsVisaSponsorship);
+  if (!needsSponsorship) return geo;
+  return geo * VISA_FIT[visa];
 }
 
 /**
@@ -146,11 +200,19 @@ export function computeMatch(c: CandidateFeatures, j: JobFeatures): MatchResult 
   // text-embedding-3 cosine for related docs typically lands in 0.2..0.7; rescale to 0..1.
   const semantic = Number.isNaN(sem) ? NaN : Math.min(1, Math.max(0, (sem - 0.2) / 0.5));
 
+  const title = titleFit(c.targetTitles, j.title);
+  const reqCount = new Set(j.requiredSkills.map(skillKey)).size;
+  const prefCount = new Set(j.preferredSkills.map(skillKey)).size;
+  const knownSkills = reqCount + prefCount;
+  // Few listed skills = weak evidence: shrink coverage toward neutral so "1 of 1" isn't a perfect fit.
+  const shrink = (ratio: number, n: number) => (n >= 3 ? ratio : (ratio * n + 0.5 * (3 - n)) / 3);
+
   const components = {
-    requiredSkills: req.ratio,
-    preferredSkills: pref.ratio,
+    // With no recognizable skills at all, title relevance stands in for skill coverage.
+    requiredSkills: knownSkills === 0 ? title : shrink(req.ratio, reqCount || (prefCount ? 3 : 0)),
+    preferredSkills: prefCount ? shrink(pref.ratio, prefCount) : NaN,
     experience: experienceFit(c.totalYearsExp, j.minYears, j.maxYears),
-    title: titleFit(c.targetTitles, j.title),
+    title,
     semantic,
     location: locationFit(c, j),
   };
@@ -166,10 +228,15 @@ export function computeMatch(c: CandidateFeatures, j: JobFeatures): MatchResult 
   let score = Math.round((acc / totalWeight) * 100);
   // Hard gate: missing more than half the must-haves caps the score.
   if (j.requiredSkills.length >= 4 && req.ratio < 0.5) score = Math.min(score, 55);
+  // Unrelated role family (e.g. "Mechanical Design Engineer" for a software profile) can't rank high.
+  if (title < 0.3 && components.requiredSkills < 0.7) score = Math.min(score, 50);
+  if (knownSkills === 0) score = Math.min(score, 70);
 
-  const atsScore = Math.round((0.7 * ats.ratio + 0.3 * req.ratio) * 100);
+  // Same keyword measure the tailored-resume before/after uses, so the two numbers always agree.
+  const atsScore = knownSkills === 0 && !j.atsKeywords.length ? Math.round(title * 100) : Math.round(ats.ratio * 100);
 
   const recommendations: string[] = [];
+  if (knownSkills === 0) recommendations.push('This posting lists few concrete skills, so the score leans on title, experience and location. Read the full description.');
   if (req.missing.length)
     recommendations.push(`Gap in must-have skills: ${req.missing.slice(0, 6).join(', ')}. Only add them once you genuinely have the experience.`);
   const phrasing = ats.missing.filter((k) => have.has(skillKey(k)));
@@ -179,7 +246,8 @@ export function computeMatch(c: CandidateFeatures, j: JobFeatures): MatchResult 
     recommendations.push(`JD asks for ${j.minYears}+ years; lead with your most relevant, highest-impact work.`);
   if (components.title < 0.4) recommendations.push('Align your headline with this role title where it truthfully reflects your work.');
 
-  const round = (n: number) => (Number.isNaN(n) ? 0 : Math.round(n * 100));
+  // -1 marks a component that did not apply (no preferred skills listed, no embeddings).
+  const round = (n: number) => (Number.isNaN(n) ? -1 : Math.round(n * 100));
   return {
     score,
     atsScore,

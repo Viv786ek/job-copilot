@@ -1,8 +1,8 @@
 'use client';
 
 import { useCallback } from 'react';
-import { demoRequest } from './demo/backend';
-import { DEMO, useAppSession } from './session';
+import { localRequest } from './local/backend';
+import { LOCAL_MODE, useAppSession } from './session';
 
 export const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:4000';
 
@@ -16,7 +16,7 @@ export class ApiError extends Error {
 }
 
 export async function apiFetch<T>(path: string, token: string | undefined, init: RequestInit = {}): Promise<T> {
-  if (DEMO) return demoRequest<T>(path, init);
+  if (LOCAL_MODE) return localRequest<T>(path, init);
   const isForm = init.body instanceof FormData;
   const res = await fetch(`${API_URL}/api/v1${path}`, {
     ...init,

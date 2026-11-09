@@ -43,5 +43,5 @@ export const DOCUMENT_TYPES = [
 ] as const;
 export type DocumentType = (typeof DOCUMENT_TYPES)[number];
 
-export const AI_PROVIDERS = ['openai', 'anthropic', 'gemini'] as const;
+export const AI_PROVIDERS = ['openai', 'anthropic', 'gemini', 'local'] as const;
 export type AiProviderName = (typeof AI_PROVIDERS)[number];

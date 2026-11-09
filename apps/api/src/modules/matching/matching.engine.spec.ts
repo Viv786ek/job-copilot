@@ -50,7 +50,7 @@ describe('computeMatch', () => {
 
   it('ignores the semantic component when embeddings are missing', () => {
     const r = computeMatch(candidate, job);
-    expect(r.breakdown.semantic).toBe(0);
+    expect(r.breakdown.semantic).toBe(-1);
     expect(Number.isFinite(r.score)).toBe(true);
   });
 });

@@ -1,0 +1,32 @@
+{
+  "name": "@copilot/connectors",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Job source connectors (public ATS APIs, job boards, RSS, keyed aggregators, Firecrawl, career-page JSON-LD), sponsor registers, company discovery and the harvester CLI.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "copilot-harvest": "dist/cli/harvest.js",
+    "copilot-discover": "dist/cli/discover.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "node --test dist/**/*.test.js",
+    "discover": "node dist/cli/discover.js",
+    "harvest": "node dist/cli/harvest.js",
+    "smoke": "node dist/cli/smoke.js"
+  },
+  "dependencies": {
+    "@copilot/shared": "*",
+    "html-to-text": "^9.0.5"
+  },
+  "optionalDependencies": {
+    "playwright-core": "^1.48.2"
+  },
+  "devDependencies": {
+    "@types/html-to-text": "^9.0.4",
+    "@types/node": "^22.8.1",
+    "typescript": "^5.6.3"
+  }
+}
