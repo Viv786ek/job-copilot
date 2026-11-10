@@ -2,6 +2,9 @@ import { BadRequestException, Injectable, Logger, NotFoundException } from '@nes
 import { Prisma, type Job } from '@prisma/client';
 import {
   analyzeJdHeuristic,
+  computeCareerInsights,
+  computeMatch,
+  explainMatch,
   countryName,
   JdAnalysis,
   JdAnalysisSchema,
@@ -49,6 +52,11 @@ export interface FeedFilters {
   relocation?: boolean;
   postedWithinDays?: number;
   sort?: 'score' | 'recent';
+  level?: 'entry' | 'mid' | 'senior' | 'leadership';
+  salaryMin?: number;
+  salaryCurrency?: string;
+  salaryListed?: boolean;
+  newWithinDays?: number;
 }
 
 const descriptionHash = (text: string) => createHash('sha256').update(text.toLowerCase().replace(/\s+/g, ' ').trim()).digest('hex');
@@ -117,6 +125,7 @@ export class JobsService {
       relocation: j.visa.relocation,
       ats: j.ats ?? null,
       fingerprint: j.fingerprint,
+      alsoOn: j.alsoOn?.length ? (j.alsoOn as unknown as Prisma.InputJsonValue) : undefined,
       description: j.description.slice(0, 30_000),
       descriptionHash: descriptionHash(j.description),
       // Heuristic analysis is stored immediately; the LLM pass (when configured) refines it.
@@ -146,8 +155,13 @@ export class JobsService {
         updated++;
         continue;
       }
-      const dup = await this.prisma.job.findFirst({ where: { fingerprint: j.fingerprint, isActive: true }, select: { id: true } });
+      const dup = await this.prisma.job.findFirst({ where: { fingerprint: j.fingerprint, isActive: true }, select: { id: true, alsoOn: true, source: true } });
       if (dup) {
+        // Same role from another site: keep one listing and remember where else it appears.
+        const also = (dup.alsoOn as Array<{ source: string; url: string }> | null) ?? [];
+        if (dup.source !== j.source && !also.some((a) => a.source === j.source)) {
+          await this.prisma.job.update({ where: { id: dup.id }, data: { alsoOn: [...also, { source: j.source, url: j.url }] } });
+        }
         skipped++;
         continue;
       }
@@ -372,6 +386,13 @@ export class JobsService {
     if (f.relocation) and.push({ relocation: true });
     if (f.source) and.push({ source: f.source });
     if (f.postedWithinDays) and.push({ OR: [{ postedAt: { gte: new Date(Date.now() - f.postedWithinDays * 86_400_000) } }, { postedAt: null }] });
+    if (f.newWithinDays) and.push({ firstSeenAt: { gte: new Date(Date.now() - f.newWithinDays * 86_400_000) } });
+    if (f.level === 'entry') and.push({ OR: [{ minYears: { lte: 2 } }, { AND: [{ minYears: null }, { title: { contains: 'junior', mode: 'insensitive' } }] }] });
+    if (f.level === 'mid') and.push({ OR: [{ minYears: { gte: 2, lte: 5 } }, { minYears: null }] });
+    if (f.level === 'senior') and.push({ OR: [{ minYears: { gte: 5 } }, { AND: [{ minYears: null }, { title: { contains: 'senior', mode: 'insensitive' } }] }] });
+    if (f.level === 'leadership') and.push({ OR: ['head', 'director', 'manager', 'lead'].map((w) => ({ title: { contains: w, mode: 'insensitive' as const } })) });
+    if (f.salaryMin) and.push({ salaryCurrency: f.salaryCurrency ?? 'USD', OR: [{ salaryMax: { gte: f.salaryMin } }, { AND: [{ salaryMax: null }, { salaryMin: { gte: f.salaryMin } }] }] });
+    else if (f.salaryListed) and.push({ OR: [{ salaryMin: { not: null } }, { salaryMax: { not: null } }] });
     if (f.q) and.push({ OR: [{ title: { contains: f.q, mode: 'insensitive' } }, { companyName: { contains: f.q, mode: 'insensitive' } }] });
     if (and.length) jobWhere.AND = and;
     return { userId, dismissed: false, score: { gte: f.minScore ?? 0 }, ...(f.saved ? { saved: true } : {}), job: jobWhere };
@@ -392,13 +413,69 @@ export class JobsService {
             select: {
               id: true, title: true, companyName: true, location: true, workMode: true, source: true, url: true, salaryMin: true, salaryMax: true,
               salaryCurrency: true, visaSponsorship: true, visaStatus: true, visaConfidence: true, relocation: true, countries: true, remoteScope: true, postedAt: true,
+              firstSeenAt: true, alsoOn: true, minYears: true, requiredSkills: true,
             },
           },
         },
       }),
       this.prisma.jobMatch.count({ where }),
     ]);
-    return { items, total, page, pageSize };
+    const prefs = await this.prisma.jobPreference.findUnique({ where: { userId }, select: { countries: true, authorizedCountries: true } });
+    const profile = await this.prisma.candidateProfile.findUnique({ where: { userId }, select: { totalYearsExp: true } });
+    const ctx = { targetCountries: prefs?.countries ?? [], authorizedCountries: prefs?.authorizedCountries ?? [], totalYearsExp: profile?.totalYearsExp ?? 0 };
+    return {
+      items: items.map((m) => {
+        const { alsoOn, requiredSkills, ...job } = m.job;
+        const result = {
+          score: m.score,
+          atsScore: m.atsScore,
+          breakdown: m.breakdown as MatchResult['breakdown'],
+          matchedSkills: m.matchedSkills,
+          missingRequiredSkills: [],
+          missingPreferredSkills: [],
+          matchedKeywords: [],
+          missingKeywords: m.missingKeywords,
+          recommendations: m.recommendations,
+        };
+        return {
+          ...m,
+          reasons: explainMatch(result, { ...job, requiredSkills, workMode: job.workMode, remoteScope: job.remoteScope as 'GLOBAL' | 'REGION' | 'COUNTRY' | null, visaStatus: job.visaStatus as 'SPONSORS' }, ctx),
+          job: { ...job, alsoOnCount: Array.isArray(alsoOn) ? alsoOn.length : 0 },
+        };
+      }),
+      total,
+      page,
+      pageSize,
+      hasProfile: !!profile,
+    };
+  }
+
+  /** Career Insights: market view over the jobs relevant to this user (same computation as the browser edition). */
+  async careerInsights(userId: string, countries?: string[]) {
+    const prefs = await this.prisma.jobPreference.findUnique({ where: { userId } });
+    const scope = countries ?? prefs?.countries ?? [];
+    const candidate = await this.matching.candidateFeatures(userId);
+    const where: Prisma.JobWhereInput = { isActive: true, requiredSkills: { hasSome: candidate.skills } };
+    if (scope.length) where.OR = [{ countries: { hasSome: scope } }, { remoteScope: 'GLOBAL' }, { AND: [{ remoteScope: 'REGION' }, { regions: { hasSome: regionsCovering(scope) } }] }];
+    const jobs = await this.prisma.job.findMany({ where, take: 5000, orderBy: { postedAt: 'desc' } });
+    const rows = jobs.map((j) => ({
+      title: j.title,
+      company: j.companyName,
+      countries: j.countries,
+      workMode: j.workMode,
+      remoteScope: j.remoteScope as 'GLOBAL' | 'REGION' | 'COUNTRY' | null,
+      visaStatus: j.visaStatus as 'SPONSORS' | 'LIKELY' | 'UNKNOWN' | 'NO_SPONSORSHIP',
+      relocation: j.relocation,
+      requiredSkills: j.requiredSkills,
+      preferredSkills: j.preferredSkills,
+      salaryMin: j.salaryMin,
+      salaryMax: j.salaryMax,
+      salaryCurrency: j.salaryCurrency,
+      postedAt: j.postedAt?.toISOString() ?? null,
+      minYears: j.minYears,
+      score: computeMatch(candidate, this.matching.jobFeatures(j)).score,
+    }));
+    return { ...computeCareerInsights(rows, candidate.skills), countriesFilter: scope };
   }
 
   /** Country facets from live data plus the full ISO list for the selector. */

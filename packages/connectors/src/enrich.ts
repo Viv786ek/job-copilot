@@ -13,6 +13,10 @@ export interface EnrichedJob extends RawJob {
   visa: VisaAssessment;
   analysis: JdAnalysis;
   fingerprint: string;
+  /** Same role found on other sites (duplicates collapsed into this job). */
+  alsoOn?: Array<{ source: string; url: string }>;
+  /** Epoch day this job first appeared in our index (freshness when sources omit dates). */
+  firstSeenDay?: number;
 }
 
 const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
@@ -24,7 +28,8 @@ export function jobId(raw: Pick<RawJob, 'source' | 'externalId'>): string {
 /** Same role syndicated across boards collapses to one fingerprint. */
 export function fingerprint(raw: Pick<RawJob, 'company' | 'title' | 'location'>, countries: string[]): string {
   return createHash('sha1')
-    .update(`${norm(raw.company)}|${norm(raw.title)}|${countries.sort().join(',')}`)
+    // Primary country only: boards list extra offices inconsistently ("Munich" vs "Munich | Amsterdam").
+    .update(`${norm(raw.company)}|${norm(raw.title)}|${[...countries].sort()[0] ?? ''}`)
     .digest('hex')
     .slice(0, 16);
 }
@@ -79,13 +84,24 @@ const SOURCE_RANK: Record<string, number> = {
   REED: 4, USAJOBS: 2, ADZUNA: 5, JOOBLE: 5,
 };
 
+/**
+ * Collapses the same role found on several sites into one job, keeping the best copy
+ * and recording where else it was posted (shown to users as "Also on …").
+ */
 export function dedupe(jobs: EnrichedJob[]): EnrichedJob[] {
-  const best = new Map<string, EnrichedJob>();
+  const groups = new Map<string, EnrichedJob[]>();
   for (const j of jobs) {
-    const cur = best.get(j.fingerprint);
-    if (!cur || (SOURCE_RANK[j.source] ?? 9) < (SOURCE_RANK[cur.source] ?? 9) || ((SOURCE_RANK[j.source] ?? 9) === (SOURCE_RANK[cur.source] ?? 9) && j.description.length > cur.description.length)) {
-      best.set(j.fingerprint, j);
-    }
+    const g = groups.get(j.fingerprint);
+    if (g) g.push(j);
+    else groups.set(j.fingerprint, [j]);
   }
-  return [...best.values()];
+  const rank = (j: EnrichedJob) => SOURCE_RANK[j.source] ?? 9;
+  return [...groups.values()].map((g) => {
+    const best = g.reduce((a, b) => (rank(b) < rank(a) || (rank(b) === rank(a) && b.description.length > a.description.length) ? b : a));
+    const alsoOn = g
+      .filter((j) => j !== best && j.url !== best.url)
+      .map((j) => ({ source: j.source, url: j.url }))
+      .filter((x, i, arr) => arr.findIndex((y) => y.source === x.source) === i);
+    return alsoOn.length ? { ...best, alsoOn } : best;
+  });
 }

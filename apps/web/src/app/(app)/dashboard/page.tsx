@@ -33,8 +33,7 @@ export default function DashboardPage() {
     <>
       {s.hasResume === false && (
         <div className="mb-6 rounded-lg border border-primary/30 bg-accent p-4 text-sm text-accent-foreground">
-          <b>Start here:</b> <Link href="/resumes" className="underline">upload your resume</Link>, then set your target countries and work authorization in{' '}
-          <Link href="/settings" className="underline">Settings</Link>. Every job is then scored for you.
+          <b>Start here:</b> run <Link href="/discover" className="underline">AI Job Discovery</Link>: drop your resume or LinkedIn PDF, answer five quick questions, and every job is scored for you.
         </div>
       )}
       <PageHeader

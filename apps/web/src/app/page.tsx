@@ -51,8 +51,8 @@ export default function Landing() {
         </p>
         <div className="mt-10 flex flex-wrap justify-center gap-3">
           <Button size="lg" asChild>
-            <Link href={LOCAL_MODE ? '/resumes' : '/register'}>
-              Upload your resume <ArrowRight />
+            <Link href={LOCAL_MODE ? '/discover' : '/register'}>
+              Discover jobs for my profile <ArrowRight />
             </Link>
           </Button>
           {LOCAL_MODE ? (

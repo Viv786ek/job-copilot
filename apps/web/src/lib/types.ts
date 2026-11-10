@@ -20,6 +20,11 @@ export interface JobSummary {
   countries?: string[];
   remoteScope?: 'GLOBAL' | 'REGION' | 'COUNTRY' | null;
   postedAt: string | null;
+  /** First time this job appeared in our index. */
+  firstSeenAt?: string | null;
+  /** Number of other sites the same role was found on. */
+  alsoOnCount?: number;
+  minYears?: number | null;
 }
 
 export interface JobMatchRow {
@@ -32,6 +37,8 @@ export interface JobMatchRow {
   missingSkills: string[];
   missingKeywords: string[];
   recommendations: string[];
+  /** Plain-language reasons this job was recommended. */
+  reasons?: string[];
   saved: boolean;
   job: JobSummary;
 }

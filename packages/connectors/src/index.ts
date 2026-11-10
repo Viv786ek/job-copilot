@@ -9,3 +9,4 @@ export * from './discover';
 export * from './harvest';
 export * from './dataset';
 export { CURATED_COMPANIES } from './curated';
+export { MOCK_JOBS, mockFeed } from './mock';

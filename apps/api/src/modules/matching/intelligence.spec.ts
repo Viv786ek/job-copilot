@@ -107,3 +107,63 @@ describe('work authorization in matching', () => {
     expect(computeMatch({ ...candidate, authorizedCountries: ['DE'] }, { ...job, visaStatus: 'NO_SPONSORSHIP' }).breakdown.location).toBe(100);
   });
 });
+
+const LINKEDIN_EXPORT = `Contact
+ananya.rao.dev@example.com
+www.linkedin.com/in/ananya-rao-dev (LinkedIn)
+Top Skills
+Python
+FastAPI
+Large Language Models (LLM)
+Languages
+English (Full Professional)
+Certifications
+AWS Certified Machine Learning – Specialty
+Ananya Rao
+Senior AI Engineer | LLMs · RAG · Python · AWS
+Bengaluru, Karnataka, India
+Summary
+AI engineer building production RAG systems and agentic workflows.
+Experience
+Nimbus Analytics
+3 years 2 months
+Senior AI Engineer
+January 2024 - Present (1 year 11 months)
+Bengaluru, Karnataka, India
+Built a RAG platform over 4 million documents using LangChain and pgvector.
+Cut inference cost by 35% with batching and caching.
+AI Engineer
+October 2022 - December 2023 (1 year 3 months)
+Shipped FastAPI microservices for document classification.
+Brightline Software
+Software Engineer
+July 2019 - September 2022 (3 years 3 months)
+Pune, Maharashtra, India
+Developed Django REST APIs on PostgreSQL.
+Education
+Vellore Institute of Technology
+Bachelor of Technology - BTech, Computer Science · (2015 - 2019)
+Page 1 of 2`;
+
+describe('LinkedIn profile export', () => {
+  const r = parseResumeText(LINKEDIN_EXPORT);
+  it('reads name, headline and location from the main column', () => {
+    expect(r.fullName).toBe('Ananya Rao');
+    expect(r.headline).toMatch(/^Senior AI Engineer/);
+    expect(r.location).toBe('Bengaluru, Karnataka, India');
+  });
+  it('parses grouped roles under one company and single roles', () => {
+    expect(r.experience.map((e) => [e.company, e.title, e.startDate, e.endDate])).toEqual([
+      ['Nimbus Analytics', 'Senior AI Engineer', '2024-01', null],
+      ['Nimbus Analytics', 'AI Engineer', '2022-10', '2023-12'],
+      ['Brightline Software', 'Software Engineer', '2019-07', '2022-09'],
+    ]);
+    expect(r.experience[0].bullets).toHaveLength(2);
+    expect(r.experience[0].location).toBe('Bengaluru, Karnataka, India');
+  });
+  it('reads top skills, education and certifications', () => {
+    expect(r.skills).toEqual(expect.arrayContaining(['Python', 'FastAPI', 'LangChain', 'PostgreSQL']));
+    expect(r.education[0]).toMatchObject({ institution: 'Vellore Institute of Technology', degree: 'Bachelor of Technology - BTech', field: 'Computer Science' });
+    expect(r.certifications[0].name).toMatch(/AWS Certified Machine Learning/);
+  });
+});

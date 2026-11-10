@@ -26,6 +26,13 @@ export interface IndexedJob {
   url: string;
   relocation: boolean;
   minYears: number | null;
+  salaryMin: number | null;
+  salaryMax: number | null;
+  salaryCurrency: string | null;
+  /** When this job first appeared in our index (freshness even when the source omits a date). */
+  firstSeenAt: string | null;
+  /** Other sites the same role was found on (duplicates collapsed). */
+  alsoOnCount: number;
 }
 
 export interface JobDetail {
@@ -37,6 +44,7 @@ export interface JobDetail {
   visa: { types: string[]; evidence: string[]; register: string | null; requiresAuthorizationIn: string[] };
   analysis: { requiredSkills: string[]; preferredSkills: string[]; atsKeywords: string[]; seniority: string; minYears: number | null; maxYears: number | null };
   ats: string | null;
+  alsoOn?: Array<{ source: string; url: string }>;
 }
 
 export interface DatasetMeta {
@@ -53,7 +61,7 @@ const VISA: VisaStatus[] = ['UNKNOWN', 'LIKELY', 'SPONSORS', 'NO_SPONSORSHIP'];
 const SCOPE: RemoteScope[] = [null, 'GLOBAL', 'REGION', 'COUNTRY'];
 const MODE: WorkMode[] = [null, 'REMOTE', 'HYBRID', 'ONSITE'];
 
-type Row = [string, string, number, string, string, string, number, number, number, number, number[], number, number, string, number, number, number[]];
+type Row = [string, string, number, string, string, string, number, number, number, number, number[], number, number, string, number, number, number[], number?, number?, string?, number?, number?];
 
 let indexPromise: Promise<{ meta: DatasetMeta; jobs: IndexedJob[]; byId: Map<string, IndexedJob> }> | null = null;
 const shardCache = new Map<string, Promise<Record<string, JobDetail>>>();
@@ -89,6 +97,11 @@ export function loadIndex() {
         relocation: r[14] === 1,
         minYears: r[15] >= 0 ? r[15] : null,
         preferredSkills: (r[16] ?? []).map((i) => index.skills[i]),
+        salaryMin: r[17] != null && r[17] >= 0 ? r[17] : null,
+        salaryMax: r[18] != null && r[18] >= 0 ? r[18] : null,
+        salaryCurrency: r[19] || null,
+        firstSeenAt: r[20] ? new Date(r[20] * 86_400_000).toISOString() : null,
+        alsoOnCount: r[21] ?? 0,
       }),
     );
     return { meta, jobs, byId: new Map(jobs.map((j) => [j.id, j])) };

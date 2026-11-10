@@ -16,8 +16,79 @@ const HEADINGS: Array<[RegExp, Section]> = [
   [/^(education|academic (background|qualifications)|qualifications)$/i, 'education'],
   [/^(personal |academic |key |selected )?projects$/i, 'projects'],
   [/^(certifications?|licenses?( (&|and) certifications)?|courses|training)$/i, 'certifications'],
-  [/^(achievements|awards|languages|interests|hobbies|publications|volunteer(ing)?|references)$/i, 'other'],
+  [/^(top skills)$/i, 'skills'],
+  [/^(achievements|awards|honors?[- ]awards|languages|interests|hobbies|publications|patents|volunteer(ing| experience)?|references|contact( info(rmation)?)?|recommendations)$/i, 'other'],
 ];
+
+const DURATION = /^\(?\s*(\d+\s+(years?|yrs?|months?|mos?)\s*){1,2}\)?$/i;
+const PAGE_FOOTER = /^page\s+\d+\s+of\s+\d+$/i;
+const INSTITUTION = /\b(university|college|institute|school|iit|nit|academy|polytechnic|universität|école|politecnico)\b/i;
+const looksLikeLocation = (l: string) =>
+  l.length < 70 && (/^[\p{L} .'-]+(,\s*[\p{L} .'-]+){1,2}$/u.test(l) || /^(greater\s+)?[\p{L} .'-]+\s+(area|metropolitan area|region)$/iu.test(l) || /^(remote|hybrid|on-?site)\b/i.test(l));
+
+/** LinkedIn's "Save to PDF" profile export: sidebar (Contact, Top Skills…) first, then name/headline/location. */
+export function isLinkedInExport(text: string): boolean {
+  return /linkedin\.com\/in\//i.test(text) && /^\s*(top skills|contact)\s*$/im.test(text) && /^\s*experience\s*$/im.test(text);
+}
+
+/**
+ * LinkedIn export role blocks:
+ *   Company / [total duration] / Title / "Month YYYY - Present (x years y months)" / [Location] / description…
+ * A company line followed by a duration line starts a group of several roles at that company.
+ */
+function parseLinkedInExperience(exp: string[]): ParsedResume['experience'] {
+  const dates = exp.map((l, i) => (RANGE.test(l) ? i : -1)).filter((i) => i >= 0);
+  const consumed = new Set<number>();
+  const roles: Array<ParsedResume['experience'][number] & { start: number; bodyFrom: number }> = [];
+  let group: string | null = null;
+  dates.forEach((d, k) => {
+    const prevDate = dates[k - 1] ?? -1;
+    const title = d - 1 > prevDate ? exp[d - 1] : 'Role';
+    consumed.add(d).add(d - 1);
+    let company: string | null = null;
+    let start = d - 1;
+    if (d - 3 > prevDate && DURATION.test(exp[d - 2] ?? '')) {
+      company = exp[d - 3];
+      group = company;
+      consumed.add(d - 2).add(d - 3);
+      start = d - 3;
+    } else {
+      const cand = exp[d - 2];
+      const isPrevLocation = d - 2 === prevDate + 1 && looksLikeLocation(cand ?? '');
+      const looksLikeCompany = !!cand && cand.length < 70 && cand.split(/\s+/).length <= 8 && !/[.!?;:]$/.test(cand) && !BULLET.test(cand) && !looksLikeLocation(cand);
+      if (cand && d - 2 > prevDate && !isPrevLocation && looksLikeCompany) {
+        company = cand;
+        group = null;
+        consumed.add(d - 2);
+        start = d - 2;
+      } else company = group ?? roles[roles.length - 1]?.company ?? null;
+    }
+    const m = RANGE.exec(exp[d])!;
+    const end = toYm(m[2]);
+    let bodyFrom = d + 1;
+    let location: string | null = null;
+    if (exp[d + 1] && looksLikeLocation(exp[d + 1])) {
+      location = exp[d + 1];
+      consumed.add(d + 1);
+      bodyFrom = d + 2;
+    }
+    roles.push({ company: company ?? 'Company', title, location, startDate: toYm(m[1]), endDate: end, current: end === null, bullets: [], skills: [], start, bodyFrom });
+  });
+  roles.forEach((r, k) => {
+    const until = roles[k + 1]?.start ?? exp.length;
+    const body = exp.slice(r.bodyFrom, until).filter((_, j) => !consumed.has(r.bodyFrom + j));
+    for (const line of body) {
+      const isBullet = BULLET.test(line);
+      const text = line.replace(BULLET, '').trim();
+      if (!text) continue;
+      const last = r.bullets.length - 1;
+      // Wrapped lines continue the previous sentence unless it ended.
+      if (!isBullet && last >= 0 && !/[.!?:]$/.test(r.bullets[last])) r.bullets[last] += ` ${text}`;
+      else r.bullets.push(text);
+    }
+  });
+  return roles.map(({ start: _s, bodyFrom: _b, ...r }) => ({ ...r, skills: extractKnownSkills(`${r.title} ${r.bullets.join(' ')}`) }));
+}
 
 const MONTHS = 'jan|feb|mar|apr|may|jun|jul|aug|sep|sept|oct|nov|dec|january|february|march|april|june|july|august|september|october|november|december';
 const DATE = `(?:(?:${MONTHS})[a-z]*\\.?\\s*['’]?\\d{2,4}|\\d{1,2}[/.-]\\d{2,4}|\\d{4})`;
@@ -65,7 +136,11 @@ function splitTitleCompany(text: string): { title: string; company: string } {
 
 export function parseResumeText(raw: string): ParsedResume {
   const text = raw.replace(/\r/g, '').replace(/[ \t]+/g, ' ');
-  const lines = text.split('\n').map((l) => l.trim()).filter(Boolean);
+  const lines = text
+    .split('\n')
+    .map((l) => l.trim())
+    .filter((l) => l && !PAGE_FOOTER.test(l));
+  const linkedIn = isLinkedInExport(text);
 
   const email = /[\w.+-]+@[\w-]+\.[\w.-]+/.exec(text)?.[0] ?? null;
   const phone = /(\+?\d[\d\s().-]{8,}\d)/.exec(text)?.[1]?.replace(/\s+/g, ' ').trim() ?? null;
@@ -82,18 +157,36 @@ export function parseResumeText(raw: string): ParsedResume {
     sections[current].push(line);
   }
 
-  const fullName =
+  let fullName =
     sections.header.find((l) => !l.includes('@') && !/\d{3}/.test(l) && /^[\p{L} .'-]{3,50}$/u.test(l) && l.split(' ').length <= 5) ?? null;
-  const headline = sections.header.find((l) => l !== fullName && TITLE_WORDS.test(l) && l.length < 90) ?? null;
-  const location =
+  let headline = sections.header.find((l) => l !== fullName && TITLE_WORDS.test(l) && l.length < 90) ?? null;
+  let location =
     sections.header
       .flatMap((l) => l.split(/[|•·]/))
       .map((s) => s.trim())
       .find((s) => /^[\p{L} .'-]+,\s*[\p{L} .'-]+$/u.test(s) && !s.includes('@')) ?? null;
 
+  if (linkedIn) {
+    // Name, headline and location sit just before "Summary" (or "Experience"), after the sidebar blocks.
+    const anchor = lines.findIndex((l) => headingOf(l) === 'summary') >= 0 ? lines.findIndex((l) => headingOf(l) === 'summary') : lines.findIndex((l) => headingOf(l) === 'experience');
+    const before = lines.slice(Math.max(0, anchor - 4), anchor);
+    const nameIdx = before.findIndex((l) => /^[\p{L} .'-]{3,60}$/u.test(l) && l.split(' ').length <= 5 && !looksLikeLocation(l) && !headingOf(l));
+    if (nameIdx >= 0) {
+      fullName = before[nameIdx];
+      const rest = before.slice(nameIdx + 1);
+      location = rest.find(looksLikeLocation) ?? location;
+      headline = rest.filter((l) => l !== location).join(' ') || headline;
+      // These lines were swept into whatever sidebar section preceded them.
+      for (const sec of [sections.header, sections.skills, sections.certifications, sections.other]) for (const l of [fullName, ...rest]) {
+        const i = sec.lastIndexOf(l);
+        if (i >= 0) sec.splice(i, 1);
+      }
+    }
+  }
+
   // ---------- Experience ----------
-  const experience: ParsedResume['experience'] = [];
-  const exp = sections.experience;
+  const experience: ParsedResume['experience'] = linkedIn ? parseLinkedInExperience(sections.experience) : [];
+  const exp = linkedIn ? [] : sections.experience;
   for (let i = 0; i < exp.length; i++) {
     const m = RANGE.exec(exp[i]);
     if (!m) {
@@ -138,7 +231,21 @@ export function parseResumeText(raw: string): ParsedResume {
   for (let i = 0; i < sections.education.length; i++) {
     const line = sections.education[i];
     const range = RANGE.exec(line) ?? new RegExp(`(${DATE})`).exec(line);
-    if (DEGREE.test(line) || /\b(university|college|institute|school|iit|nit)\b/i.test(line)) {
+    const prev = education[education.length - 1];
+    // Institution on one line, "Degree, Field · (2015 - 2019)" on the next (LinkedIn and many resumes).
+    if (DEGREE.test(line) && !INSTITUTION.test(line) && prev && !prev.degree) {
+      const [deg, ...field] = line.replace(/·?\s*\(?[^()]*\d{4}[^()]*\)?\s*$/, '').split(/,\s*/);
+      prev.degree = deg.trim();
+      prev.field = field.join(', ').trim() || null;
+      prev.startDate = prev.startDate ?? range?.[1] ?? null;
+      prev.endDate = prev.endDate ?? range?.[2] ?? null;
+      continue;
+    }
+    if (linkedIn && !DEGREE.test(line) && !RANGE.test(line) && line.length < 90) {
+      education.push({ institution: line, degree: null, field: null, startDate: null, endDate: null, grade: null });
+      continue;
+    }
+    if (DEGREE.test(line) || INSTITUTION.test(line)) {
       const parts = line.replace(range?.[0] ?? '', '').split(/[|,–—]| - /).map((p) => p.trim()).filter(Boolean);
       const degreePart = parts.find((p) => DEGREE.test(p)) ?? null;
       const inst = parts.find((p) => /\b(university|college|institute|school|iit|nit|academy)\b/i.test(p)) ?? parts.find((p) => p !== degreePart) ?? '';

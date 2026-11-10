@@ -10,3 +10,4 @@ export * from './visa';
 export * from './resume-parser';
 export * as templates from './templates';
 export { prompts } from './prompts';
+export * from './insights';

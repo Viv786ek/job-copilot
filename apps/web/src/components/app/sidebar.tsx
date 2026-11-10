@@ -2,15 +2,18 @@
 
 import {
   BarChart3,
+  Bookmark,
   Briefcase,
   FileSearch,
-  FileText,
   KanbanSquare,
+  LineChart,
   LogOut,
   Menu,
   MessageSquareQuote,
+  Radar,
   Settings,
   Sparkles,
+  UserRound,
   X,
 } from 'lucide-react';
 import Link from 'next/link';
@@ -21,14 +24,31 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
-const NAV = [
-  { href: '/dashboard', label: 'Dashboard', icon: BarChart3 },
-  { href: '/jobs', label: 'Job Matches', icon: Briefcase },
-  { href: '/analyzer', label: 'JD Analyzer', icon: FileSearch },
-  { href: '/resumes', label: 'Resumes', icon: FileText },
-  { href: '/applications', label: 'Applications', icon: KanbanSquare },
-  { href: '/documents', label: 'Generated Docs', icon: MessageSquareQuote },
-  { href: '/settings', label: 'Settings', icon: Settings },
+const NAV: Array<{ title?: string; items: Array<{ href: string; label: string; icon: typeof BarChart3 }> }> = [
+  {
+    items: [
+      { href: '/dashboard', label: 'Dashboard', icon: BarChart3 },
+      { href: '/discover', label: 'AI Job Discovery', icon: Radar },
+      { href: '/jobs', label: 'Recommended Jobs', icon: Briefcase },
+      { href: '/saved', label: 'Saved Jobs', icon: Bookmark },
+      { href: '/applications', label: 'Application Tracker', icon: KanbanSquare },
+      { href: '/insights', label: 'Career Insights', icon: LineChart },
+    ],
+  },
+  {
+    title: 'Tools',
+    items: [
+      { href: '/analyzer', label: 'JD Analyzer', icon: FileSearch },
+      { href: '/documents', label: 'Generated Docs', icon: MessageSquareQuote },
+    ],
+  },
+  {
+    title: 'Account',
+    items: [
+      { href: '/resumes', label: 'My Profile', icon: UserRound },
+      { href: '/settings', label: 'Settings', icon: Settings },
+    ],
+  },
 ];
 
 export function Sidebar() {
@@ -37,8 +57,11 @@ export function Sidebar() {
   const [open, setOpen] = useState(false);
 
   const nav = (
-    <nav className="flex flex-1 flex-col gap-1">
-      {NAV.map(({ href, label, icon: Icon }) => (
+    <nav className="flex flex-1 flex-col gap-1 overflow-y-auto">
+      {NAV.map((group, gi) => (
+        <div key={gi} className={cn('flex flex-col gap-1', gi > 0 && 'mt-4')}>
+          {group.title && <p className="px-3 pb-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">{group.title}</p>}
+          {group.items.map(({ href, label, icon: Icon }) => (
         <Link
           key={href}
           href={href}
@@ -51,6 +74,8 @@ export function Sidebar() {
           <Icon className="h-4 w-4" />
           {label}
         </Link>
+          ))}
+        </div>
       ))}
     </nav>
   );

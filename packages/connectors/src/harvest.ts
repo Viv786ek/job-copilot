@@ -1,6 +1,7 @@
 import { fetchCompanyBoard } from './ats';
 import { dedupe, enrichJob, type EnrichedJob } from './enrich';
 import { FEED_CONNECTORS } from './feeds';
+import { mockFeed } from './mock';
 import { pool } from './http';
 import { loadSponsorRegisters, type SponsorRegisters } from './sponsors';
 import type { CompanyBoard, FeedQuery, RawJob } from './types';
@@ -31,6 +32,8 @@ export interface HarvestOptions {
   maxPerCompany?: number;
   concurrency?: number;
   registers?: SponsorRegisters | null;
+  /** id → epoch day first seen, carried between harvests for freshness. */
+  firstSeen?: Map<string, number>;
   log?: (m: string) => void;
 }
 
@@ -42,14 +45,16 @@ export async function harvest(opts: HarvestOptions): Promise<HarvestResult> {
   const cutoff = Date.now() - (opts.maxAgeDays ?? 60) * 86_400_000;
   const stats: SourceStat[] = [];
 
-  const registers = opts.registers === undefined ? await loadSponsorRegisters(log) : opts.registers;
+  const mock = env.JOB_SOURCES_MODE === 'mock';
+  // Mock mode: offline, deterministic (tests/dev). Never touches the network.
+  const registers = mock ? null : opts.registers === undefined ? await loadSponsorRegisters(log) : opts.registers;
   if (registers) log(`sponsor registers: ${JSON.stringify(registers.counts)}`);
 
   const raw: RawJob[] = [];
 
   // Company boards (official ATS APIs)
   const perAts = new Map<string, number>();
-  const boardRun = await pool(opts.boards, opts.concurrency ?? 16, async (b) => {
+  const boardRun = await pool(mock ? [] : opts.boards, opts.concurrency ?? 16, async (b) => {
     const jobs = (await fetchCompanyBoard(b)).slice(0, opts.maxPerCompany ?? 400);
     raw.push(...jobs);
     perAts.set(b.ats, (perAts.get(b.ats) ?? 0) + jobs.length);
@@ -59,7 +64,7 @@ export async function harvest(opts: HarvestOptions): Promise<HarvestResult> {
   log(`boards: ${boardRun.results.length} ok, ${boardRun.errors.length} failed`);
 
   // Feeds (boards, RSS, keyed aggregators)
-  for (const c of FEED_CONNECTORS) {
+  for (const c of mock ? [mockFeed] : FEED_CONNECTORS) {
     if (!c.enabled(env)) {
       stats.push({ source: c.source, ok: false, jobs: 0, skipped: `needs ${c.requires?.join(', ')}` });
       continue;
@@ -77,7 +82,7 @@ export async function harvest(opts: HarvestOptions): Promise<HarvestResult> {
 
   const fresh = raw.filter((j) => j.title && j.url && (!j.postedAt || Date.parse(j.postedAt) >= cutoff));
   const enriched = fresh.map((j) => enrichJob(j, registers));
-  const jobs = dedupe(enriched);
+  const jobs = dedupe(enriched).map((j) => ({ ...j, firstSeenDay: opts.firstSeen?.get(j.id) ?? Math.floor(Date.now() / 86_400_000) }));
   log(`harvest: ${raw.length} raw → ${fresh.length} fresh → ${jobs.length} unique`);
 
   return {

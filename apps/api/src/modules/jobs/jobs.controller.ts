@@ -46,6 +46,11 @@ const FeedSchema = z.object({
   relocation: z.enum(['true', 'false']).optional().transform((v) => v === 'true'),
   postedWithinDays: z.coerce.number().int().min(1).max(365).optional(),
   sort: z.enum(['score', 'recent']).optional(),
+  level: z.enum(['entry', 'mid', 'senior', 'leadership']).optional(),
+  salaryMin: z.coerce.number().int().min(0).optional(),
+  salaryCurrency: z.string().length(3).optional(),
+  salaryListed: z.enum(['true', 'false']).optional().transform((v) => v === 'true'),
+  newWithinDays: z.coerce.number().int().min(1).max(60).optional(),
 });
 
 const FlagsSchema = z.object({ saved: z.boolean().optional(), dismissed: z.boolean().optional() });

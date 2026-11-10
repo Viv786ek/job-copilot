@@ -69,7 +69,7 @@ export default function ResumesPage() {
 
   return (
     <>
-      <PageHeader title="Resumes" description="Upload a PDF or DOCX. We extract your skills, experience, education, projects and certifications." />
+      <PageHeader title="My Profile" description="Your resumes and LinkedIn exports. The active one powers matching, documents and insights." />
 
       <div
         onDragOver={(e) => {

@@ -55,7 +55,7 @@ export function AuthForm({ mode, oauth }: { mode: 'login' | 'register'; oauth: {
           </CardHeader>
           <CardContent>
             <Button asChild className="w-full">
-              <Link href="/resumes">Upload my resume</Link>
+              <Link href="/discover">Start AI Job Discovery</Link>
             </Button>
           </CardContent>
         </Card>

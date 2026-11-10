@@ -6,6 +6,8 @@
 
 **🔗 Live app: https://viv786ek.github.io/job-copilot/** — upload your resume and search ~17,000 real openings from 600+ company career boards and 7 job feeds across 130+ countries, refreshed every 6 hours. Runs in your browser: your resume never leaves your device.
 
+**New: AI Job Discovery**: drop a resume or your LinkedIn "Save to PDF" export, answer five quick questions, and get explained matches, saved jobs and career insights. Design, competitor analysis, roadmap and free-provider strategy: [docs/JOB_DISCOVERY.md](docs/JOB_DISCOVERY.md).
+
 ## What it does
 
 | | Feature | How |

@@ -1,14 +1,14 @@
 'use client';
 
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Bookmark, BookmarkCheck, ExternalLink, Link2, Loader2, Plane, RefreshCw, X } from 'lucide-react';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { Bookmark, Link2, Loader2, Plane, RefreshCw } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
-import { CountryPicker, visaLabel } from '@/components/app/country-picker';
-import { EmptyState, PageHeader, ScoreRing } from '@/components/app/shared';
-import { Badge } from '@/components/ui/badge';
+import { CountryPicker } from '@/components/app/country-picker';
+import { JobCard } from '@/components/app/job-card';
+import { EmptyState, PageHeader } from '@/components/app/shared';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input, Label, NativeSelect, Textarea } from '@/components/ui/input';
@@ -16,7 +16,6 @@ import { Skeleton } from '@/components/ui/progress';
 import { useApi, useToken } from '@/lib/api';
 import { LOCAL_MODE } from '@/lib/session';
 import type { FeedResponse } from '@/lib/types';
-import { formatSalary, relativeDays } from '@/lib/utils';
 
 interface Filters {
   q: string;
@@ -30,15 +29,18 @@ interface Filters {
   minScore: string;
   sort: 'score' | 'recent';
   saved: boolean;
+  level: string;
+  salaryMin: string;
+  salaryCurrency: string;
+  newWithinDays: string;
 }
 
-const DEFAULTS: Filters = { q: '', countries: [], includeRemote: true, workModes: [], visa: '', relocation: false, postedWithinDays: '', source: '', minScore: '0', sort: 'score', saved: false };
+const DEFAULTS: Filters = { q: '', countries: [], includeRemote: true, workModes: [], visa: '', relocation: false, postedWithinDays: '', source: '', minScore: '0', sort: 'score', saved: false, level: '', salaryMin: '', salaryCurrency: 'USD', newWithinDays: '' };
 const STORE = 'job-copilot-filters';
 
 export default function JobsPage() {
   const api = useApi();
   const { ready } = useToken();
-  const qc = useQueryClient();
   const router = useRouter();
   const [f, setF] = useState<Filters>(DEFAULTS);
   const [page, setPage] = useState(1);
@@ -47,6 +49,12 @@ export default function JobsPage() {
 
   // Restore last filters (per-viewer convenience); otherwise start from the target countries in Settings.
   useEffect(() => {
+    // Deep links (e.g. from Career Insights: /jobs?q=Company) override saved filters.
+    const q = new URLSearchParams(window.location.search).get('q');
+    if (q) {
+      setF({ ...DEFAULTS, q });
+      return;
+    }
     try {
       const saved = window.localStorage.getItem(STORE);
       if (saved) {
@@ -91,6 +99,9 @@ export default function JobsPage() {
     ...(f.postedWithinDays ? { postedWithinDays: f.postedWithinDays } : {}),
     ...(f.source ? { source: f.source } : {}),
     ...(f.saved ? { saved: 'true' } : {}),
+    ...(f.level ? { level: f.level } : {}),
+    ...(f.salaryMin ? { salaryMin: f.salaryMin, salaryCurrency: f.salaryCurrency } : {}),
+    ...(f.newWithinDays ? { newWithinDays: f.newWithinDays } : {}),
   });
   const feed = useQuery({ queryKey: ['feed', params.toString()], queryFn: () => api<FeedResponse>(`/jobs/feed?${params}`), enabled: ready });
   const sources = useQuery({
@@ -118,10 +129,6 @@ export default function JobsPage() {
     },
     onError: (e) => toast.error((e as Error).message),
   });
-  const flag = useMutation({
-    mutationFn: ({ id, body }: { id: string; body: { saved?: boolean; dismissed?: boolean } }) => api(`/jobs/${id}`, { method: 'PATCH', body: JSON.stringify(body) }),
-    onSuccess: () => qc.invalidateQueries({ queryKey: ['feed'] }),
-  });
 
   const toggleMode = (m: string) => update({ workModes: f.workModes.includes(m) ? f.workModes.filter((x) => x !== m) : [...f.workModes, m] });
   const pages = feed.data ? Math.ceil(feed.data.total / feed.data.pageSize) : 0;
@@ -129,7 +136,7 @@ export default function JobsPage() {
   return (
     <>
       <PageHeader
-        title="Job matches"
+        title="Recommended jobs"
         description="Real openings from company career boards and job feeds, scored against your resume."
         actions={
           <>
@@ -218,6 +225,36 @@ export default function JobsPage() {
             )}
           </div>
           <div className="space-y-1">
+            <Label>Experience</Label>
+            <NativeSelect value={f.level} onChange={(e) => update({ level: e.target.value })}>
+              <option value="">Any level</option>
+              <option value="entry">Entry (0–2 yrs)</option>
+              <option value="mid">Mid (2–5 yrs)</option>
+              <option value="senior">Senior (5+ yrs)</option>
+              <option value="leadership">Lead / manager</option>
+            </NativeSelect>
+          </div>
+          <div className="space-y-1">
+            <Label>Minimum salary (listed only)</Label>
+            <div className="flex gap-1">
+              <NativeSelect className="w-24" value={f.salaryCurrency} onChange={(e) => update({ salaryCurrency: e.target.value })}>
+                {['USD', 'EUR', 'GBP', 'INR', 'AED', 'CHF', 'CAD', 'AUD', 'SGD'].map((c) => (
+                  <option key={c}>{c}</option>
+                ))}
+              </NativeSelect>
+              <Input type="number" min={0} step={5000} placeholder="Any" value={f.salaryMin} onChange={(e) => update({ salaryMin: e.target.value })} />
+            </div>
+          </div>
+          <div className="space-y-1">
+            <Label>New to our index</Label>
+            <NativeSelect value={f.newWithinDays} onChange={(e) => update({ newWithinDays: e.target.value })}>
+              <option value="">Any</option>
+              <option value="1">Found in the last 24 h</option>
+              <option value="3">Last 3 days</option>
+              <option value="7">Last week</option>
+            </NativeSelect>
+          </div>
+          <div className="space-y-1">
             <Label>Source</Label>
             <NativeSelect value={f.source} onChange={(e) => update({ source: e.target.value })}>
               <option value="">All sources</option>
@@ -278,67 +315,7 @@ export default function JobsPage() {
       {feed.data && feed.data.total > 0 && <p className="mb-2 text-sm text-muted-foreground">{feed.data.total.toLocaleString()} jobs</p>}
 
       <div className="space-y-3">
-        {feed.data?.items.map((m) => {
-          const visa = visaLabel(m.job.visaStatus, m.job.visaConfidence);
-          return (
-            <Card key={m.id} className="transition-shadow hover:shadow-md">
-              <CardContent className="flex gap-4 p-4">
-                <ScoreRing score={m.score} size={56} />
-                <div className="min-w-0 flex-1">
-                  <div className="flex items-start justify-between gap-2">
-                    <div className="min-w-0">
-                      <Link href={`/jobs/view?id=${m.job.id}`} className="font-semibold hover:underline">
-                        {m.job.title}
-                      </Link>
-                      <p className="truncate text-sm text-muted-foreground">
-                        {m.job.companyName} · {m.job.location || 'Location not stated'} {m.job.postedAt && `· ${relativeDays(m.job.postedAt)}`}
-                      </p>
-                    </div>
-                    <div className="flex shrink-0 gap-1">
-                      <Button size="icon" variant="ghost" title={m.saved ? 'Unsave' : 'Save'} onClick={() => flag.mutate({ id: m.job.id, body: { saved: !m.saved } })}>
-                        {m.saved ? <BookmarkCheck className="text-primary" /> : <Bookmark />}
-                      </Button>
-                      <Button size="icon" variant="ghost" title="Not interested" onClick={() => flag.mutate({ id: m.job.id, body: { dismissed: true } })}>
-                        <X />
-                      </Button>
-                      {m.job.url.startsWith('http') && (
-                        <Button size="icon" variant="ghost" asChild title="Open original posting">
-                          <a href={m.job.url} target="_blank" rel="noopener noreferrer">
-                            <ExternalLink />
-                          </a>
-                        </Button>
-                      )}
-                    </div>
-                  </div>
-                  <div className="mt-2 flex flex-wrap gap-1.5">
-                    <Badge variant="outline">{m.job.source}</Badge>
-                    {m.job.workMode && (
-                      <Badge variant="secondary">
-                        {m.job.workMode === 'REMOTE' && m.job.remoteScope === 'GLOBAL' ? 'Remote · worldwide' : m.job.workMode.toLowerCase()}
-                      </Badge>
-                    )}
-                    {m.job.countries?.slice(0, 3).map((c) => (
-                      <Badge key={c} variant="outline">
-                        {c}
-                      </Badge>
-                    ))}
-                    {visa && <Badge variant={visa.variant}>{visa.text}</Badge>}
-                    {m.job.relocation && <Badge variant="success">Relocation</Badge>}
-                    {formatSalary(m.job.salaryMin, m.job.salaryMax, m.job.salaryCurrency) && (
-                      <Badge variant="secondary">{formatSalary(m.job.salaryMin, m.job.salaryMax, m.job.salaryCurrency)}</Badge>
-                    )}
-                    {m.atsScore != null && <Badge variant="secondary">ATS {m.atsScore}%</Badge>}
-                    {m.missingSkills.slice(0, 3).map((s) => (
-                      <Badge key={s} variant="warning">
-                        Missing: {s}
-                      </Badge>
-                    ))}
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          );
-        })}
+        {feed.data?.items.map((m) => <JobCard key={m.id} m={m} />)}
       </div>
 
       {pages > 1 && (

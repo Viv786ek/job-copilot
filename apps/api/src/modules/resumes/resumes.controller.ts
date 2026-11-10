@@ -1,4 +1,5 @@
 import {
+  Body,
   Controller,
   Delete,
   Get,
@@ -11,9 +12,17 @@ import {
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiBearerAuth, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { Throttle } from '@nestjs/throttler';
+import { z } from 'zod';
 import { AuthUser, CurrentUser } from '../../common/auth';
+import { ZodPipe } from '../../common/zod.pipe';
 import { ResumesService } from './resumes.service';
 import { MAX_RESUME_BYTES } from './text-extractor';
+
+const TextBody = z.object({
+  text: z.string().min(150).max(60_000),
+  source: z.enum(['linkedin', 'paste']).default('paste'),
+  linkedinUrl: z.string().url().optional(),
+});
 
 @ApiTags('resumes')
 @ApiBearerAuth()
@@ -27,6 +36,12 @@ export class ResumesController {
   @UseInterceptors(FileInterceptor('file', { limits: { fileSize: MAX_RESUME_BYTES } }))
   upload(@CurrentUser() u: AuthUser, @UploadedFile() file: Express.Multer.File) {
     return this.resumes.upload(u.id, file);
+  }
+
+  @Throttle({ default: { limit: 10, ttl: 3_600_000 } })
+  @Post('text')
+  uploadText(@CurrentUser() u: AuthUser, @Body(new ZodPipe(TextBody)) b: z.infer<typeof TextBody>) {
+    return this.resumes.uploadText(u.id, b.text, b.source, b.linkedinUrl);
   }
 
   @Get()

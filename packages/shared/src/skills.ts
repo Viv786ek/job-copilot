@@ -127,7 +127,7 @@ export const SKILL_TAXONOMY: Record<string, string[]> = {
   Solidity: ['solidity', 'web3', 'ethereum'],
   'Product Management': ['product management', 'product roadmap', 'product strategy'],
   Accessibility: ['accessibility', 'wcag', 'a11y'],
-  Security: ['application security', 'owasp', 'penetration testing', 'devsecops'],
+  'Application Security': ['application security', 'appsec', 'owasp', 'penetration testing', 'devsecops'],
 };
 
 const aliasIndex: Map<string, string> = (() => {
@@ -164,7 +164,8 @@ function escapeRegex(s: string): string {
 }
 
 const aliasPatterns: Array<[RegExp, string]> = [...aliasIndex.entries()]
-  .filter(([alias]) => alias.length > 2 || alias === 'go' || alias === 'c#')
+  // 'go' alone is too common an English word ("go-to-market"); Go is detected via "golang" or a skills list.
+  .filter(([alias]) => (alias.length > 2 && alias !== 'go') || alias === 'c#')
   .map(([alias, canonical]) => [
     new RegExp(`(^|[^a-z0-9+#])${escapeRegex(alias)}(?=[^a-z0-9+#]|$)`, 'i'),
     canonical,

@@ -44,12 +44,28 @@ export class ResumesService {
     return resume;
   }
 
+  /** Pasted profile text (LinkedIn sections, portfolio, plain resume). Same pipeline as a file upload. */
+  async uploadText(userId: string, text: string, source: 'linkedin' | 'paste', linkedinUrl?: string) {
+    const clean = text.replace(/\r/g, '').trim();
+    if (clean.length < 150) throw new BadRequestException('Paste at least a few paragraphs: your headline, experience and skills.');
+    if (clean.length > 60_000) throw new BadRequestException('That is longer than a resume; paste only your profile sections.');
+    const body = linkedinUrl && !clean.includes('linkedin.com/in/') ? clean + '\n' + linkedinUrl : clean;
+    const fileName = source === 'linkedin' ? 'LinkedIn profile (pasted).txt' : 'Pasted profile.txt';
+    const buf = Buffer.from(body, 'utf8');
+    const storageKey = this.storage.buildKey(userId, 'resumes', fileName);
+    await this.storage.put(storageKey, buf, 'text/plain');
+    const resume = await this.prisma.resume.create({ data: { userId, fileName, mimeType: 'text/plain', storageKey, sizeBytes: buf.length } });
+    await this.queue.parseResume(resume.id);
+    return resume;
+  }
+
   /** Workflow 1: Resume Upload -> Parse -> Store Candidate Profile -> Extract Skills. Runs in the worker. */
   async process(resumeId: string): Promise<void> {
     const resume = await this.prisma.resume.update({ where: { id: resumeId }, data: { status: 'PARSING', errorMessage: null } });
     try {
       const buf = await this.storage.getBuffer(resume.storageKey);
-      const rawText = await extractText(buf);
+      // Pasted profiles are stored as UTF-8 text; files go through PDF/DOCX extraction.
+      const rawText = resume.mimeType === 'text/plain' ? buf.toString('utf8') : await extractText(buf);
       const data = await this.parse(rawText, resume.userId);
 
       // Union of LLM skills and deterministic matches that literally appear in the text.

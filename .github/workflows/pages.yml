@@ -57,8 +57,17 @@ jobs:
         if: github.event.schedule == '30 2 * * 1' || inputs.discover
         run: node packages/connectors/dist/cli/discover.js --merge
 
+      - name: Restore first-seen state (freshness tracking between runs)
+        uses: actions/cache@v4
+        with:
+          path: .harvest-state
+          key: harvest-state-${{ github.run_id }}
+          restore-keys: harvest-state-
+
       - name: Harvest jobs
-        run: node packages/connectors/dist/cli/harvest.js --out apps/web/public/data
+        run: |
+          mkdir -p .harvest-state
+          node packages/connectors/dist/cli/harvest.js --out apps/web/public/data --state .harvest-state/firstseen.json
 
       - name: Build static app
         working-directory: apps/web

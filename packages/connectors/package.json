@@ -12,7 +12,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "typecheck": "tsc -p tsconfig.json --noEmit",
-    "test": "node --test dist/**/*.test.js",
+    "test": "node --test dist/pipeline.test.js",
     "discover": "node dist/cli/discover.js",
     "harvest": "node dist/cli/harvest.js",
     "smoke": "node dist/cli/smoke.js"

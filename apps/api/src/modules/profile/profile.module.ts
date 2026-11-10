@@ -44,6 +44,15 @@ const PreferencesPatch = z.object({
   authorizedCountries: IsoCountries.optional(),
   openToRelocation: z.boolean().optional(),
   workModes: z.array(z.enum(['REMOTE', 'HYBRID', 'ONSITE'])).optional(),
+  experienceLevel: z.enum(['', 'entry', 'mid', 'senior', 'leadership']).optional(),
+  salaryFloor: z.number().int().min(0).max(10_000_000).nullable().optional(),
+  salaryCurrency: z.string().length(3).optional(),
+  linkedinUrl: z
+    .string()
+    .regex(/^https?:\/\/([a-z]{2,3}\.)?linkedin\.com\/in\/[\w\-%]+\/?$/i, 'Must be a linkedin.com/in/… profile URL')
+    .nullable()
+    .optional(),
+  discoveryCompletedAt: z.coerce.date().nullable().optional(),
 });
 
 @Injectable()

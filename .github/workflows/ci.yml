@@ -41,7 +41,7 @@ jobs:
       - name: Typecheck
         run: npm run typecheck -w @copilot/api && npm run typecheck -w @copilot/web
       - name: Unit tests
-        run: npm test -w @copilot/api
+        run: npm test -w @copilot/api && npm test -w @copilot/connectors
       - name: Live source smoke test (non-blocking)
         continue-on-error: true
         run: node packages/connectors/dist/cli/smoke.js

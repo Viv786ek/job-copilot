@@ -77,7 +77,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       return session;
     },
     authorized({ auth: session, request }) {
-      const protectedPaths = ['/dashboard', '/resumes', '/jobs', '/analyzer', '/applications', '/documents', '/interviews', '/settings'];
+      const protectedPaths = ['/dashboard', '/discover', '/resumes', '/jobs', '/saved', '/insights', '/analyzer', '/applications', '/documents', '/settings'];
       const isProtected = protectedPaths.some((p) => request.nextUrl.pathname.startsWith(p));
       return isProtected ? !!session?.user : true;
     },

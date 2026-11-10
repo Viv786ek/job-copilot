@@ -19,11 +19,12 @@ export interface DatasetIndex {
   sources: string[];
   skills: string[];
   /** Column order documented in INDEX_COLUMNS. */
-  rows: Array<[string, string, number, string, string, string, number, number, number, number, number[], number, number, string, number, number, number[]]>;
+  rows: Array<[string, string, number, string, string, string, number, number, number, number, number[], number, number, string, number, number, number[], number, number, string, number, number]>;
 }
 export const INDEX_COLUMNS = [
   'id', 'title', 'companyIdx', 'location', 'countries(csv)', 'regions(csv)', 'remoteScope', 'workMode', 'visaStatus', 'visaConfidence',
   'requiredSkillIdx[]', 'postedDay', 'sourceIdx', 'url', 'relocation(0/1)', 'minYears(-1=unknown)', 'preferredSkillIdx[]',
+  'salaryMin(-1)', 'salaryMax(-1)', 'salaryCurrency', 'firstSeenDay', 'alsoOnCount',
 ] as const;
 
 export interface DatasetDetail {
@@ -35,6 +36,7 @@ export interface DatasetDetail {
   visa: { types: string[]; evidence: string[]; register: string | null; requiresAuthorizationIn: string[] };
   analysis: { requiredSkills: string[]; preferredSkills: string[]; atsKeywords: string[]; seniority: string; minYears: number | null; maxYears: number | null };
   ats: string | null;
+  alsoOn: Array<{ source: string; url: string }>;
 }
 
 export function buildDataset(result: HarvestResult, opts: { maxDescription?: number } = {}) {
@@ -79,6 +81,11 @@ export function buildDataset(result: HarvestResult, opts: { maxDescription?: num
       j.visa.relocation ? 1 : 0,
       j.analysis.minYearsExperience ?? -1,
       j.analysis.preferredSkills.map((s) => idx(kIdx, skills, s)),
+      j.salaryMin ? Math.round(j.salaryMin) : -1,
+      j.salaryMax ? Math.round(j.salaryMax) : -1,
+      j.salaryMin || j.salaryMax ? (j.salaryCurrency ?? '') : '',
+      j.firstSeenDay ?? Math.floor(Date.now() / 86_400_000),
+      j.alsoOn?.length ?? 0,
     ]);
     const shard = j.id.slice(0, 2);
     const bucket = shards.get(shard) ?? {};
@@ -117,5 +124,6 @@ function toDetail(j: EnrichedJob, maxDescription: number): DatasetDetail {
       maxYears: j.analysis.maxYearsExperience ?? null,
     },
     ats: j.ats ?? null,
+    alsoOn: j.alsoOn ?? [],
   };
 }
